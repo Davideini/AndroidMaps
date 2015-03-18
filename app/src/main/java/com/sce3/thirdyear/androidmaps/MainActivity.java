@@ -1,14 +1,11 @@
 package com.sce3.thirdyear.androidmaps;
 
-import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.method.CharacterPickerDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -19,18 +16,26 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
 
-        Button btn = (Button) findViewById(R.id.btnMessage);
+        //Button btn = (Button) findViewById(R.id.btnMessage);
 
-        final Context context = getApplicationContext();
+        //final Context context = getApplicationContext();
 
-        final CharSequence text = "Hello toast!";
+        //final CharSequence text = "Hello toast!";
 
-        final int duration = Toast.LENGTH_SHORT;
+        //final int duration = Toast.LENGTH_SHORT;
 
+      /*  btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+
+            }
+        });*/
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(i);
             }
         });
 
