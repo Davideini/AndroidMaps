@@ -10,6 +10,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import com.sce3.thirdyear.classes.JSONRequest;
+import com.sce3.thirdyear.classes.SQLiteDB;
 
 import org.json.JSONObject;
 
@@ -35,6 +36,10 @@ public class LoginActivity extends ActionBarActivity {
             JSONObject jobj = new JSONObject(future.get());
             if(jobj.getString("result").equals("success")){
                 res.setText(jobj.getString("session"));
+                SQLiteDB db=new SQLiteDB(getApplicationContext());
+                db.open();
+                db.updateSession(jobj.getString("session"));
+                db.close();
             }
             else{
                 res.setText(jobj.getString("message"));
