@@ -1,14 +1,21 @@
 package com.sce3.thirdyear.androidmaps;
 
-import android.content.Context;
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.text.method.CharacterPickerDialog;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
-import android.widget.Toast;
+import android.widget.TextView;
+
+import com.sce3.thirdyear.classes.JSONRequest;
+import com.sce3.thirdyear.classes.SQLiteDB;
+
+import org.json.JSONObject;
+
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -18,22 +25,61 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        SQLiteDB db=new SQLiteDB(getApplicationContext());
+        db.open();
+        String session=db.getSavedSession();
+        db.close();
+        System.out.println(session);
+        if(!session.equals("")){
+            String address=String.format("http://192.168.3.170:8080/JavaWeb/api?action=Main&session=%s",session);
+            ExecutorService pool = Executors.newFixedThreadPool(1);
+            JSONRequest json=new JSONRequest(address);
+            Future<String> future=pool.submit(json);
+            System.out.println(address);
+            try {
+                JSONObject jobj = new JSONObject(future.get());
+                if(jobj.getString("result").equals("success")){
+                    TextView txt=(TextView)findViewById(R.id.textView);
+                    txt.setVisibility(View.VISIBLE); //logged by session.
+                }
+                else{
+                    Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                    startActivity(i);
+                }
+            } catch (Exception e){
+                System.out.println(e.getMessage());
+            }
+        }
+else {
+            //no session in local db or session expired on server
+            Intent i = new Intent(MainActivity.this, LoginActivity.class);
+            startActivity(i);
+        }
 
-        Button btn = (Button) findViewById(R.id.btnMessage);
+       // Button btn = (Button) findViewById(R.id.btnMessage);
 
-        final Context context = getApplicationContext();
+        //final Context context = getApplicationContext();
 
-        final CharSequence text = "Hello toast!";
+        //final CharSequence text = "Hello toast!";
 
-        final int duration = Toast.LENGTH_SHORT;
+        //final int duration = Toast.LENGTH_SHORT;
 
+      /*  btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                //Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+
+            }
+        });*/
+/*
         btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(context, text, Toast.LENGTH_SHORT).show();
+                Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(i);
             }
         });
-
+*/
     }
 
 

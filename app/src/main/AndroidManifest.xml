@@ -20,6 +20,10 @@
             android:name=".ApplicationObjects"
             android:label="@string/title_activity_application_objects" >
         </activity>
+        <activity
+            android:name=".LoginActivity"
+            android:label="@string/title_activity_login" >
+        </activity>
     </application>
-
+    <uses-permission android:name="android.permission.INTERNET" />
 </manifest>
