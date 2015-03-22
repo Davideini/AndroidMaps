@@ -81,7 +81,7 @@ public class MapsActivity extends FragmentActivity {
         List<MarkerOptions> markers = new MapData().getMarkers();
 
         for (MarkerOptions marker : markers) {
-            mMap.addMarker(marker).i;
+            mMap.addMarker(marker);
         }
     }
 }
