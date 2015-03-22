@@ -1,5 +1,6 @@
 package com.sce3.thirdyear.androidmaps;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -65,7 +66,9 @@ public class LoginActivity extends ActionBarActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
+        if (id == R.id.action_maps_develop) {
+            Intent intent = new Intent(LoginActivity.this, MapsActivity.class);
+            startActivity(intent);
             return true;
         }
 

@@ -6,4 +6,5 @@
     <string name="title_activity_application_objects">ApplicationObjects</string>
     <string name="title_activity_login">LoginActivity</string>
     <string name="action_google_maps">Google maps</string>
+    <string name="title_activity_maps">Map</string>
 </resources>

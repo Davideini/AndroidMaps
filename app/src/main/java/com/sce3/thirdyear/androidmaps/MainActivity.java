@@ -25,38 +25,36 @@ public class MainActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        SQLiteDB db=new SQLiteDB(getApplicationContext());
+        SQLiteDB db = new SQLiteDB(getApplicationContext());
         db.open();
-        String session=db.getSavedSession();
+        String session = db.getSavedSession();
         db.close();
         System.out.println(session);
-        if(!session.equals("")){
-            String address=String.format("http://192.168.3.170:8080/JavaWeb/api?action=Main&session=%s",session);
+        if (!session.equals("")) {
+            String address = String.format("http://192.168.3.170:8080/JavaWeb/api?action=Main&session=%s", session);
             ExecutorService pool = Executors.newFixedThreadPool(1);
-            JSONRequest json=new JSONRequest(address);
-            Future<String> future=pool.submit(json);
+            JSONRequest json = new JSONRequest(address);
+            Future<String> future = pool.submit(json);
             System.out.println(address);
             try {
                 JSONObject jobj = new JSONObject(future.get());
-                if(jobj.getString("result").equals("success")){
-                    TextView txt=(TextView)findViewById(R.id.textView);
+                if (jobj.getString("result").equals("success")) {
+                    TextView txt = (TextView) findViewById(R.id.textView);
                     txt.setVisibility(View.VISIBLE); //logged by session.
-                }
-                else{
+                } else {
                     Intent i = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(i);
                 }
-            } catch (Exception e){
+            } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
-        }
-else {
+        } else {
             //no session in local db or session expired on server
             Intent i = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(i);
         }
 
-       // Button btn = (Button) findViewById(R.id.btnMessage);
+        // Button btn = (Button) findViewById(R.id.btnMessage);
 
         //final Context context = getApplicationContext();
 
@@ -99,6 +97,8 @@ else {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            Intent intent = new Intent(MainActivity.this, MapsActivity.class);
+            startActivity(intent);
             return true;
         }
 
