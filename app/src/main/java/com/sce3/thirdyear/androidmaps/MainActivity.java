@@ -6,11 +6,14 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.sce3.thirdyear.classes.JSONRequest;
 import com.sce3.thirdyear.classes.SQLiteDB;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.concurrent.ExecutorService;
@@ -29,31 +32,45 @@ public class MainActivity extends ActionBarActivity {
         db.open();
         String session = db.getSavedSession();
         db.close();
+
+        //dbg
         System.out.println(session);
+        TextView txt=(TextView) findViewById(R.id.textView);
+        txt.setVisibility(View.INVISIBLE);
+
         if (!session.equals("")) {
-            String address = String.format("http://192.168.3.170:8080/JavaWeb/api?action=Main&session=%s", session);
+            String address = String.format("http://%s/JavaWeb/api?action=Main&session=%s", JSONRequest.SERVER, session);
             ExecutorService pool = Executors.newFixedThreadPool(1);
             JSONRequest json = new JSONRequest(address);
             Future<String> future = pool.submit(json);
             System.out.println(address);
             try {
                 JSONObject jobj = new JSONObject(future.get());
+                System.out.println("RES: " + jobj.getString("result"));
                 if (jobj.getString("result").equals("success")) {
-                    TextView txt = (TextView) findViewById(R.id.textView);
                     txt.setVisibility(View.VISIBLE); //logged by session.
                 } else {
                     Intent i = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(i);
                 }
-            } catch (Exception e) {
+            } catch (JSONException e) {
                 System.out.println(e.getMessage());
+            } catch (Exception e){
+                Toast.makeText(this, "Error receiving data.", Toast.LENGTH_LONG);
             }
         } else {
             //no session in local db or session expired on server
             Intent i = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(i);
         }
-
+        Button btn = (Button) findViewById(R.id.btnHistory);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(MainActivity.this, HistoryActivity.class);
+                startActivity(i);
+            }
+        });
         // Button btn = (Button) findViewById(R.id.btnMessage);
 
         //final Context context = getApplicationContext();
@@ -79,6 +96,7 @@ public class MainActivity extends ActionBarActivity {
         });
 */
     }
+
 
 
     @Override

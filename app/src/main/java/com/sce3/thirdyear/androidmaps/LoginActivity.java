@@ -7,12 +7,15 @@ import android.view.Menu;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import com.sce3.thirdyear.classes.JSONRequest;
 import com.sce3.thirdyear.classes.SQLiteDB;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends ActionBarActivity {
@@ -27,7 +30,7 @@ public class LoginActivity extends ActionBarActivity {
     public void LoginOnClick(View v){
         TextView emailText = (TextView) findViewById(R.id.emailText);
         TextView passText = (TextView) findViewById(R.id.passText);
-        String address=String.format("http://192.168.3.170:8080/JavaWeb/api?action=Login&email=%s&password=%s",emailText.getText(),passText.getText());
+        String address=String.format("http://%s/JavaWeb/api?action=Login&email=%s&password=%s",JSONRequest.SERVER,emailText.getText(),passText.getText());
         TextView res=(TextView)findViewById(R.id.textView3);
         ExecutorService pool = Executors.newFixedThreadPool(1);
         JSONRequest json=new JSONRequest(address);
@@ -41,15 +44,26 @@ public class LoginActivity extends ActionBarActivity {
                 db.open();
                 db.updateSession(jobj.getString("session"));
                 db.close();
+                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(i);
+                /*
+                SharedPreferences sessionPref=getSharedPreferences("session",MODE_PRIVATE);
+                SharedPreferences.Editor edit=sessionPref.edit();
+                edit.putString("session",jobj.getString("session"));
+                edit.commit();
+                 */
             }
             else{
                 res.setText(jobj.getString("message"));
             }
-        } catch (Exception e){
+        } catch (JSONException e) {
             System.out.println(e.getMessage());
+        } catch (Exception e){
+            Toast.makeText(this, "Error receiving data.", Toast.LENGTH_LONG);
         }
         //Toast.makeText(this.getApplicationContext(),"test",Toast.LENGTH_SHORT);
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
