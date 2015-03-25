@@ -8,4 +8,5 @@
     <string name="action_google_maps">Google maps</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_house_details">HouseDetailsActivity</string>
+    <string name="title_activity_history">HistoryActivity</string>
 </resources>
