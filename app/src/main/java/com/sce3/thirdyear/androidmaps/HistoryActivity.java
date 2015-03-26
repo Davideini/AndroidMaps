@@ -21,9 +21,6 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 
 public class HistoryActivity extends ActionBarActivity {
@@ -34,16 +31,12 @@ public class HistoryActivity extends ActionBarActivity {
         setContentView(R.layout.activity_history);
 
         SQLiteDB db = new SQLiteDB(getApplicationContext());
-        db.open();
         String session_str=db.getSavedSession();
-        db.close();
         String address=String.format("http://%s/JavaWeb/api?action=History&session=%s", JSONRequest.SERVER,session_str);
-        ExecutorService pool = Executors.newFixedThreadPool(1);
         JSONRequest json=new JSONRequest(address);
-        Future<String> future=pool.submit(json);
         System.out.println(address);
         try {
-            JSONObject jobj = new JSONObject(future.get());
+            JSONObject jobj = new JSONObject(json.getJSON());
             if(jobj.getString("result").equals("success")){
                 JSONArray jarr=jobj.getJSONArray("data");
                 List<Map<String,String>> list=new ArrayList(jarr.length());
@@ -57,10 +50,9 @@ public class HistoryActivity extends ActionBarActivity {
                     }
                     list.add(map);
                 }
-            ListAdapter theAdapter=new MyListAdapter(this,(List)list);
-            ListView lv=(ListView)findViewById(R.id.listView);
-            lv.setAdapter(theAdapter);
-
+                    ListAdapter theAdapter = new MyListAdapter(this, (List) list);
+                    ListView lv = (ListView) findViewById(R.id.listView);
+                    lv.setAdapter(theAdapter);
             }
             else{
                 Toast.makeText(this,jobj.getString("message"),Toast.LENGTH_LONG).show();
@@ -72,6 +64,7 @@ public class HistoryActivity extends ActionBarActivity {
         }
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

@@ -16,9 +16,6 @@ import com.sce3.thirdyear.classes.SQLiteDB;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 
 
 public class MainActivity extends ActionBarActivity {
@@ -29,9 +26,7 @@ public class MainActivity extends ActionBarActivity {
         setContentView(R.layout.activity_main);
 
         SQLiteDB db = new SQLiteDB(getApplicationContext());
-        db.open();
         String session = db.getSavedSession();
-        db.close();
 
         //dbg
         System.out.println(session);
@@ -40,13 +35,10 @@ public class MainActivity extends ActionBarActivity {
 
         if (!session.equals("")) {
             String address = String.format("http://%s/JavaWeb/api?action=Main&session=%s", JSONRequest.SERVER, session);
-            ExecutorService pool = Executors.newFixedThreadPool(1);
-            JSONRequest json = new JSONRequest(address);
-            Future<String> future = pool.submit(json);
+            JSONRequest json=new JSONRequest(address);
             System.out.println(address);
             try {
-                JSONObject jobj = new JSONObject(future.get());
-                System.out.println("RES: " + jobj.getString("result"));
+                JSONObject jobj = new JSONObject(json.getJSON());
                 if (jobj.getString("result").equals("success")) {
                     txt.setVisibility(View.VISIBLE); //logged by session.
                 } else {

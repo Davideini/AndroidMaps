@@ -16,18 +16,27 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.net.ConnectException;
 import java.util.concurrent.Callable;
+import java.util.concurrent.ExecutionException;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 
 public class JSONRequest implements Callable<String> {
-    public final static String SERVER = "10.0.0.8:8080";
+    public final static String SERVER = "192.168.3.146:8080";
     public final static String IMAGE_DIR = "JavaWeb/images";
 
     String address;
-
+    Future<String> future;
     public JSONRequest(String address) {
         this.address = address;
+        ExecutorService pool = Executors.newFixedThreadPool(1);
+        future=pool.submit(this);
     }
 
+    public String getJSON() throws ExecutionException, InterruptedException {
+        return future.get();
+    }
     public String call() throws IOException {
         return getJSON(address);
     }

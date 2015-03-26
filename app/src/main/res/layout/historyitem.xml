@@ -15,7 +15,7 @@
         android:layout_alignParentTop="true"
         android:id="@+id/tableLayout2"
         android:layout_toStartOf="@+id/imageView2"
-        android:layout_toEndOf="@+id/imageButton">
+        android:layout_toEndOf="@+id/deletebtn">
 
         <TableRow
             android:layout_width="fill_parent"
@@ -60,8 +60,8 @@
     <ImageButton
         android:layout_width="60dp"
         android:background="@android:color/transparent"
-        android:layout_height="wrap_content"
-        android:id="@+id/imageButton"
+        android:layout_height="60dp"
+        android:id="@+id/deletebtn"
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignBottom="@+id/tableLayout2"
