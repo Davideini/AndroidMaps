@@ -54,12 +54,12 @@ public class LoginActivity extends ActionBarActivity {
                  */
             }
             else{
-                res.setText(jobj.getString("message"));
+                Toast.makeText(this, jobj.getString("message"), Toast.LENGTH_LONG).show();
             }
         } catch (JSONException e) {
             System.out.println(e.getMessage());
         } catch (Exception e){
-            Toast.makeText(this, "Error receiving data.", Toast.LENGTH_LONG);
+            Toast.makeText(this, "Error receiving data.", Toast.LENGTH_LONG).show();
         }
         //Toast.makeText(this.getApplicationContext(),"test",Toast.LENGTH_SHORT);
     }

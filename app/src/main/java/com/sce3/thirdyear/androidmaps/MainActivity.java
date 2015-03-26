@@ -56,7 +56,9 @@ public class MainActivity extends ActionBarActivity {
             } catch (JSONException e) {
                 System.out.println(e.getMessage());
             } catch (Exception e){
-                Toast.makeText(this, "Error receiving data.", Toast.LENGTH_LONG);
+                Toast.makeText(this, "Error receiving data.", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(MainActivity.this, LoginActivity.class);
+                startActivity(i);
             }
         } else {
             //no session in local db or session expired on server

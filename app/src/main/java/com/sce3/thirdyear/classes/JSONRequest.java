@@ -7,6 +7,8 @@ import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -17,8 +19,8 @@ import java.util.concurrent.Callable;
 
 
 public class JSONRequest implements Callable<String> {
-    public final static String SERVER = "192.168.3.145:8080";
-    public final static String IMAGE_DIR = "images";
+    public final static String SERVER = "10.0.0.8:8080";
+    public final static String IMAGE_DIR = "JavaWeb/images";
 
     String address;
 
@@ -34,6 +36,7 @@ public class JSONRequest implements Callable<String> {
         StringBuilder builder = new StringBuilder();
         HttpClient client = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(address);
+        HttpConnectionParams.setConnectionTimeout(new BasicHttpParams(),5000);
         HttpResponse response = client.execute(httpGet);
         StatusLine statusLine = response.getStatusLine();
         int statusCode = statusLine.getStatusCode();
