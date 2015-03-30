@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMapOptions;
@@ -59,10 +60,9 @@ public class MapsActivity extends FragmentActivity implements OnMapReadyCallback
 
     @Override
     public void onMapReady(GoogleMap mMap) {
-        GoogleMapOptions options = new GoogleMapOptions();
-
-        MarkerOptions marker = new MarkerOptions().position(new LatLng(0, 0));
-
-        mMap.addMarker(marker);
+        mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(new LatLng(31.804996, 34.657698), 12));
+        for (MarkerOptions marker : new MapData().getMarkers()) {
+            mMap.addMarker(marker);
+        }
     }
 }
