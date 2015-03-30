@@ -9,9 +9,6 @@ import android.view.MenuItem;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
 import com.sce3.thirdyear.classes.JSONRequest;
 import com.sce3.thirdyear.classes.SQLiteDB;
 
@@ -31,19 +28,16 @@ public class LoginActivity extends ActionBarActivity {
         TextView emailText = (TextView) findViewById(R.id.emailText);
         TextView passText = (TextView) findViewById(R.id.passText);
         String address=String.format("http://%s/JavaWeb/api?action=Login&email=%s&password=%s",JSONRequest.SERVER,emailText.getText(),passText.getText());
-        TextView res=(TextView)findViewById(R.id.textView3);
-        ExecutorService pool = Executors.newFixedThreadPool(1);
-        JSONRequest json=new JSONRequest(address);
-        Future<String> future=pool.submit(json);
+        //TextView res=(TextView)findViewById(R.id.textView3);
+
         System.out.println(address);
         try {
-            JSONObject jobj = new JSONObject(future.get());
+            JSONRequest json=new JSONRequest(address);
+            JSONObject jobj = new JSONObject(json.getJSON());
             if(jobj.getString("result").equals("success")){
-                res.setText(jobj.getString("session"));
+                //res.setText(jobj.getString("session"));
                 SQLiteDB db=new SQLiteDB(getApplicationContext());
-                db.open();
                 db.updateSession(jobj.getString("session"));
-                db.close();
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
                 /*
@@ -54,12 +48,12 @@ public class LoginActivity extends ActionBarActivity {
                  */
             }
             else{
-                res.setText(jobj.getString("message"));
+                Toast.makeText(this, jobj.getString("message"), Toast.LENGTH_LONG).show();
             }
         } catch (JSONException e) {
             System.out.println(e.getMessage());
         } catch (Exception e){
-            Toast.makeText(this, "Error receiving data.", Toast.LENGTH_LONG);
+            Toast.makeText(this, "Error receiving data.", Toast.LENGTH_LONG).show();
         }
         //Toast.makeText(this.getApplicationContext(),"test",Toast.LENGTH_SHORT);
     }
