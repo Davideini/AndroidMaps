@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.sce3.thirdyear.androidmaps">
+    package="com.sce3.thirdyear.androidmaps" >
 
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -17,12 +17,11 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme">
+        android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/app_name">
-
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -31,12 +30,13 @@
         </activity>
         <activity
             android:name=".ApplicationObjects"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_application_objects"></activity>
+            android:label="@string/title_activity_application_objects"
+            android:screenOrientation="portrait" />
         <activity
             android:name=".LoginActivity"
-            android:screenOrientation="portrait"
-            android:label="@string/title_activity_login"></activity>
+            android:label="@string/title_activity_login"
+            android:screenOrientation="portrait" />
+
 
         <meta-data
             android:name="com.google.android.gms.version"
@@ -54,6 +54,18 @@
         <activity
             android:name=".HistoryActivity"
             android:label="@string/title_activity_history" >
+        </activity>
+        <activity
+            android:name=".RegistrationActivity"
+            android:label="@string/title_activity_registration" >
+        </activity>
+        <activity
+            android:name=".UpdateUserDetailsActivity"
+            android:label="@string/title_activity_update_user_details" >
+        </activity>
+        <activity
+            android:name=".ChangePasswordActivity"
+            android:label="@string/title_activity_change_password" >
         </activity>
     </application>
 

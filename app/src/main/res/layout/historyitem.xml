@@ -65,7 +65,7 @@
         android:layout_alignParentTop="true"
         android:layout_alignParentStart="true"
         android:layout_alignBottom="@+id/tableLayout2"
-        android:src="@drawable/x"
+        android:src="@drawable/logo"
         android:scaleType="centerCrop" />
 
 </RelativeLayout>
