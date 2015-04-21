@@ -32,7 +32,7 @@ public class HistoryActivity extends ActionBarActivity {
 
         SQLiteDB db = new SQLiteDB(getApplicationContext());
         String session_str=db.getSavedSession();
-        String address=String.format("http://%s/JavaWeb/api?action=History&session=%s", JSONRequest.SERVER,session_str);
+        String address=String.format("http://%s/JavaMaps/api?action=History&session=%s", JSONRequest.SERVER,session_str);
         JSONRequest json=new JSONRequest(address);
         System.out.println(address);
         try {
@@ -69,7 +69,7 @@ public class HistoryActivity extends ActionBarActivity {
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_history, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 

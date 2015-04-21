@@ -34,13 +34,14 @@ public class MainActivity extends ActionBarActivity {
         txt.setVisibility(View.INVISIBLE);
 
         if (!session.equals("")) {
-            String address = String.format("http://%s/JavaWeb/api?action=Main&session=%s", JSONRequest.SERVER, session);
+            String address = String.format("http://%s/JavaMaps/api?action=Main&session=%s", JSONRequest.SERVER, session);
             JSONRequest json=new JSONRequest(address);
             System.out.println(address);
             try {
                 JSONObject jobj = new JSONObject(json.getJSON());
                 if (jobj.getString("result").equals("success")) {
                     txt.setVisibility(View.VISIBLE); //logged by session.
+                    /////////////////////////////////////////////////////////
                 } else {
                     Intent i = new Intent(MainActivity.this, LoginActivity.class);
                     startActivity(i);
