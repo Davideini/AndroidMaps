@@ -117,4 +117,10 @@ public class MainActivity extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
+
+    public void toMenu(View view) {
+        Intent i = new Intent(MainActivity.this, MenuActivity.class);
+        startActivity(i);
+        finish();
+    }
 }
