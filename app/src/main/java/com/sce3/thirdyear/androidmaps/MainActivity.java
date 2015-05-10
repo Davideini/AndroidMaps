@@ -8,6 +8,7 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.sce3.thirdyear.AddApartment;
 import com.sce3.thirdyear.classes.JSONRequest;
 import com.sce3.thirdyear.classes.SQLiteDB;
 
@@ -53,6 +54,13 @@ public class MainActivity extends ActionBarActivity {
             Intent i = new Intent(MainActivity.this, LoginActivity.class);
             startActivity(i);
         }
+
+        //######### Test Shimi's activity ###########
+
+//        Intent intent = new Intent(this, AddApartment.class);
+//        startActivity(intent);
+
+        //###########################################
 
         // Button btn = (Button) findViewById(R.id.btnMessage);
 
