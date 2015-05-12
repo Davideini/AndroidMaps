@@ -121,6 +121,6 @@ public class MainActivity extends ActionBarActivity {
     public void toMenu(View view) {
         Intent i = new Intent(MainActivity.this, MenuActivity.class);
         startActivity(i);
-        finish();
+        //finish();
     }
 }
