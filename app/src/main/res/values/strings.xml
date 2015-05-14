@@ -15,12 +15,20 @@
     <string name="title_activity_menu">Menu</string>
 <!--here menu items -->
     <string-array name="menu_array">
-        <item>Home</item>
         <item>profile</item>
         <item>search</item>
-        <item>History</item>
+        <item>MyHistory</item>
         <item>Chat</item>
         <item>Setting</item>
+        <item>Logout</item>
+    </string-array>
+    <string-array name="menu_icons">
+        <item>@drawable/ic_profile</item>
+        <item>@drawable/ic_search</item>
+        <item>@drawable/ic_history</item>
+        <item>@drawable/ic_chat</item>
+        <item>@drawable/ic_setting</item>
+        <item>@drawable/ic_logout</item>
     </string-array>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>

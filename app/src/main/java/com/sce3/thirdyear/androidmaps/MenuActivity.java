@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.Configuration;
+import android.content.res.TypedArray;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
@@ -20,8 +21,12 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 
 import com.sce3.thirdyear.androidmaps.fragments.test;
+import com.sce3.thirdyear.classes.MenuAdapter;
+import com.sce3.thirdyear.classes.MenuItemTemplate;
 
 import junit.framework.Test;
+
+import java.util.ArrayList;
 
 
 public class MenuActivity extends ActionBarActivity {
@@ -32,6 +37,8 @@ public class MenuActivity extends ActionBarActivity {
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private String[] menuTitles;
+    private TypedArray menuIcons;
+    private ArrayList<MenuItemTemplate> menuitems;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,17 +46,25 @@ public class MenuActivity extends ActionBarActivity {
         //getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
         setContentView(R.layout.activity_menu);
 
-
+        menuitems = new ArrayList<MenuItemTemplate>();
         mTitle = mDrawerTitle = getTitle();
         menuTitles = getResources().getStringArray(R.array.menu_array);
+        menuIcons =getResources().obtainTypedArray(R.array.menu_icons);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        // set up the drawer's list view with items and click listener
-        mDrawerList.setAdapter(new ArrayAdapter<String>(this,
-                R.layout.drawer_list_item, menuTitles));
-        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
+        for(int i=0;i<menuTitles.length;i++)
+        {
+            menuitems.add(new MenuItemTemplate(menuTitles[i], menuIcons.getResourceId(i,-1)));
+        }
+
+        menuIcons.recycle();
+
+
+        mDrawerList.setAdapter(new MenuAdapter(getApplicationContext(),menuitems));
+                mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
 
         //Object a=getSupportActionBar();
         // enable ActionBar app icon to behave as action to toggle nav drawer
@@ -105,7 +120,9 @@ public class MenuActivity extends ActionBarActivity {
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
-        setTitle(menuTitles[position]);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(menuitems.get(position).getIcon());
+       // setTitle(menuTitles[position],menuIcons);
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
