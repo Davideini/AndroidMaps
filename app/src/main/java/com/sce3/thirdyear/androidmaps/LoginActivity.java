@@ -7,12 +7,12 @@ import android.view.Menu;
 import android.view.View;
 import android.view.MenuItem;
 import android.widget.TextView;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.Future;
+import android.widget.Toast;
+
 import com.sce3.thirdyear.classes.JSONRequest;
 import com.sce3.thirdyear.classes.SQLiteDB;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 public class LoginActivity extends ActionBarActivity {
@@ -27,34 +27,42 @@ public class LoginActivity extends ActionBarActivity {
     public void LoginOnClick(View v){
         TextView emailText = (TextView) findViewById(R.id.emailText);
         TextView passText = (TextView) findViewById(R.id.passText);
-        String address=String.format("http://192.168.3.170:8080/JavaWeb/api?action=Login&email=%s&password=%s",emailText.getText(),passText.getText());
-        TextView res=(TextView)findViewById(R.id.textView3);
-        ExecutorService pool = Executors.newFixedThreadPool(1);
-        JSONRequest json=new JSONRequest(address);
-        Future<String> future=pool.submit(json);
+        String address=String.format("http://%s/JavaMaps/api?action=Login&email=%s&password=%s",JSONRequest.SERVER,emailText.getText(),passText.getText());
+        //TextView res=(TextView)findViewById(R.id.textView3);
+
         System.out.println(address);
         try {
-            JSONObject jobj = new JSONObject(future.get());
+            JSONRequest json=new JSONRequest(address);
+            JSONObject jobj = new JSONObject(json.getJSON());
             if(jobj.getString("result").equals("success")){
-                res.setText(jobj.getString("session"));
+                //res.setText(jobj.getString("session"));
                 SQLiteDB db=new SQLiteDB(getApplicationContext());
-                db.open();
                 db.updateSession(jobj.getString("session"));
-                db.close();
+                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                startActivity(i);
+                /*
+                SharedPreferences sessionPref=getSharedPreferences("session",MODE_PRIVATE);
+                SharedPreferences.Editor edit=sessionPref.edit();
+                edit.putString("session",jobj.getString("session"));
+                edit.commit();
+                 */
             }
             else{
-                res.setText(jobj.getString("message"));
+                Toast.makeText(this, jobj.getString("message"), Toast.LENGTH_LONG).show();
             }
-        } catch (Exception e){
+        } catch (JSONException e) {
             System.out.println(e.getMessage());
+        } catch (Exception e){
+            Toast.makeText(this, "Error receiving data.", Toast.LENGTH_LONG).show();
         }
         //Toast.makeText(this.getApplicationContext(),"test",Toast.LENGTH_SHORT);
     }
 
+
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_login, menu);
+        getMenuInflater().inflate(R.menu.menu_main, menu);
         return true;
     }
 
