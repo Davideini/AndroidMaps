@@ -6,229 +6,230 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/scrollView">
+        android:id="@+id/scrollViewAddApt">
 
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/location"
-        android:id="@+id/textView4"
-        android:paddingTop="10dp"/>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location"
+                android:id="@+id/LocationTVAddApt"
+                android:paddingTop="10dp"/>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/street_name"
-            android:id="@+id/textView6" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/street_name"
+                    android:id="@+id/StreetNameTV" />
 
-        <EditText
-            android:layout_width="0dp"
-            android:layout_weight="70"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:hint="@string/street_name_hint"
-            android:ems="10"
-            android:id="@+id/streetNameEditText" />
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="70"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:hint="@string/street_name_hint"
+                    android:ems="10"
+                    android:id="@+id/streetNameEditText" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/city"
-            android:id="@+id/textView9" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/city"
+                    android:id="@+id/cityTV" />
 
-        <EditText
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:inputType="textPersonName"
-            android:hint="@string/city_hint"
-            android:ems="10"
-            android:id="@+id/editText"
-            android:layout_weight="50" />
-
-
-    </LinearLayout>
-
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/house_number"
-            android:id="@+id/textView7" />
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_weight="20"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/houseNumEditText"
-            android:hint="@string/house_num_hint"/>
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/apt_number"
-            android:id="@+id/textView8" />
-
-        <EditText
-            android:layout_width="0dp"
-            android:layout_weight="20"
-            android:layout_height="wrap_content"
-            android:inputType="number"
-            android:ems="10"
-            android:id="@+id/editText2"
-            android:hint="@string/apt_num_hint"/>
-        </LinearLayout>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/structure"
-        android:id="@+id/textView10"
-        android:paddingTop="10dp"/>
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:hint="@string/city_hint"
+                    android:ems="10"
+                    android:id="@+id/cityEditText"
+                    android:layout_weight="50" />
 
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            </LinearLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/roomsTV"
-            android:id="@+id/roomsTV" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText3"
-            android:hint="@string/rooms_hint"
-            android:inputType="number"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/house_number"
+                    android:id="@+id/houseNumTV" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/apt_area"
-            android:id="@+id/textView12"
-            android:paddingStart="20sp"/>
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="20"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:id="@+id/houseNumEditText"
+                    android:hint="@string/house_num_hint"/>
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/editText4"
-            android:hint="@string/area_hint"
-            android:inputType="number"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/apt_number"
+                    android:id="@+id/aptNumTV" />
 
-    </LinearLayout>
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="20"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:id="@+id/aptNumEditText"
+                    android:hint="@string/apt_num_hint"/>
+            </LinearLayout>
 
-    <LinearLayout
-        android:orientation="vertical"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/structure"
+                android:id="@+id/structureTV"
+                android:paddingTop="10dp"/>
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/elevator"
-            android:id="@+id/checkBox" />
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/sun_balcony"
-            android:id="@+id/checkBox2" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/mamad"
-            android:id="@+id/checkBox3" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/roomsTV"
+                    android:id="@+id/roomsTV" />
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/service_balcony"
-            android:id="@+id/checkBox4" />
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/roomNumEditText"
+                    android:hint="@string/rooms_hint"
+                    android:inputType="number"/>
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/parking"
-            android:id="@+id/checkBox5" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/apt_area"
+                    android:id="@+id/aptAreaTV"
+                    android:paddingStart="20sp"
+                    android:paddingEnd="0sp"/>
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/handicapped_access"
-            android:id="@+id/checkBox6" />
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/aptAreaEditText"
+                    android:hint="@string/area_hint"
+                    android:inputType="number"/>
 
-        <CheckBox
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/storage"
-            android:id="@+id/checkBox7" />
-    </LinearLayout>
+            </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/additional_details_tv"
-        android:id="@+id/textView11"
-        android:paddingTop="10dp"/>
+            <LinearLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/elevator"
+                    android:id="@+id/elevatorCheckBox" />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/price"
-            android:id="@+id/textView13" />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sun_balcony"
+                    android:id="@+id/sunBalconyCheckBox" />
 
-        <EditText
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/priceEditText"
-            android:hint="@string/estimated_price_hint"/>
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mamad"
+                    android:id="@+id/mamadCheckBox" />
 
-    </LinearLayout>
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/service_balcony"
+                    android:id="@+id/serviceBalconyCheckBox" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/sell"
-        android:id="@+id/checkBox8" />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/parking"
+                    android:id="@+id/parkingCheckBox" />
 
-    <CheckBox
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/rent"
-        android:id="@+id/checkBox9" />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/handicapped_access"
+                    android:id="@+id/handicappedAccessCheckBox" />
 
-    <Button
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/ok_button"
-        android:id="@+id/button"
-        android:layout_gravity="center_horizontal" />
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/storage"
+                    android:id="@+id/storageCheckBox" />
+            </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/additional_details_tv"
+                android:id="@+id/additionalDetailsTV"
+                android:paddingTop="10dp"/>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/price"
+                    android:id="@+id/priceTV" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/priceEditText"
+                    android:hint="@string/estimated_price_hint"/>
+
+            </LinearLayout>
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/sell"
+                android:id="@+id/sellCheckBox" />
+
+            <CheckBox
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/rent"
+                android:id="@+id/rentCheckBox" />
+
+            <Button
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/ok_button"
+                android:id="@+id/button"
+                android:layout_gravity="center_horizontal" />
 
         </LinearLayout>
     </ScrollView>
-    </LinearLayout>
+</LinearLayout>
