@@ -32,4 +32,34 @@
     </string-array>
     <string name="drawer_open">Open navigation drawer</string>
     <string name="drawer_close">Close navigation drawer</string>
+    <string name="title_activity_add_apartment">AddApartment</string>
+    <string name="add_new_apartment">Add new Apartment</string>
+    <string name="street_name">Street name: </string>
+    <string name="street_name_hint">Street name</string>
+    <string name="number">Number:</string>
+    <string name="location">Location</string>
+    <string name="house_number">House Number:</string>
+    <string name="apt_number">Apt. Number:</string>
+    <string name="city_hint">City</string>
+    <string name="city">City:</string>
+    <string name="structure">Structure</string>
+    <string name="roomsTV">Rooms:</string>
+    <string name="rooms_hint"># of rooms</string>
+    <string name="apt_area">Apt. area:</string>
+    <string name="house_num_hint">House #</string>
+    <string name="apt_num_hint">Apt. #</string>
+    <string name="area_hint">Area in M*M</string>
+    <string name="elevator">Elevator</string>
+    <string name="sun_balcony">Sun Balcony</string>
+    <string name="mamad">Mamad</string>
+    <string name="service_balcony">Service Balcony</string>
+    <string name="parking">Parking</string>
+    <string name="handicapped_access">Handicapped Access</string>
+    <string name="storage">Storage</string>
+    <string name="additional_details_tv">Additional Details</string>
+    <string name="price">Price</string>
+    <string name="sell">Sell</string>
+    <string name="rent">Rent</string>
+    <string name="estimated_price_hint">Estimated Price</string>
+    <string name="ok_button">OK</string>
 </resources>
