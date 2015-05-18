@@ -19,6 +19,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.sce3.thirdyear.androidmaps.fragments.test;
 import com.sce3.thirdyear.classes.MenuAdapter;
@@ -39,7 +40,7 @@ public class MenuActivity extends ActionBarActivity {
     private String[] menuTitles;
     private TypedArray menuIcons;
     private ArrayList<MenuItemTemplate> menuitems;
-
+    private int chosenMenuItem=-1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -81,18 +82,21 @@ public class MenuActivity extends ActionBarActivity {
                 R.string.drawer_close  /* "close drawer" description for accessibility */
         ) {
             public void onDrawerClosed(View view) {
-                getSupportActionBar().setTitle(mTitle);
+               // getSupportActionBar().setTitle(mTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
             public void onDrawerOpened(View drawerView) {
                 getSupportActionBar().setTitle(mDrawerTitle);
+                getSupportActionBar().setIcon(R.drawable.ic_home);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
         if (savedInstanceState == null) {
+            ///here we can put the automatic search
+//            Toast.makeText(this,"sfsf",Toast.LENGTH_LONG);
             selectItem(0);
         }
 
@@ -122,7 +126,7 @@ public class MenuActivity extends ActionBarActivity {
         mDrawerList.setItemChecked(position, true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
         getSupportActionBar().setIcon(menuitems.get(position).getIcon());
-       // setTitle(menuTitles[position],menuIcons);
+        getSupportActionBar().setTitle(menuitems.get(position).getTitle());
         mDrawerLayout.closeDrawer(mDrawerList);
     }
 
