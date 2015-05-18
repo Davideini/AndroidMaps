@@ -123,4 +123,9 @@ public class MainActivity extends ActionBarActivity {
         startActivity(i);
         //finish();
     }
+
+    public void toReg(View view) {
+        Intent i = new Intent(MainActivity.this, RegistrationActivity.class);
+        startActivity(i);
+    }
 }

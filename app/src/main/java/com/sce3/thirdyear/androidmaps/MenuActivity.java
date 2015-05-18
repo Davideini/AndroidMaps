@@ -122,6 +122,8 @@ public class MenuActivity extends ActionBarActivity {
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
 
+
+
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);

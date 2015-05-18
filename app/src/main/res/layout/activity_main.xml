@@ -46,5 +46,15 @@
         android:layout_below="@+id/btnHistory"
         android:layout_centerHorizontal="true" />
 
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Register"
+        android:id="@+id/regBtn"
+        android:layout_below="@+id/toMenuBtn"
+        android:layout_alignStart="@+id/toMenuBtn"
+        android:layout_marginTop="48dp"
+        android:onClick="toReg"/>
+
 
 </RelativeLayout>
