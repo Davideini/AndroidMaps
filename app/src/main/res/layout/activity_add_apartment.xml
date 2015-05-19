@@ -94,6 +94,18 @@
                     android:hint="@string/apt_num_hint"/>
             </LinearLayout>
 
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_from_map"
+                    android:id="@+id/button2" />
+            </LinearLayout>
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
@@ -207,7 +219,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/priceEditText"
-                    android:hint="@string/estimated_price_hint"/>
+                    android:hint="@string/estimated_price_hint"
+                    android:inputType="number"/>
 
             </LinearLayout>
 
@@ -228,7 +241,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/ok_button"
                 android:id="@+id/button"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:onClick="addNewApt"/>
 
         </LinearLayout>
     </ScrollView>

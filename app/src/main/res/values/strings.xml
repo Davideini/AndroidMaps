@@ -62,4 +62,5 @@
     <string name="rent">Rent</string>
     <string name="estimated_price_hint">Estimated Price</string>
     <string name="ok_button">OK</string>
+    <string name="select_from_map">Select from map</string>
 </resources>
