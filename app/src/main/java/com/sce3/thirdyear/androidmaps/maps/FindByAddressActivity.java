@@ -18,9 +18,12 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
+import com.google.android.gms.internal.it;
 import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -53,6 +56,7 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -64,6 +68,8 @@ public class FindByAddressActivity extends ActionBarActivity implements OnMapRea
     GoogleMap mMap;
 
     Marker userMarker = null;
+
+    List<Address> locations = null;
 
     private GoogleMap.OnMapClickListener mapClickListener = new GoogleMap.OnMapClickListener() {
         @Override
@@ -148,9 +154,9 @@ public class FindByAddressActivity extends ActionBarActivity implements OnMapRea
     public void onMapReady(final GoogleMap mMap) {
         GoogleMapsSetup(mMap);
 
-
-        SearchMarkers(getIntent().getExtras().getString("Address"));
-
+        String address = getIntent().getExtras().getString("Address");
+        SearchMarkers(address);
+        MakeListView(address);
     }
 
 
@@ -307,11 +313,28 @@ public class FindByAddressActivity extends ActionBarActivity implements OnMapRea
     }
 
     private void SearchMarkers(String address) {
-        List<Address> list = Address.SearchApi(address);
 
-        for (Address item : list) {
+        if (locations == null)
+            locations = Address.SearchApi(address);
+
+
+        for (Address item : locations) {
             mMap.addMarker(CreateMarker(item, BitmapDescriptorFactory.HUE_BLUE));
         }
+    }
+
+    private void MakeListView(String address) {
+//        if (locations == null)
+//            locations = Address.SearchApi(address);
+//
+//        List<String> li = new ArrayList<String>();
+//        for (Address item : locations) {
+//            li.add(item.getFormattedAddress());
+//        }
+//        ArrayAdapter<String> strs = new ArrayAdapter<String>(this, R.layout.location_item, li.toArray(new String[li.size()]));
+//
+//        ListView lv = (ListView) findViewById(R.id.lvLocations);
+//        lv.setAdapter(strs);
     }
 
     private MarkerOptions CreateMarker(Address address, float style) {
