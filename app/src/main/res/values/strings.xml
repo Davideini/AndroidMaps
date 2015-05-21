@@ -13,7 +13,7 @@
     <string name="title_activity_update_user_details">UpdateUserDetailsActivity</string>
     <string name="title_activity_change_password">ChangePasswordActivity</string>
     <string name="title_activity_menu">Menu</string>
-<!--here menu items -->
+    <!--here menu items -->
     <string-array name="menu_array">
         <item>profile</item>
         <item>search</item>
@@ -63,4 +63,6 @@
     <string name="estimated_price_hint">Estimated Price</string>
     <string name="ok_button">OK</string>
     <string name="select_from_map">Select from map</string>
+    <string name="title_activity_address">AddressActivity</string>
+    <string name="title_activity_find_by_address">FindByAddressActivity</string>
 </resources>

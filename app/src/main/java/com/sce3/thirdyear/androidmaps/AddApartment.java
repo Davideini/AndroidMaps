@@ -4,6 +4,8 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -17,6 +19,8 @@ public class AddApartment extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_apartment);
+
+        initializeMapFeature();
     }
 
 
@@ -41,7 +45,8 @@ public class AddApartment extends ActionBarActivity {
 
         return super.onOptionsItemSelected(item);
     }
-    public void addNewApt(){
+
+    public void addNewApt() {
         EditText street, city, house_num, apt_num, room_num, area, price;
         CheckBox elevator, sunBalcony, mamad, serviceBalcony, parking, hadicappedAccess, storage, rent, sell;
 
@@ -62,46 +67,48 @@ public class AddApartment extends ActionBarActivity {
         rent = (CheckBox) findViewById(R.id.rentCheckBox);
         sell = (CheckBox) findViewById(R.id.sellCheckBox);
 
-        if(!InputValidator.EmptyField(street.getText().toString()))
-        {
+        if (!InputValidator.EmptyField(street.getText().toString())) {
             street.requestFocus();
             street.setError("FIELD CANNOT BE EMPTY");
         }
-        if(!InputValidator.EmptyField(city.getText().toString()))
-        {
+        if (!InputValidator.EmptyField(city.getText().toString())) {
             city.requestFocus();
             city.setError("FIELD CANNOT BE EMPTY");
         }
-        if(!InputValidator.EmptyField(house_num.getText().toString()))
-        {
+        if (!InputValidator.EmptyField(house_num.getText().toString())) {
             house_num.requestFocus();
             house_num.setError("FIELD CANNOT BE EMPTY");
         }
-        if(!InputValidator.EmptyField(apt_num.getText().toString()))
-        {
+        if (!InputValidator.EmptyField(apt_num.getText().toString())) {
             apt_num.requestFocus();
             apt_num.setError("FIELD CANNOT BE EMPTY");
         }
-        if(!InputValidator.EmptyField(room_num.getText().toString()))
-        {
+        if (!InputValidator.EmptyField(room_num.getText().toString())) {
             room_num.requestFocus();
             room_num.setError("FIELD CANNOT BE EMPTY");
         }
-        if(!InputValidator.EmptyField(area.getText().toString()))
-        {
+        if (!InputValidator.EmptyField(area.getText().toString())) {
             area.requestFocus();
             area.setError("FIELD CANNOT BE EMPTY");
         }
-        if(!InputValidator.EmptyField(price.getText().toString()))
-        {
+        if (!InputValidator.EmptyField(price.getText().toString())) {
             price.requestFocus();
             price.setError("FIELD CANNOT BE EMPTY");
         }
 
-        if(!(rent.isChecked() || sell.isChecked()))
-        {
+        if (!(rent.isChecked() || sell.isChecked())) {
             Toast.makeText(getApplicationContext(), "Must Choose Rent\\Sell!", Toast.LENGTH_SHORT).show();
         }
 
+    }
+
+    public void initializeMapFeature() {
+        Button btn = (Button) findViewById(R.id.getFromMaps);
+        btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+            }
+        });
     }
 }
