@@ -6,6 +6,7 @@ import android.text.TextUtils;
 import android.widget.EditText;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.sce3.thirdyear.classes.JSONRequest;
 
 import org.json.JSONArray;
@@ -23,19 +24,21 @@ import java.util.concurrent.ExecutionException;
  */
 public class Address {
 
+    // private const
+    private static final String GEOCODE_URL = "http://maps.googleapis.com/maps/api/geocode/json?%s";
+    private static final String BY_LATLNG = "latlng=%s,%s";
+    private static final String BY_ADDRESS = "address=%s";
+    private static final String SENSOR = "sensor=%s";
+
     // private variables
     private String city;
     private String country;
-    private String zip;
     private String street;
     private double lat;
     private double lng;
-
-    private String address1;
-    private String state;
-    private String address2;
-    private String county;
-    private String pin;
+    private String streetNumber;
+    private String postalCode;
+    private String formattedAddress;
 
     public Address() {
 
@@ -45,11 +48,76 @@ public class Address {
         this.city = city.getText().toString();
         this.street = street.getText().toString();
         this.country = country.getText().toString();
-        this.zip = zip.getText().toString();
     }
 
-    public void GetFromDb(Object dbData) {
+    // set functions
+    public void setFormattedAddress(String formattedAddress) {
+        this.formattedAddress = formattedAddress;
+    }
 
+    public void setStreet(String street) {
+        this.street = street;
+    }
+
+    public void setLng(double lng) {
+        this.lng = lng;
+    }
+
+    public void setLat(double lat) {
+        this.lat = lat;
+    }
+
+    public void setPostalCode(String postalCode) {
+        this.postalCode = postalCode;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public void setCountry(String country) {
+        this.country = country;
+    }
+
+    public void setStreetNumber(String streetNumber) {
+        this.streetNumber = streetNumber;
+    }
+
+    // get functions
+    public String getFormattedAddress() {
+        return formattedAddress;
+    }
+
+    public String getPostalCode() {
+        return postalCode;
+    }
+
+    public String getStreet() {
+        return street;
+    }
+
+    public String getCountry() {
+        return country;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public double getLat() {
+        return lat;
+    }
+
+    public double getLng() {
+        return lng;
+    }
+
+    public String getStreetNumber() {
+        return streetNumber;
+    }
+
+    public LatLng getPosition() {
+        return new LatLng(lat, lng);
     }
 
     @Override
@@ -69,277 +137,88 @@ public class Address {
         return sb.toString();
     }
 
-    // get functions
-    public double getLat() {
-        return lat;
-    }
-
-    public double getLng() {
-        return lng;
-    }
-
-    public String getCity() {
-        return city;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public String getStreet() {
-        return street;
-    }
-
-    public String getZip() {
-        return zip;
-    }
-
-    // set functions
-    public void setCity(String city) {
-        this.city = city;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public void setLat(double lat) {
-        this.lat = lat;
-    }
-
-    public void setLng(double lng) {
-        this.lng = lng;
-    }
-
-    public void setStreet(String street) {
-        this.street = street;
-    }
-
-    public void setZip(String zip) {
-        this.zip = zip;
-    }
-
-
-    public static List<Address> Search(Context context, String address) {
-        List<Address> list = new ArrayList<>();
-
-        try {
-            Geocoder geocoder = new Geocoder(context, Locale.getDefault());
-            List<android.location.Address> addresses = null;
-            addresses = geocoder.getFromLocationName(address, 10);
-
-            for (android.location.Address item : addresses) {
-                Address ad = new Address();
-                ad.setLat(item.getLatitude());
-                ad.setLng(item.getLongitude());
-                ad.setStreet(item.getLocality());
-                ad.setCountry(item.getCountryName());
-                ad.getAddress();
-                list.add(ad);
-            }
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
-
-    public String getAddress1() {
-        return address1;
-    }
-
-    public String getAddress2() {
-        return address2;
-    }
-
-    public String getCounty() {
-        return county;
-    }
-
-    public String getPin() {
-        return pin;
-    }
-
-    public String getState() {
-        return state;
-    }
-
-    public void setAddress1(String address1) {
-        this.address1 = address1;
-    }
-
-    public void setAddress2(String address2) {
-        this.address2 = address2;
-    }
-
-    public void setCounty(String county) {
-        this.county = county;
-    }
-
-    public void setPin(String pin) {
-        this.pin = pin;
-    }
-
-    public void setState(String state) {
-        this.state = state;
-    }
-
+    // Static Functions
     public static List<Address> SearchApi(String address) {
+        address = address.replaceAll("[' ']", "%20");
+        String parm1 = String.format(BY_ADDRESS, address);
+        String parm2 = String.format(SENSOR, true);
+        String params = parm1 + "&" + parm2;
+        String url = String.format(GEOCODE_URL, params);
 
+        return GetLocations(url);
+    }
+
+    public static Address AddressByLatLng(LatLng latlng) {
+        String parm1 = String.format(BY_LATLNG, latlng.latitude, latlng.longitude);
+        String parm2 = String.format(SENSOR, true);
+        String params = parm1 + "&" + parm2;
+        String url = String.format(GEOCODE_URL, params);
+
+        return GetLocations(url).get(0);
+    }
+
+    private static List<Address> GetLocations(String url) {
         List<Address> locations = new ArrayList<>();
 
-        JSONObject jsonObject = null;
-        String url = "http://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&sensor=true";
         try {
-            JSONRequest request = new JSONRequest(url);
-            //jsonObject = new JSONObject(request.getJSON());
-
-            jsonObject = parser_Json.getJSONfromURL(url);
+            JSONObject jsonObject = parser_Json.getJSONfromURL(url);
 
             String Status = jsonObject.getString("status");
             if (Status.equalsIgnoreCase("OK")) {
-                JSONArray Results = jsonObject.getJSONArray("results");
-                for (int j = 0; j < Results.length(); j++) {
-
-                    JSONObject zero = Results.getJSONObject(j);
-                    if (zero == null) {
-                        break;
-                    }
-
-                    Address location = new Address();
-
-
-                    JSONArray address_components = zero.getJSONArray("address_components");
-
-                    JSONObject geo = zero.getJSONObject("geometry");
-                    JSONObject locat = geo.getJSONObject("location");
-
-                    location.setLat(locat.getDouble("lat"));
-                    location.setLng(locat.getDouble("lng"));
-
-                    for (int i = 0; i < address_components.length(); i++) {
-                        JSONObject zero2 = address_components.getJSONObject(i);
-                        String long_name = zero2.getString("long_name");
-                        JSONArray mtypes = zero2.getJSONArray("types");
-                        String Type = mtypes.getString(0);
-
-                        if (TextUtils.isEmpty(long_name) == false || !long_name.equals(null) || long_name.length() > 0 || long_name != "") {
-                            if (Type.equalsIgnoreCase("street_number")) {
-                                location.setAddress1(long_name + " ");
-                            } else if (Type.equalsIgnoreCase("route")) {
-                                location.setAddress1(location.getAddress1() + long_name);
-                            } else if (Type.equalsIgnoreCase("sublocality")) {
-                                location.setAddress2(long_name);
-                            } else if (Type.equalsIgnoreCase("locality")) {
-                                // Address2 = Address2 + long_name + ", ";
-                                location.setCity(long_name);
-                            } else if (Type.equalsIgnoreCase("administrative_area_level_2")) {
-                                location.setCounty(long_name);
-                            } else if (Type.equalsIgnoreCase("administrative_area_level_1")) {
-                                location.setState(long_name);
-                            } else if (Type.equalsIgnoreCase("country")) {
-                                location.setCountry(long_name);
-                            } else if (Type.equalsIgnoreCase("postal_code")) {
-                                location.setPin(long_name);
-                            }
-                        }
-                    }
-
-                    locations.add(location);
+                JSONArray results = jsonObject.getJSONArray("results");
+                for (int j = 0; j < results.length(); j++) {
+                    JSONObject json = results.getJSONObject(j);
+                    locations.add(AddressFromJSON(json));
                 }
             }
-
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
-
         return locations;
     }
 
-    public static Address GetMyLocation(Context context) {
-        Address address = null;
-        /*
+    private static Address AddressFromJSON(JSONObject json) {
+        Address address = new Address();
         try {
-            Geocoder geocoder = new Geocoder(context, Locale.getDefault());
-            List<android.location.Address> addresses = null;
-            //addresses = geocoder.
+            JSONArray address_components = json.getJSONArray("address_components");
+            JSONObject geometry = json.getJSONObject("geometry");
+            JSONObject location = geometry.getJSONObject("location");
 
-            for(android.location.Address item : addresses){
-                Address ad = new Address();
-                ad.setLat(item.getLatitude());
-                ad.setLng(item.getLongitude());
-                list.add(ad);
-            }
+            for (int i = 0; i < address_components.length(); i++) {
+                JSONObject item = address_components.getJSONObject(i);
+                String type = item.getJSONArray("types").getString(0);
+                String name = item.getString("long_name");
 
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-*/
-        return address;
-    }
-
-    public LatLng getPosition() {
-        return new LatLng(lat, lng);
-    }
-
-
-    public void getAddress() {
-        address1 = "";
-        address2 = "";
-        city = "";
-        state = "";
-        country = "";
-        county = "";
-        pin = "";
-
-        try {
-
-            JSONObject jsonObj = parser_Json.getJSONfromURL("http://maps.googleapis.com/maps/api/geocode/json?latlng=" + lat + ","
-                    + lng + "&sensor=true");
-            String Status = jsonObj.getString("status");
-            if (Status.equalsIgnoreCase("OK")) {
-                JSONArray Results = jsonObj.getJSONArray("results");
-                JSONObject zero = Results.getJSONObject(0);
-                JSONArray address_components = zero.getJSONArray("address_components");
-
-                for (int i = 0; i < address_components.length(); i++) {
-                    JSONObject zero2 = address_components.getJSONObject(i);
-                    String long_name = zero2.getString("long_name");
-                    JSONArray mtypes = zero2.getJSONArray("types");
-                    String Type = mtypes.getString(0);
-
-                    if (TextUtils.isEmpty(long_name) == false || !long_name.equals(null) || long_name.length() > 0 || long_name != "") {
-                        if (Type.equalsIgnoreCase("street_number")) {
-                            address1 = long_name + " ";
-                        } else if (Type.equalsIgnoreCase("route")) {
-                            address1 = address1 + long_name;
-                        } else if (Type.equalsIgnoreCase("sublocality")) {
-                            address2 = long_name;
-                        } else if (Type.equalsIgnoreCase("locality")) {
-                            // Address2 = Address2 + long_name + ", ";
-                            city = long_name;
-                        } else if (Type.equalsIgnoreCase("administrative_area_level_2")) {
-                            county = long_name;
-                        } else if (Type.equalsIgnoreCase("administrative_area_level_1")) {
-                            state = long_name;
-                        } else if (Type.equalsIgnoreCase("country")) {
-                            county = long_name;
-                        } else if (Type.equalsIgnoreCase("postal_code")) {
-                            pin = long_name;
-                        }
-                    }
-
-                    // JSONArray mtypes = zero2.getJSONArray("types");
-                    // String Type = mtypes.getString(0);
-                    // Log.e(Type,long_name);
+                switch (type) {
+                    case "street_number":
+                        address.setStreetNumber(name);
+                        break;
+                    case "route":
+                        address.setStreet(name);
+                        break;
+                    case "locality":
+                        address.setCity(name);
+                        break;
+                    case "country":
+                        address.setCountry(name);
+                        break;
+                    case "postal_code":
+                        address.setPostalCode(name);
+                        break;
+                    default:
+                        break;
                 }
             }
+            String formatted_address = json.getString("formatted_address");
+            Double lat = location.getDouble("lat");
+            Double lng = location.getDouble("lng");
 
+            address.setFormattedAddress(formatted_address);
+            address.setLat(lat);
+            address.setLng(lng);
         } catch (Exception e) {
-            e.printStackTrace();
         }
-
+        return address;
     }
 
 }

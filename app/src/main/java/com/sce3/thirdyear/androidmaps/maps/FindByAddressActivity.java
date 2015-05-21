@@ -1,6 +1,7 @@
 package com.sce3.thirdyear.androidmaps.maps;
 
 import android.content.Context;
+import android.content.Intent;
 import android.gesture.GestureOverlayView;
 import android.location.Geocoder;
 import android.location.Location;
@@ -16,6 +17,8 @@ import android.view.GestureDetector.OnGestureListener;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdate;
@@ -73,7 +76,7 @@ public class FindByAddressActivity extends ActionBarActivity implements OnMapRea
 
             // Setting the title for the marker.
             // This will be displayed on taping the marker
-            markerOptions.title("User marker");
+            markerOptions.title(Address.AddressByLatLng(latLng).getFormattedAddress());
 
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
 
@@ -110,11 +113,35 @@ public class FindByAddressActivity extends ActionBarActivity implements OnMapRea
         setContentView(R.layout.activity_find_by_address);
 
 
+        SetupClickEvents();
+
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
         mMap = mapFragment.getMap();
 
+    }
+
+    private void SetupClickEvents() {
+        Button btnReturn = (Button) findViewById(R.id.btnReturn);
+
+        btnReturn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Address address = Address.AddressByLatLng(userMarker.getPosition());
+                Intent returnIntent = new Intent();
+
+                returnIntent.putExtra("houseNumber", address.getStreetNumber());
+                returnIntent.putExtra("street", address.getStreet());
+                returnIntent.putExtra("city", address.getCity());
+                returnIntent.putExtra("country", address.getCountry());
+                returnIntent.putExtra("lat", address.getLat());
+                returnIntent.putExtra("lng", address.getLng());
+
+                setResult(RESULT_OK, returnIntent);
+                finish();
+            }
+        });
     }
 
     @Override
@@ -283,13 +310,13 @@ public class FindByAddressActivity extends ActionBarActivity implements OnMapRea
         List<Address> list = Address.SearchApi(address);
 
         for (Address item : list) {
-            mMap.addMarker(CreateMarker(item, item.toString(), BitmapDescriptorFactory.HUE_BLUE));
+            mMap.addMarker(CreateMarker(item, BitmapDescriptorFactory.HUE_BLUE));
         }
     }
 
-    private MarkerOptions CreateMarker(Address address, String title, float style) {
+    private MarkerOptions CreateMarker(Address address, float style) {
         return new MarkerOptions()
-                .title(title)
+                .title(address.getFormattedAddress())
                 .position(address.getPosition())
                 .icon(BitmapDescriptorFactory.defaultMarker(style));
     }

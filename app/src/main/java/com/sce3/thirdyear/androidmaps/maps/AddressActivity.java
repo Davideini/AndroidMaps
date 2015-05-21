@@ -19,6 +19,7 @@ import com.sce3.thirdyear.androidmaps.R;
 import com.sce3.thirdyear.maps.data.Address;
 
 public class AddressActivity extends ActionBarActivity {
+    static final int GET_ADDRESS_FROM_MAP = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,17 +54,33 @@ public class AddressActivity extends ActionBarActivity {
         EditText street = (EditText) findViewById(R.id.tbStreet);
         EditText city = (EditText) findViewById(R.id.tbCity);
         EditText country = (EditText) findViewById(R.id.tbCountry);
-        EditText zip = (EditText) findViewById(R.id.tbZip);
+        EditText houseNumber = (EditText) findViewById(R.id.tbhouseNumber);
 
-        Address address = new Address(street, city, country, zip);
+        Address address = new Address(street, houseNumber, city, country);
 
         Intent i = new Intent(AddressActivity.this, FindByAddressActivity.class);
 
         i.putExtra("Address", address.toString());
 
-        startActivity(i);
+        startActivityForResult(i, GET_ADDRESS_FROM_MAP);
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == GET_ADDRESS_FROM_MAP) {
+            if (resultCode == RESULT_OK) {
+                EditText street = (EditText) findViewById(R.id.tbStreet);
+                EditText city = (EditText) findViewById(R.id.tbCity);
+                EditText country = (EditText) findViewById(R.id.tbCountry);
+                EditText houseNumber = (EditText) findViewById(R.id.tbhouseNumber);
+
+                street.setText(data.getExtras().getString("street"));
+                city.setText(data.getExtras().getString("city"));
+                country.setText(data.getExtras().getString("country"));
+                houseNumber.setText(data.getExtras().getString("houseNumber"));
+            }
+        }
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
