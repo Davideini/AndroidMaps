@@ -21,6 +21,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
+
 import com.sce3.thirdyear.androidmaps.fragments.test;
 import com.sce3.thirdyear.classes.MenuAdapter;
 import com.sce3.thirdyear.classes.MenuItemTemplate;
@@ -115,6 +116,7 @@ public class MenuActivity extends ActionBarActivity {
         // update the main content by replacing fragments
 
         Fragment fragment = new test();
+
         //Bundle args = new Bundle();
         //args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
         //fragment.setArguments(args);

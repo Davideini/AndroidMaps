@@ -140,9 +140,9 @@ public class AddressActivity extends ActionBarActivity {
         EditText street = (EditText) findViewById(R.id.tbStreet);
         EditText city = (EditText) findViewById(R.id.tbCity);
         EditText country = (EditText) findViewById(R.id.tbCountry);
-        EditText zip = (EditText) findViewById(R.id.tbZip);
+        //EditText zip = (EditText) findViewById(R.id.tbZip);
 
-        Address address = new Address(street, city, country, zip);
+        Address address = new Address(street, city, country, null);
     }
 
     public void onClear(View view) {
