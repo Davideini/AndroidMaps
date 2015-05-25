@@ -20,6 +20,15 @@ public final class InputValidator {
     {
         return text.length()>0;
     }
+    /*better version of the previous function*/
+    public static boolean isEmpty(String text)
+    {
+        return text.length()==0;
+    }
+    public static boolean isBadForSQL(String text)
+    {
+        return (text.contains("'") || text.contains("\""));
+    }
     /*For first and last names:
     only alphabetic and of length less than 30*/
     public static boolean Name(String text)
@@ -41,6 +50,10 @@ public final class InputValidator {
     public static boolean Password(String text)
     {
         return text.matches("[a-zA-Z0-9 ]+") && (text.length()>=8 && text.length()<=15);
+    }
+    public static boolean AlphaNumerical(String text)
+    {
+        return text.matches("[a-zA-Z0-9 ]+");
     }
 
 }
