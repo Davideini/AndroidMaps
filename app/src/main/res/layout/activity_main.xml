@@ -54,7 +54,16 @@
         android:layout_below="@+id/toMenuBtn"
         android:layout_alignStart="@+id/toMenuBtn"
         android:layout_marginTop="48dp"
-        android:onClick="toReg"/>
+        android:onClick="toReg" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address"
+        android:id="@+id/btnAddress"
+        android:onClick="toAddress"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>

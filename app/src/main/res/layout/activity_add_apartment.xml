@@ -18,7 +18,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/location"
                 android:id="@+id/LocationTVAddApt"
-                android:paddingTop="10dp"/>
+                android:paddingTop="10dp" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -76,7 +76,7 @@
                     android:inputType="number"
                     android:ems="10"
                     android:id="@+id/houseNumEditText"
-                    android:hint="@string/house_num_hint"/>
+                    android:hint="@string/house_num_hint" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -91,7 +91,19 @@
                     android:inputType="number"
                     android:ems="10"
                     android:id="@+id/aptNumEditText"
-                    android:hint="@string/apt_num_hint"/>
+                    android:hint="@string/apt_num_hint" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/select_from_map"
+                    android:id="@+id/getFromMaps" />
             </LinearLayout>
 
             <TextView
@@ -99,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/structure"
                 android:id="@+id/structureTV"
-                android:paddingTop="10dp"/>
+                android:paddingTop="10dp" />
 
 
             <LinearLayout
@@ -118,7 +130,7 @@
                     android:layout_height="wrap_content"
                     android:id="@+id/roomNumEditText"
                     android:hint="@string/rooms_hint"
-                    android:inputType="number"/>
+                    android:inputType="number" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -126,14 +138,14 @@
                     android:text="@string/apt_area"
                     android:id="@+id/aptAreaTV"
                     android:paddingStart="20sp"
-                    android:paddingEnd="0sp"/>
+                    android:paddingEnd="0sp" />
 
                 <EditText
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/aptAreaEditText"
                     android:hint="@string/area_hint"
-                    android:inputType="number"/>
+                    android:inputType="number" />
 
             </LinearLayout>
 
@@ -190,7 +202,7 @@
                 android:layout_height="wrap_content"
                 android:text="@string/additional_details_tv"
                 android:id="@+id/additionalDetailsTV"
-                android:paddingTop="10dp"/>
+                android:paddingTop="10dp" />
 
             <LinearLayout
                 android:orientation="horizontal"
@@ -207,7 +219,8 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:id="@+id/priceEditText"
-                    android:hint="@string/estimated_price_hint"/>
+                    android:hint="@string/estimated_price_hint"
+                    android:inputType="number" />
 
             </LinearLayout>
 
@@ -228,7 +241,8 @@
                 android:layout_height="wrap_content"
                 android:text="@string/ok_button"
                 android:id="@+id/button"
-                android:layout_gravity="center_horizontal" />
+                android:layout_gravity="center_horizontal"
+                android:onClick="addNewApt" />
 
         </LinearLayout>
     </ScrollView>
