@@ -10,6 +10,7 @@
     <string name="title_activity_house_details">HouseDetailsActivity</string>
     <string name="title_activity_history">HistoryActivity</string>
     <string name="title_activity_registration">RegistrationActivity</string>
+    <string name="title_activity_registration_buyer">RegistrationBuyerActivity</string>
     <string name="title_activity_update_user_details">UpdateUserDetailsActivity</string>
     <string name="title_activity_change_password">ChangePasswordActivity</string>
     <string name="title_activity_menu">Menu</string>
