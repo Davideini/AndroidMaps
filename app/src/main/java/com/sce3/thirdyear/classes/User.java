@@ -1,5 +1,10 @@
 package com.sce3.thirdyear.classes;
 
+import android.widget.Toast;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 public class User {
     private int id;
     private String fname;
@@ -9,7 +14,29 @@ public class User {
     private String phone1;
     private String phone2;
     private String session;
+    /*do not remove the default constructor*/
+    public User()
+    {}
+    /*st*/
+    public User(SQLiteDB db) {
+        String address = String.format("http://%s/JavaMaps/api?action=GetUserUsingSession&session=%s", JSONRequest.SERVER, db.getSavedSession());
 
+        try {
+            JSONRequest json = new JSONRequest(address);
+            JSONObject jobj = new JSONObject(json.getJSON());
+            fname=jobj.getString("fname");
+            lname=jobj.getString("lname");
+            email=jobj.getString("email");
+            password=jobj.getString("password");
+            phone1=jobj.getString("phone1");
+            phone2=jobj.getString("phone2");
+
+        } catch (JSONException e) {
+            System.out.println(e.getMessage());
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+    }
     public void setID(int id) {
         this.id = id;
     }
