@@ -63,6 +63,9 @@
             android:name=".ChangePasswordActivity"
             android:label="@string/title_activity_change_password" />
         <activity
+            android:name=".RegistrationBuyerActivity"
+            android:label="@string/title_activity_registration_buyer"></activity>
+        <activity
             android:name=".MenuActivity"
             android:label="@string/title_activity_menu" />
         <activity
