@@ -31,7 +31,7 @@ import junit.framework.Test;
 import java.util.ArrayList;
 
 
-public class MenuActivity extends ActionBarActivity {
+public class MenuActivity extends ActionBarActivity   {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -45,7 +45,7 @@ public class MenuActivity extends ActionBarActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+
         setContentView(R.layout.activity_menu);
 
         menuitems = new ArrayList<MenuItemTemplate>();
@@ -123,8 +123,7 @@ public class MenuActivity extends ActionBarActivity {
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-
-
+//      fragmentManager.beginTransaction().replace(R.id.content_frame,new Fragment()).commit();
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);

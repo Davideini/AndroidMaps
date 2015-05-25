@@ -24,7 +24,6 @@
         android:layout_height="wrap_content"
         android:text="Descripton:"
         android:id="@+id/Desc"
-        android:layout_layout_below="true"
         android:layout_below="@+id/AddresstextView"
         android:layout_alignStart="@+id/AddresstextView"
         android:textSize="20sp"
@@ -46,13 +45,19 @@
         android:id="@+id/DescVal"
         android:layout_alignTop="@+id/Desc"
         android:layout_toEndOf="@+id/Desc" />
-
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="more..."
+        android:id="@+id/mDetailsBtn"
+        android:layout_below="@+id/Desc"
+        android:layout_alignStart="@+id/Desc" />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:layout_below="@+id/Desc"
-        android:paddingTop="30dp"
+        android:paddingTop="70dp"
         android:paddingLeft="15dp"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true">
@@ -71,5 +76,15 @@
             android:src="@drawable/ic_cancel" />
 
         </LinearLayout>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mapOp"
+        android:layout_alignBottom="@+id/imgResButton"
+        android:layout_alignEnd="@+id/imgResButton"
+        android:src="@android:drawable/ic_menu_mapmode" />
+
+
 
 </RelativeLayout>
