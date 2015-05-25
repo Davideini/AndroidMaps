@@ -1,5 +1,6 @@
 package com.sce3.thirdyear.androidmaps;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,6 +11,12 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.sce3.thirdyear.classes.InputValidator;
+import com.sce3.thirdyear.classes.JSONRequest;
+import com.sce3.thirdyear.classes.SQLiteDB;
+import com.sce3.thirdyear.classes.User;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 
 public class ChangePasswordActivity extends ActionBarActivity {
@@ -17,11 +24,14 @@ public class ChangePasswordActivity extends ActionBarActivity {
     private EditText OldPass;
     private EditText NewPass;
     private EditText NewPassConfirm;
+    private User user;
     private View.OnClickListener FinishButtonListener;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_change_password);
+        user=new User(new SQLiteDB(getApplicationContext()));
+
         finish=(Button)findViewById(R.id.buttonFinish);
         OldPass=(EditText)findViewById(R.id.TextBoxOP);
         NewPass=(EditText)findViewById(R.id.TextBoxNP);
@@ -41,6 +51,11 @@ public class ChangePasswordActivity extends ActionBarActivity {
                 {
                     OldPass.requestFocus();
                     OldPass.setError("Password can contain only 8 to 15 (included) alphabetical letters and/or digitis");
+                }
+                else if(!OldPassword.equals(user.getPassword()))
+                {
+                    OldPass.requestFocus();
+                    OldPass.setError("This in not you current password,\n calling the FBI..........");
                 }
                 else if(!InputValidator.EmptyField(NewPassword))
                 {
@@ -70,7 +85,30 @@ public class ChangePasswordActivity extends ActionBarActivity {
                 }
                 else
                 {
-                    Toast.makeText(ChangePasswordActivity.this, "Validation Successful", Toast.LENGTH_LONG).show();
+
+                    String address=String.format("http://%s/JavaMaps/api?action=ChangeUserPassword&email=%s&password=%s", JSONRequest.SERVER,user.getEmail(),NewPassword);
+
+                    System.out.println(address);
+                    try {
+                        JSONRequest json=new JSONRequest(address);
+                        JSONObject jobj = new JSONObject(json.getJSON());
+                        if(jobj.getString("result").equals("success")){
+                            Toast.makeText(ChangePasswordActivity.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
+
+                            Intent i = new Intent(ChangePasswordActivity.this, MainActivity.class);
+                            startActivity(i);
+                            finish();
+                        }
+
+                        else if(jobj.getString("result").equals("error")){
+                            Toast.makeText(ChangePasswordActivity.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        System.out.println(e.getMessage());
+                    } catch (Exception e){
+                        Toast.makeText(ChangePasswordActivity.this, "Error receiving data.", Toast.LENGTH_LONG).show();
+
+                    }
                 }
             }
         };

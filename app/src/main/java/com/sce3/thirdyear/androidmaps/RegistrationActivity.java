@@ -1,5 +1,6 @@
 package com.sce3.thirdyear.androidmaps;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -10,7 +11,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Toast;
+
 import com.sce3.thirdyear.classes.InputValidator;
+import com.sce3.thirdyear.classes.JSONRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 public class RegistrationActivity extends ActionBarActivity {
     private CheckBox buy;
@@ -18,6 +24,7 @@ public class RegistrationActivity extends ActionBarActivity {
     private Button finish;
     private OnClickListener checkBoxListener;
     private OnClickListener FinishButtonListener;
+    private OnClickListener NextButtonListener;
     private EditText FN;
     private EditText LN;
     private EditText Phone1;
@@ -41,18 +48,133 @@ public class RegistrationActivity extends ActionBarActivity {
         Email=(EditText)findViewById(R.id.TextBoxEmail);
         Pass=(EditText)findViewById(R.id.TextBoxPass);
         PassConfirm=(EditText)findViewById(R.id.TextBoxPassConfirm);
+        NextButtonListener=new OnClickListener() {
+            @Override
+            public void onClick(View view) {
 
+                 String FirstName=FN.getText().toString();
+                 String LastName=LN.getText().toString();
+                 String PhoneNumber1=Phone1.getText().toString();
+                 String PhoneNumber2=Phone2.getText().toString();
+                 String EmailAddress=Email.getText().toString();
+                 String Password=Pass.getText().toString();
+                 String PasswordConfirmation=PassConfirm.getText().toString();
+
+                if(!InputValidator.EmptyField(FirstName))
+                {
+                    FN.requestFocus();
+                    FN.setError("FIELD CANNOT BE EMPTY");
+                }
+                else if(!InputValidator.Name(FirstName))
+                {
+                    FN.requestFocus();
+                    FN.setError("ENTER ONLY ALPHABETICAL CHARACTER");
+                }
+                else if(!InputValidator.EmptyField(LastName))
+                {
+                    LN.requestFocus();
+                    LN.setError("FIELD CANNOT BE EMPTY");
+                }
+                else if(!InputValidator.Name(LastName))
+                {
+                    LN.requestFocus();
+                    LN.setError("ENTER ONLY ALPHABETICAL CHARACTER");
+                }
+                else if(!InputValidator.EmptyField(EmailAddress))
+                {
+                    Email.requestFocus();
+                    Email.setError("FIELD CANNOT BE EMPTY");
+                }
+                else if(!InputValidator.Email(EmailAddress))
+                {
+                    Email.requestFocus();
+                    Email.setError("Please enter a valid Email");
+                }
+                else if(!InputValidator.EmptyField(PhoneNumber1))
+                {
+                    Phone1.requestFocus();
+                    Phone1.setError("FIELD CANNOT BE EMPTY");
+                }
+                else if(!InputValidator.Phone(PhoneNumber1))
+                {
+                    Phone1.requestFocus();
+                    Phone1.setError("Please enter a valid Phone number");
+                }
+                else if(!InputValidator.EmptyField(PhoneNumber2))
+                {
+                    Phone2.requestFocus();
+                    Phone2.setError("FIELD CANNOT BE EMPTY"
+                            +"you can right the same number as in phone number 1");
+                }
+                else if(!InputValidator.Phone(PhoneNumber2))
+                {
+                    Phone2.requestFocus();
+                    Phone2.setError("Please enter a valid Phone number \n" +
+                            "you can write the same number as in phone number 1");
+                }
+                else if(!InputValidator.EmptyField(Password))
+                {
+                    Pass.requestFocus();
+                    Pass.setError("FIELD CANNOT BE EMPTY");
+                }
+                else if(!InputValidator.Password(Password))
+                {
+                    Pass.requestFocus();
+                    Pass.setError("Password can contain only 8 to 15 (included) alphabetical letters and/or digitis");
+                }
+                else if(!InputValidator.EmptyField(PasswordConfirmation))
+                {
+                    PassConfirm.requestFocus();
+                    PassConfirm.setError("FIELD CANNOT BE EMPTY");
+                }
+                else if(!InputValidator.Password(PasswordConfirmation))
+                {
+                    PassConfirm.requestFocus();
+                    PassConfirm.setError("Password can contain only 8 to 15 (included) alphabetical letters and/or digitis");
+                }
+                else if(!PasswordConfirmation.equals(Password))
+                {
+                    PassConfirm.requestFocus();
+                    PassConfirm.setError("Wrong Password Confirmation");
+                }
+                else
+                {
+
+                    String address=String.format("http://%s/JavaMaps/api?action=Registration&email=%s&password=%s&fname=%s&lname=%s&phone1=%s&phone2=%s", JSONRequest.SERVER,EmailAddress,Password,FirstName,LastName,PhoneNumber1,PhoneNumber2);
+
+                    System.out.println(address);
+                    try {
+                        JSONRequest json=new JSONRequest(address);
+                        JSONObject jobj = new JSONObject(json.getJSON());
+                        if(jobj.getString("result").equals("success")){
+                            Toast.makeText(RegistrationActivity.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
+                            Intent myIntent = new Intent(RegistrationActivity.this, RegistrationBuyerActivity.class);
+                            RegistrationActivity.this.startActivity(myIntent);
+                        }
+
+                        else if(jobj.getString("result").equals("error")){
+                            Toast.makeText(RegistrationActivity.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        System.out.println(e.getMessage());
+                    } catch (Exception e){
+                        Toast.makeText(RegistrationActivity.this, "Error receiving data.", Toast.LENGTH_LONG).show();
+
+                    }
+                }
+            }
+        };
         FinishButtonListener=new OnClickListener() {
             @Override
             public void onClick(View view) {
 
-                final String FirstName=FN.getText().toString();
-                final String LastName=LN.getText().toString();
-                final String PhoneNumber1=Phone1.getText().toString();
-                final String PhoneNumber2=Phone2.getText().toString();
-                final String EmailAddress=Email.getText().toString();
-                final String Password=Pass.getText().toString();
-                final String PasswordConfirmation=PassConfirm.getText().toString();
+                 String FirstName=FN.getText().toString();
+                 String LastName=LN.getText().toString();
+                 String PhoneNumber1=Phone1.getText().toString();
+                 String PhoneNumber2=Phone2.getText().toString();
+                 String EmailAddress=Email.getText().toString();
+                 String Password=Pass.getText().toString();
+                 String PasswordConfirmation=PassConfirm.getText().toString();
 
                 if(!InputValidator.EmptyField(FirstName))
                 {
@@ -133,7 +255,30 @@ public class RegistrationActivity extends ActionBarActivity {
                 }
                 else
                 {
-                    Toast.makeText(RegistrationActivity.this,"Validation Successful",Toast.LENGTH_LONG).show();
+
+                    String address=String.format("http://%s/JavaMaps/api?action=Registration&email=%s&password=%s&fname=%s&lname=%s&phone1=%s&phone2=%s", JSONRequest.SERVER,EmailAddress,Password,FirstName,LastName,PhoneNumber1,PhoneNumber2);
+
+                    System.out.println(address);
+                    try {
+                        JSONRequest json=new JSONRequest(address);
+                        JSONObject jobj = new JSONObject(json.getJSON());
+                        if(jobj.getString("result").equals("success")){
+                            Toast.makeText(RegistrationActivity.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
+
+                            Intent i = new Intent(RegistrationActivity.this, MainActivity.class);
+                            startActivity(i);
+//
+                        }
+
+                        else if(jobj.getString("result").equals("error")){
+                            Toast.makeText(RegistrationActivity.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
+                        }
+                    } catch (JSONException e) {
+                        System.out.println(e.getMessage());
+                    } catch (Exception e){
+                        Toast.makeText(RegistrationActivity.this, "Error receiving data.", Toast.LENGTH_LONG).show();
+
+                    }
                 }
             }
         };
@@ -159,7 +304,7 @@ public class RegistrationActivity extends ActionBarActivity {
 
         buy.setOnClickListener(checkBoxListener);
         finish.setOnClickListener(FinishButtonListener);
-
+        next.setOnClickListener(NextButtonListener);
     }
 
 
