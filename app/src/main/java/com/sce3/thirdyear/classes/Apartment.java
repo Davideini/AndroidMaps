@@ -29,8 +29,9 @@ public class Apartment {
     float longitude;
     float latitude;
     float sizem2;
+    String desc;
 
-    public Apartment(int id, String city, int price, String territory, String address, boolean aircondition, boolean elevator, boolean balcony, boolean isolated_room, boolean parking, boolean handicap_access, boolean storage, boolean bars, boolean sun_balcony, boolean renovated, boolean furnished, boolean unit, boolean pandoor, float rooms, int floor, float longitude, float latitude, float sizem2) {
+    public Apartment(int id, String city, int price, String territory, String address, boolean aircondition, boolean elevator, boolean balcony, boolean isolated_room, boolean parking, boolean handicap_access, boolean storage, boolean bars, boolean sun_balcony, boolean renovated, boolean furnished, boolean unit, boolean pandoor, float rooms, int floor, float longitude, float latitude, float sizem2,String desc) {
         this.id = id;
         this.city = city;
         this.price = price;
@@ -54,6 +55,7 @@ public class Apartment {
         this.longitude = longitude;
         this.latitude = latitude;
         this.sizem2 = sizem2;
+        this.desc=desc;
     }
 
     public int getId() {
@@ -94,6 +96,13 @@ public class Apartment {
 
     public void setAddress(String address) {
         this.address = address;
+    }
+    public String getDesc() {
+        return desc;
+    }
+
+    public void setDesc(String desc) {
+        this.desc = desc;
     }
 
     public boolean isAircondition() {

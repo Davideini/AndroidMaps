@@ -18,6 +18,7 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -36,19 +37,19 @@ public class MenuActivity extends ActionBarActivity   {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private String[] menuTitles;
     private TypedArray menuIcons;
     private ArrayList<MenuItemTemplate> menuitems;
+    ResultFragment resf;
     private int chosenMenuItem=-1;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_menu);
-
+        resf=(ResultFragment) getFragmentManager().findFragmentById(R.id.content_frame);
         menuitems = new ArrayList<MenuItemTemplate>();
         mTitle = mDrawerTitle = getTitle();
         menuTitles = getResources().getStringArray(R.array.menu_array);
@@ -191,5 +192,9 @@ public class MenuActivity extends ActionBarActivity   {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+    public void okClick(View view) {
+
+        resf.updateTextView();
     }
 }
