@@ -22,6 +22,7 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 
+import com.sce3.thirdyear.androidmaps.fragments.ResultFragment;
 import com.sce3.thirdyear.androidmaps.fragments.test;
 import com.sce3.thirdyear.classes.MenuAdapter;
 import com.sce3.thirdyear.classes.MenuItemTemplate;
@@ -114,8 +115,11 @@ public class MenuActivity extends ActionBarActivity   {
 
     private void selectItem(int position) {
         // update the main content by replacing fragments
-
-        Fragment fragment = new test();
+        Fragment fragment;
+        if(position==0)
+            fragment=new ResultFragment();
+        else
+        fragment = new test();
 
         //Bundle args = new Bundle();
         //args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
@@ -123,7 +127,7 @@ public class MenuActivity extends ActionBarActivity   {
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
-//      fragmentManager.beginTransaction().replace(R.id.content_frame,new Fragment()).commit();
+
 
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);

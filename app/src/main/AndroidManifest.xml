@@ -77,14 +77,6 @@
         <activity
             android:name=".maps.FindByAddressActivity"
             android:label="@string/title_activity_find_by_address" />
-        <activity
-            android:name=".maps.ResultsActivity"
-            android:label="@string/title_activity_results"
-            android:parentActivityName=".MenuActivity" >
-            <meta-data
-                android:name="android.support.PARENT_ACTIVITY"
-                android:value="com.sce3.thirdyear.androidmaps.MenuActivity" />
-        </activity>
     </application>
 
 </manifest>
