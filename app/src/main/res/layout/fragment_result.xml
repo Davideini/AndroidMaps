@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+   <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_height="wrap_content"
+    android:layout_width="wrap_content">
+
+    <ImageButton
+        android:layout_width="350dp"
+        android:layout_height="300dp"
+        android:id="@+id/imgResButton"
+        android:layout_margin="15dp"
+        android:src="@android:drawable/ic_menu_report_image" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Address:"
+        android:id="@+id/AddresstextView"
+        android:layout_below="@+id/imgResButton"
+        android:textSize="20sp"
+        android:layout_alignStart="@+id/imgResButton" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Descripton:"
+        android:id="@+id/Desc"
+        android:layout_below="@+id/AddresstextView"
+        android:layout_alignStart="@+id/AddresstextView"
+        android:textSize="20sp"
+        android:layout_marginTop="5dp"
+
+/>
+
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/AddressVal"
+        android:layout_above="@+id/Desc"
+        android:layout_toEndOf="@+id/AddresstextView" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/DescVal"
+        android:layout_alignTop="@+id/Desc"
+        android:layout_toEndOf="@+id/Desc" />
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="more..."
+        android:id="@+id/mDetailsBtn"
+        android:layout_below="@+id/Desc"
+        android:layout_alignStart="@+id/Desc" />
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@+id/Desc"
+        android:paddingTop="70dp"
+        android:paddingLeft="15dp"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentStart="true">
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="70dp"
+            android:id="@+id/okBtn"
+            android:src="@drawable/ic_ok" />
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:id="@+id/cancelBtn"
+            android:src="@drawable/ic_cancel" />
+
+        </LinearLayout>
+
+    <ImageButton
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/mapOp"
+        android:layout_alignBottom="@+id/imgResButton"
+        android:layout_alignEnd="@+id/imgResButton"
+        android:src="@android:drawable/ic_menu_mapmode" />
+
+
+
+</RelativeLayout>
