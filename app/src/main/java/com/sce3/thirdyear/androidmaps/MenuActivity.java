@@ -27,6 +27,7 @@ import com.sce3.thirdyear.androidmaps.fragments.ResultFragment;
 import com.sce3.thirdyear.androidmaps.fragments.test;
 import com.sce3.thirdyear.classes.MenuAdapter;
 import com.sce3.thirdyear.classes.MenuItemTemplate;
+import com.sce3.thirdyear.classes.User;
 
 import junit.framework.Test;
 
@@ -44,12 +45,15 @@ public class MenuActivity extends ActionBarActivity   {
     private ArrayList<MenuItemTemplate> menuitems;
     ResultFragment resf;
     private int chosenMenuItem=-1;
+    ///////////////////////////////////////////////////////////
+    private User user; //important for profile fragment
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_menu);
-        resf=(ResultFragment) getFragmentManager().findFragmentById(R.id.content_frame);
+
         menuitems = new ArrayList<MenuItemTemplate>();
         mTitle = mDrawerTitle = getTitle();
         menuTitles = getResources().getStringArray(R.array.menu_array);
@@ -117,8 +121,11 @@ public class MenuActivity extends ActionBarActivity   {
     private void selectItem(int position) {
         // update the main content by replacing fragments
         Fragment fragment;
-        if(position==0)
-            fragment=new ResultFragment();
+        if(position==0) {
+             resf = new ResultFragment();
+            // = (ResultFragment) fragment;
+            fragment=resf;
+        }
         else
         fragment = new test();
 
@@ -128,6 +135,9 @@ public class MenuActivity extends ActionBarActivity   {
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        //resf=(ResultFragment) fragmentManager.findFragmentById(R.id.content_frame);
+
+
 
 
         // update selected item and title, then close the drawer

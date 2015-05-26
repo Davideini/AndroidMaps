@@ -8,7 +8,9 @@
         android:layout_height="300dp"
         android:id="@+id/imgResButton"
         android:layout_margin="15dp"
-        android:src="@android:drawable/ic_menu_report_image" />
+        android:src="@android:drawable/ic_menu_report_image"
+        android:adjustViewBounds="true"
+        android:scaleType="fitXY"/>
 
     <TextView
         android:layout_width="wrap_content"
