@@ -1,0 +1,317 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    tools:context="com.sce3.thirdyear.androidmaps.RegistrationBuyerActivity">
+
+
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="3dp"
+        android:id="@+id/tableLayout3">
+
+
+
+        <TableRow>
+            <LinearLayout
+                android:id="@+id/LinearLayout06"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_alignParentBottom="true"
+                android:weightSum="1">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:text="Location of importance     "
+            android:id="@+id/textView3"
+
+            android:layout_marginBottom="10dp"/>
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:text="Help"
+            android:id="@+id/textViewRegistration_buyer_Help"
+            android:layout_column="1" />
+            </LinearLayout>
+    </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <LinearLayout
+                android:id="@+id/LinearLayout03"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_alignParentBottom="true"
+                android:weightSum="1">
+            <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceMedium"
+            android:textStyle="bold|italic"
+            android:text="Location 1"
+            android:textColor="#ffffff"
+            android:background="#ff5e01ff"
+            android:id="@+id/textViewLocation1"
+            android:layout_centerVertical="true"
+            android:layout_alignParentStart="true"
+            android:layout_marginBottom="3dp"
+                android:layout_weight="1.00"></TextView>
+                <Button
+                    android:id="@+id/ButtonUseMap1"
+                    android:layout_width="70dp"
+                    android:layout_height="32dp"
+                    android:text="Use Map"
+                    android:textSize="10sp">
+                </Button>
+            </LinearLayout>
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Name: "
+                android:id="@+id/textLocation1name"
+                android:layout_weight="1" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text=""
+                android:ems="10"
+                android:id="@+id/TextBoxLocation1name"
+                android:layout_weight="1" />
+
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Address: "
+                android:id="@+id/textLocation1address"
+                android:layout_weight="1"
+                android:layout_column="0" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text=""
+                android:ems="10"
+                android:id="@+id/TextBoxLocation1address"
+                android:layout_column="1"
+                android:layout_weight="1" />
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+            <LinearLayout
+                android:id="@+id/LinearLayout02"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_alignParentBottom="true"
+                android:weightSum="1">
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="bold|italic"
+                android:text="Location 2"
+                android:id="@+id/textViewLocation2"
+                android:textColor="#ffffff"
+                android:background="#ff5e01ff"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="0.97" />
+
+                <Button
+                    android:id="@+id/ButtonUseMap2"
+                    android:layout_width="70dp"
+                    android:layout_height="32dp"
+                    android:text="Use Map"
+                    android:textSize="10sp"></Button>
+
+            </LinearLayout>
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Name: "
+                android:id="@+id/textLocation2name"
+                android:layout_weight="1"
+                android:layout_column="0" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text=""
+                android:ems="10"
+                android:id="@+id/TextBoxLocation2name"
+                android:layout_column="1"
+                android:layout_weight="1" />
+
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Address: "
+                android:id="@+id/textLocation2address"
+                android:layout_weight="1"
+                android:layout_column="0" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text=""
+                android:ems="10"
+                android:id="@+id/TextBoxLocation2address"
+                android:layout_column="1"
+                android:layout_weight="1" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:id="@+id/LinearLayout07"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_alignParentBottom="true"
+                android:weightSum="1">
+
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:textStyle="bold|italic"
+                android:text="Location 3"
+                android:id="@+id/textViewLocation3"
+                android:textColor="#ffffff"
+                android:background="#ff5e01ff"
+                android:layout_centerVertical="true"
+                android:layout_alignParentStart="true"
+                android:layout_marginBottom="3dp"
+                android:layout_weight="0.97" />
+                <Button
+                    android:id="@+id/ButtonUseMap3"
+                    android:layout_width="70dp"
+                    android:layout_height="32dp"
+                    android:text="Use Map"
+                    android:textSize="10sp">
+                </Button>
+            </LinearLayout>
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="30dp"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Name: "
+                android:id="@+id/textLocation3name"
+                android:layout_weight="1"
+                android:layout_column="0" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text=""
+                android:ems="10"
+                android:id="@+id/TextBoxLocation3name"
+                android:layout_column="1"
+                android:layout_weight="1" />
+
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:textAppearance="?android:attr/textAppearanceMedium"
+                android:text="Address: "
+                android:id="@+id/textLocation3address"
+                android:layout_weight="1"
+                android:layout_column="0" />
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:inputType="text"
+                android:text=""
+                android:ems="10"
+                android:id="@+id/TextBoxLocation3address"
+                android:layout_column="1"
+                android:layout_weight="1" />
+        </TableRow>
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+
+
+            <LinearLayout
+                android:id="@+id/LinearLayout04"
+                android:layout_height="wrap_content"
+                android:layout_width="fill_parent"
+                android:layout_alignParentBottom="true"
+                android:weightSum="1">
+
+                <Button
+                    android:id="@+id/ButtonCancel_Locations"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:text="Cancel"
+                    android:textSize="12sp"
+                    android:layout_weight="0.40">
+
+                </Button>
+
+                <Button
+                    android:id="@+id/ButtonRegister_Locations"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Register Locations"
+                    android:layout_marginLeft="36dp"
+                    android:textSize="12sp" />
+            </LinearLayout>
+
+        </TableRow>
+
+    </TableLayout>
+
+
+
+</RelativeLayout>

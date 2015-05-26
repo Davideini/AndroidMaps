@@ -18,33 +18,40 @@ import android.view.View;
 import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.FrameLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
+
+import com.sce3.thirdyear.androidmaps.fragments.ResultFragment;
 import com.sce3.thirdyear.androidmaps.fragments.test;
 import com.sce3.thirdyear.classes.MenuAdapter;
 import com.sce3.thirdyear.classes.MenuItemTemplate;
+import com.sce3.thirdyear.classes.User;
 
 import junit.framework.Test;
 
 import java.util.ArrayList;
 
 
-public class MenuActivity extends ActionBarActivity {
+public class MenuActivity extends ActionBarActivity   {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
-
     private CharSequence mDrawerTitle;
     private CharSequence mTitle;
     private String[] menuTitles;
     private TypedArray menuIcons;
     private ArrayList<MenuItemTemplate> menuitems;
+    ResultFragment resf;
     private int chosenMenuItem=-1;
+    ///////////////////////////////////////////////////////////
+    private User user; //important for profile fragment
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //getWindow().requestFeature(Window.FEATURE_ACTION_BAR);
+
         setContentView(R.layout.activity_menu);
 
         menuitems = new ArrayList<MenuItemTemplate>();
@@ -113,14 +120,23 @@ public class MenuActivity extends ActionBarActivity {
 
     private void selectItem(int position) {
         // update the main content by replacing fragments
+        Fragment fragment;
+        if(position==0) {
+             resf = new ResultFragment();
+            // = (ResultFragment) fragment;
+            fragment=resf;
+        }
+        else
+        fragment = new test();
 
-        Fragment fragment = new test();
         //Bundle args = new Bundle();
         //args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
         //fragment.setArguments(args);
 
         FragmentManager fragmentManager = getFragmentManager();
         fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        //resf=(ResultFragment) fragmentManager.findFragmentById(R.id.content_frame);
+
 
 
 
@@ -186,5 +202,9 @@ public class MenuActivity extends ActionBarActivity {
         super.onConfigurationChanged(newConfig);
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
+    }
+    public void okClick(View view) {
+
+        resf.updateTextView();
     }
 }

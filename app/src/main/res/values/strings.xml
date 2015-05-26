@@ -10,6 +10,7 @@
     <string name="title_activity_house_details">HouseDetailsActivity</string>
     <string name="title_activity_history">HistoryActivity</string>
     <string name="title_activity_registration">RegistrationActivity</string>
+    <string name="title_activity_registration_buyer">RegistrationBuyerActivity</string>
     <string name="title_activity_update_user_details">UpdateUserDetailsActivity</string>
     <string name="title_activity_change_password">ChangePasswordActivity</string>
     <string name="title_activity_menu">Menu</string>
@@ -65,4 +66,8 @@
     <string name="select_from_map">Select from map</string>
     <string name="title_activity_address">AddressActivity</string>
     <string name="title_activity_find_by_address">FindByAddressActivity</string>
+    <string name="title_activity_results">ResultsActivity</string>
+
+<!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
