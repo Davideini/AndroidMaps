@@ -1,23 +1,15 @@
 package com.sce3.thirdyear.maps.data;
 
-import android.content.Context;
-import android.location.Geocoder;
-import android.text.TextUtils;
 import android.widget.EditText;
 
 import com.google.android.gms.maps.model.LatLng;
-import com.google.android.gms.maps.model.Marker;
-import com.sce3.thirdyear.classes.JSONRequest;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Locale;
-import java.util.concurrent.ExecutionException;
 
 /**
  * Created by David on 21/05/2015.
@@ -29,6 +21,17 @@ public class Address {
     private static final String BY_LATLNG = "latlng=%s,%s";
     private static final String BY_ADDRESS = "address=%s";
     private static final String SENSOR = "sensor=%s";
+
+    // variables const
+
+    public static final String CITY = "city";
+    public static final String COUNTRY = "country";
+    public static final String STREET = "street";
+    public static final String LAT = "lat";
+    public static final String LNG = "lng";
+    public static final String STREET_NUMBER = "streetNumber";
+    public static final String POSTAL_CODE = "postalCode";
+    public static final String FORMATTED_ADDRESS = "formattedAddress";
 
     // private variables
     private String city;
@@ -127,6 +130,9 @@ public class Address {
         if (street != null && !street.isEmpty()) {
             sb.append(street).append(" ");
         }
+        if (streetNumber != null && !streetNumber.isEmpty()) {
+            sb.append(streetNumber).append(" ");
+        }
         if (city != null && !city.isEmpty()) {
             sb.append(city).append(" ");
         }
@@ -136,6 +142,9 @@ public class Address {
 
         return sb.toString();
     }
+
+    // for extras
+
 
     // Static Functions
     public static List<Address> SearchApi(String address) {
@@ -154,7 +163,13 @@ public class Address {
         String params = parm1 + "&" + parm2;
         String url = String.format(GEOCODE_URL, params);
 
-        return GetLocations(url).get(0);
+        List<Address> list = GetLocations(url);
+        Address address = null;
+        if (list.size() > 0) {
+            address = list.get(0);
+        }
+
+        return address;
     }
 
     private static List<Address> GetLocations(String url) {
@@ -210,8 +225,8 @@ public class Address {
                 }
             }
             String formatted_address = json.getString("formatted_address");
-            Double lat = location.getDouble("lat");
-            Double lng = location.getDouble("lng");
+            double lat = location.getDouble("lat");
+            double lng = location.getDouble("lng");
 
             address.setFormattedAddress(formatted_address);
             address.setLat(lat);
@@ -221,4 +236,14 @@ public class Address {
         return address;
     }
 
+    public static List<Address> AddressByLatLngArray(LatLng latlng) {
+        String parm1 = String.format(BY_LATLNG, latlng.latitude, latlng.longitude);
+        String parm2 = String.format(SENSOR, true);
+        String params = parm1 + "&" + parm2;
+        String url = String.format(GEOCODE_URL, params);
+
+        List<Address> list = GetLocations(url);
+
+        return list;
+    }
 }

@@ -24,15 +24,11 @@
         android:layout_height="wrap_content"
         android:id="@+id/lvLocations"
         android:layout_alignParentStart="true"
-        android:layout_below="@+id/btnReturn" />
+        android:layout_below="@+id/map" />
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Return this location"
-        android:id="@+id/btnReturn"
-        android:layout_below="@+id/map"
-        android:layout_alignEnd="@+id/lvLocations" />
+    <TextView
+        android:id="@+id/tbSearch"
+        android:layout_width="100dp"
+        android:layout_height="20dp" />
 
 </RelativeLayout>
