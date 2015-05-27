@@ -16,6 +16,8 @@ import com.sce3.thirdyear.androidmaps.R;
 import com.sce3.thirdyear.maps.data.Address;
 import com.sce3.thirdyear.maps.data.tools.Utility;
 
+import java.text.DecimalFormat;
+
 public class AddressActivity extends ActionBarActivity {
     static final int GET_ADDRESS_FROM_MAP = 0;
 
@@ -108,6 +110,10 @@ public class AddressActivity extends ActionBarActivity {
                 EditText houseNumber = (EditText) findViewById(R.id.tbhouseNumber);
                 EditText lat = (EditText) findViewById(R.id.tbLat);
                 EditText lng = (EditText) findViewById(R.id.tbLng);
+                EditText distance = (EditText) findViewById(R.id.tbDistance);
+
+
+                Address address = new Address(data.getExtras().getDouble(Address.LAT), data.getExtras().getDouble(Address.LNG));
 
                 street.setText(data.getExtras().getString(Address.STREET));
                 city.setText(data.getExtras().getString(Address.CITY));
@@ -115,6 +121,9 @@ public class AddressActivity extends ActionBarActivity {
                 houseNumber.setText(data.getExtras().getString(Address.STREET_NUMBER));
                 lat.setText("" + data.getExtras().getDouble(Address.LAT));
                 lng.setText("" + data.getExtras().getDouble(Address.LNG));
+                distance.setText("" + new DecimalFormat("#0.00").format(address.getDistance(this)) + " km");
+
+
             }
         }
     }

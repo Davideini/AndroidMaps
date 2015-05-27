@@ -1,8 +1,10 @@
 package com.sce3.thirdyear.maps.data;
 
+import android.content.Context;
 import android.widget.EditText;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.sce3.thirdyear.maps.data.tools.GPSTracker;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -51,6 +53,11 @@ public class Address {
         this.city = city.getText().toString();
         this.street = street.getText().toString();
         this.country = country.getText().toString();
+    }
+
+    public Address(double lat, double lng) {
+        this.lng = lng;
+        this.lat = lat;
     }
 
     // set functions
@@ -246,4 +253,43 @@ public class Address {
 
         return list;
     }
+
+    public static LatLng GetMyPosition(Context context) {
+        GPSTracker mGPS = new GPSTracker(context);
+
+        if (mGPS.canGetLocation()) {
+            mGPS.getLocation();
+        } else {
+            System.out.println("Unable");
+        }
+
+        return mGPS.getPosition();
+    }
+
+    public double getDistance(Context context) {
+        return distance(getPosition(), Address.GetMyPosition(context), 'K');
+    }
+
+    private double distance(LatLng one, LatLng two, char unit) {
+        double theta = one.longitude - two.longitude;
+        double dist = Math.sin(deg2rad(one.latitude)) * Math.sin(deg2rad(two.latitude)) + Math.cos(deg2rad(one.latitude)) * Math.cos(deg2rad(two.latitude)) * Math.cos(deg2rad(theta));
+        dist = Math.acos(dist);
+        dist = rad2deg(dist);
+        dist = dist * 60 * 1.1515;
+        if (unit == 'K') {
+            dist = dist * 1.609344;
+        } else if (unit == 'N') {
+            dist = dist * 0.8684;
+        }
+        return (dist);
+    }
+
+    private double deg2rad(double deg) {
+        return (deg * Math.PI / 180.0);
+    }
+
+    private double rad2deg(double rad) {
+        return (rad * 180 / Math.PI);
+    }
+
 }
