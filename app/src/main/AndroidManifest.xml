@@ -52,28 +52,31 @@
             android:label="@string/title_activity_house_details" />
         <activity
             android:name=".HistoryActivity"
-            android:label="@string/title_activity_history" >
-        </activity>
+            android:label="@string/title_activity_history" />
         <activity
             android:name=".RegistrationActivity"
-            android:label="@string/title_activity_registration" >
-        </activity>
+            android:label="@string/title_activity_registration" />
         <activity
             android:name=".UpdateUserDetailsActivity"
-            android:label="@string/title_activity_update_user_details" >
-        </activity>
+            android:label="@string/title_activity_update_user_details" />
         <activity
             android:name=".ChangePasswordActivity"
-            android:label="@string/title_activity_change_password" >
-        </activity>
+            android:label="@string/title_activity_change_password" />
+        <activity
+            android:name=".RegistrationBuyerActivity"
+            android:label="@string/title_activity_registration_buyer"></activity>
         <activity
             android:name=".MenuActivity"
-            android:label="@string/title_activity_menu" >
-        </activity>
+            android:label="@string/title_activity_menu" />
         <activity
             android:name=".AddApartment"
-            android:label="@string/title_activity_add_apartment" >
-        </activity>
+            android:label="@string/title_activity_add_apartment" />
+        <activity
+            android:name=".maps.AddressActivity"
+            android:label="@string/title_activity_address" />
+        <activity
+            android:name=".maps.FindByAddressActivity"
+            android:label="@string/title_activity_find_by_address" />
     </application>
 
 </manifest>

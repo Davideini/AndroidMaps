@@ -10,12 +10,12 @@ import android.widget.Button;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.sce3.thirdyear.androidmaps.maps.AddressActivity;
 import com.sce3.thirdyear.classes.JSONRequest;
 import com.sce3.thirdyear.classes.SQLiteDB;
 
 import org.json.JSONException;
 import org.json.JSONObject;
-
 
 
 public class MainActivity extends ActionBarActivity {
@@ -30,12 +30,12 @@ public class MainActivity extends ActionBarActivity {
 
         //dbg
         System.out.println(session);
-        TextView txt=(TextView) findViewById(R.id.textView);
+        TextView txt = (TextView) findViewById(R.id.textView);
         txt.setVisibility(View.INVISIBLE);
 
         if (!session.equals("")) {
             String address = String.format("http://%s/JavaMaps/api?action=Main&session=%s", JSONRequest.SERVER, session);
-            JSONRequest json=new JSONRequest(address);
+            JSONRequest json = new JSONRequest(address);
             System.out.println(address);
             try {
                 JSONObject jobj = new JSONObject(json.getJSON());
@@ -48,7 +48,7 @@ public class MainActivity extends ActionBarActivity {
                 }
             } catch (JSONException e) {
                 System.out.println(e.getMessage());
-            } catch (Exception e){
+            } catch (Exception e) {
                 Toast.makeText(this, "Error receiving data.", Toast.LENGTH_LONG).show();
                 Intent i = new Intent(MainActivity.this, LoginActivity.class);
                 startActivity(i);
@@ -93,7 +93,6 @@ public class MainActivity extends ActionBarActivity {
     }
 
 
-
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
@@ -126,6 +125,12 @@ public class MainActivity extends ActionBarActivity {
 
     public void toReg(View view) {
         Intent i = new Intent(MainActivity.this, RegistrationActivity.class);
+        startActivity(i);
+    }
+
+
+    public void toAddress(View view) {
+        Intent i = new Intent(MainActivity.this, AddressActivity.class);
         startActivity(i);
     }
 }
