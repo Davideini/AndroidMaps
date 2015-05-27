@@ -114,7 +114,6 @@ public class AddressActivity extends ActionBarActivity {
 
 
                 Address address = new Address(data.getExtras().getDouble(Address.LAT), data.getExtras().getDouble(Address.LNG));
-
                 street.setText(data.getExtras().getString(Address.STREET));
                 city.setText(data.getExtras().getString(Address.CITY));
                 country.setText(data.getExtras().getString(Address.COUNTRY));
