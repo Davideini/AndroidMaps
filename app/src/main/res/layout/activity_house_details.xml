@@ -19,7 +19,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/HouseDetails"
+                android:text="HouseDetails"
                 android:id="@+id/HD"
                 android:layout_alignParentTop="true"
                 android:layout_alignParentStart="true"
