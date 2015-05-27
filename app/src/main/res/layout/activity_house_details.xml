@@ -1,16 +1,355 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.sce3.thirdyear.androidmaps.HouseDetailsActivity">
 
-    <TextView
-        android:text="@string/hello_world"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
+    <TableLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/HouseDetails"
+                android:id="@+id/HD"
+                android:layout_alignParentTop="true"
+                android:layout_alignParentStart="true"
+                android:focusable="false" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/HouseDetails"
+                android:layout_alignParentStart="true"
+                android:id="@+id/linearLayout6" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/street_name"
+                    android:id="@+id/StreetName" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="4.69"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/StreetN"
+                    android:enabled="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/city"
+                    android:id="@+id/CITY" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:inputType="textPersonName"
+                    android:ems="10"
+                    android:id="@+id/city"
+                    android:layout_weight="15.44"
+                    android:enabled="false" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayout"
+                android:layout_alignParentStart="true"
+                android:id="@+id/linearLayout7" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/house_number"
+                    android:id="@+id/HouseNumber" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="4.01"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:id="@+id/HouseN"
+                    android:enabled="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/apt_number"
+                    android:id="@+id/ApartmentNum" />
+
+                <EditText
+                    android:layout_width="0dp"
+                    android:layout_weight="20"
+                    android:layout_height="wrap_content"
+                    android:inputType="number"
+                    android:ems="10"
+                    android:id="@+id/AptN"
+                    android:enabled="false" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayout2"
+                android:layout_alignParentStart="true"
+                android:id="@+id/linearLayout8"
+                android:weightSum="1" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/roomsTV"
+                    android:id="@+id/ROOMS" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/rooms"
+                    android:inputType="number"
+                    android:layout_weight="0.26"
+                    android:enabled="false" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/apt_area"
+                    android:id="@+id/ApartmentArea"
+                    android:paddingStart="20sp"
+                    android:paddingEnd="0sp" />
+
+                <EditText
+                    android:layout_width="84dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/AptA"
+                    android:inputType="number"
+                    android:enabled="false"
+                    android:layout_weight="0.07" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/service_balcony"
+                    android:id="@+id/ServiceBalcony"
+                    android:enabled="false" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/mamad"
+                    android:id="@+id/mamad"
+                    android:enabled="false" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/parking"
+                    android:id="@+id/parking"
+                    android:enabled="false" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/handicapped_access"
+                    android:id="@+id/HandicappedAccess"
+                    android:enabled="false" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/storage"
+                    android:id="@+id/storage"
+                    android:enabled="false" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/elevator"
+                    android:id="@+id/elevator"
+                    android:enabled="false" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/sun_balcony"
+                    android:id="@+id/SunBalcony"
+                    android:enabled="false" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/linearLayout4"
+                android:layout_alignParentStart="true"
+                android:id="@+id/linearLayout9"
+                android:weightSum="1" >
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/price"
+                    android:id="@+id/PRICE" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/pr"
+                    android:layout_weight="0.51"
+                    android:enabled="false" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contact Phone:"
+                    android:id="@+id/ContactPhone"
+                    android:layout_alignBottom="@+id/editText8"
+                    android:layout_alignParentStart="true" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="phone"
+                    android:ems="10"
+                    android:id="@+id/ContactP"
+                    android:layout_below="@+id/linearLayout5"
+                    android:layout_toEndOf="@+id/textView17"
+                    android:enabled="false" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Contact Email:"
+                    android:id="@+id/ContactEmail"
+                    android:layout_alignBottom="@+id/editText9"
+                    android:layout_alignParentStart="true" />
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:inputType="textEmailAddress"
+                    android:ems="10"
+                    android:id="@+id/ContactE"
+                    android:layout_below="@+id/textView17"
+                    android:layout_alignStart="@+id/editText8"
+                    android:enabled="false" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginTop="15sp"
+            android:layout_marginLeft="110sp">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:weightSum="1">
+
+                <Button
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/ok_button"
+                    android:id="@+id/OKButton"
+                    android:clickable="true"
+                    android:elegantTextHeight="true"
+                    android:enabled="true"
+                    android:layout_centerHorizontal="true"
+                    android:layout_weight="0.06" />
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
 </RelativeLayout>
