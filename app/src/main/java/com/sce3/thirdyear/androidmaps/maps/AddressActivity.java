@@ -1,22 +1,22 @@
 package com.sce3.thirdyear.androidmaps.maps;
 
-import android.app.Activity;
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.TextView;
+import android.widget.Toast;
 
-import com.sce3.thirdyear.androidmaps.MenuActivity;
+import com.google.android.gms.maps.model.LatLng;
 import com.sce3.thirdyear.androidmaps.R;
 import com.sce3.thirdyear.maps.data.Address;
+import com.sce3.thirdyear.maps.data.tools.Utility;
+
+import java.text.DecimalFormat;
 
 public class AddressActivity extends ActionBarActivity {
     static final int GET_ADDRESS_FROM_MAP = 0;
@@ -26,7 +26,7 @@ public class AddressActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_address);
 
-        setupUI(findViewById(R.id.mainLayout));
+        Utility.SetupUIKeyboard(findViewById(R.id.mainLayout), AddressActivity.this);
 
         clickEventSetup();
     }
@@ -34,6 +34,8 @@ public class AddressActivity extends ActionBarActivity {
     private void clickEventSetup() {
         Button clear = (Button) findViewById(R.id.btnClear);
         Button find = (Button) findViewById(R.id.btnFindInMap);
+        Button show = (Button) findViewById(R.id.btnShowOnMap);
+
 
         clear.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -48,6 +50,13 @@ public class AddressActivity extends ActionBarActivity {
                 onFind(v);
             }
         });
+
+        show.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onShow(v);
+            }
+        });
     }
 
     private void onFind(View v) {
@@ -60,9 +69,35 @@ public class AddressActivity extends ActionBarActivity {
 
         Intent i = new Intent(AddressActivity.this, FindByAddressActivity.class);
 
-        i.putExtra("Address", address.toString());
+        i.putExtra(Address.FORMATTED_ADDRESS, address.toString());
 
         startActivityForResult(i, GET_ADDRESS_FROM_MAP);
+    }
+
+    private void onShow(View v) {
+        EditText lat = (EditText) findViewById(R.id.tbLat);
+        EditText lng = (EditText) findViewById(R.id.tbLng);
+
+        Intent i = new Intent(AddressActivity.this, FindByAddressActivity.class);
+        try {
+            double lat_val = Double.parseDouble(lat.getText().toString());
+            double lng_val = Double.parseDouble(lng.getText().toString());
+
+            Address israel = Address.SearchApi("Israel").get(0);
+            Address address = Address.AddressByLatLng(new LatLng(lat_val, lng_val));
+            if (address == null) return;
+            if (!address.toString().toLowerCase().contains(israel.getCountry().toLowerCase())) {
+                Toast.makeText(AddressActivity.this, "Location not in israel bounds select other lat lng", Toast.LENGTH_LONG).show();
+                return;
+            }
+
+            i.putExtra(Address.LAT, lat_val);
+            i.putExtra(Address.LNG, lng_val);
+
+            startActivityForResult(i, GET_ADDRESS_FROM_MAP);
+        } catch (Exception e) {
+            Toast.makeText(AddressActivity.this, "Set lat and lng corectly", Toast.LENGTH_LONG).show();
+        }
     }
 
     @Override
@@ -73,11 +108,21 @@ public class AddressActivity extends ActionBarActivity {
                 EditText city = (EditText) findViewById(R.id.tbCity);
                 EditText country = (EditText) findViewById(R.id.tbCountry);
                 EditText houseNumber = (EditText) findViewById(R.id.tbhouseNumber);
+                EditText lat = (EditText) findViewById(R.id.tbLat);
+                EditText lng = (EditText) findViewById(R.id.tbLng);
+                EditText distance = (EditText) findViewById(R.id.tbDistance);
 
-                street.setText(data.getExtras().getString("street"));
-                city.setText(data.getExtras().getString("city"));
-                country.setText(data.getExtras().getString("country"));
-                houseNumber.setText(data.getExtras().getString("houseNumber"));
+
+                Address address = new Address(data.getExtras().getDouble(Address.LAT), data.getExtras().getDouble(Address.LNG));
+                street.setText(data.getExtras().getString(Address.STREET));
+                city.setText(data.getExtras().getString(Address.CITY));
+                country.setText(data.getExtras().getString(Address.COUNTRY));
+                houseNumber.setText(data.getExtras().getString(Address.STREET_NUMBER));
+                lat.setText("" + data.getExtras().getDouble(Address.LAT));
+                lng.setText("" + data.getExtras().getDouble(Address.LNG));
+                distance.setText("" + new DecimalFormat("#0.00").format(address.getDistance(this)) + " km");
+
+
             }
         }
     }
@@ -104,61 +149,19 @@ public class AddressActivity extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void setupUI(View view) {
-
-        //Set up touch listener for non-text box views to hide keyboard.
-        if (!(view instanceof EditText)) {
-
-            view.setOnTouchListener(new View.OnTouchListener() {
-
-                public boolean onTouch(View v, MotionEvent event) {
-                    hideSoftKeyboard(AddressActivity.this);
-                    return false;
-                }
-
-            });
-        }
-
-        //If a layout container, iterate over children and seed recursion.
-        if (view instanceof ViewGroup) {
-
-            for (int i = 0; i < ((ViewGroup) view).getChildCount(); i++) {
-
-                View innerView = ((ViewGroup) view).getChildAt(i);
-
-                setupUI(innerView);
-            }
-        }
-    }
-
-    public static void hideSoftKeyboard(Activity activity) {
-        InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
-        inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
-    }
 
     public void onFindOnMap(View view) {
         EditText street = (EditText) findViewById(R.id.tbStreet);
         EditText city = (EditText) findViewById(R.id.tbCity);
         EditText country = (EditText) findViewById(R.id.tbCountry);
-        //EditText zip = (EditText) findViewById(R.id.tbZip);
+        EditText houseNumber = (EditText) findViewById(R.id.tbhouseNumber);
 
-        Address address = new Address(street, city, country, null);
+        Address address = new Address(street, houseNumber, city, country);
     }
 
     public void onClear(View view) {
         ViewGroup group = (ViewGroup) findViewById(R.id.mainLayout);
-        clearForm(group);
+        Utility.ClearForm(group);
     }
 
-    private void clearForm(ViewGroup group) {
-        for (int i = 0, count = group.getChildCount(); i < count; ++i) {
-            View view = group.getChildAt(i);
-            if (view instanceof EditText) {
-                ((EditText) view).setText("");
-            }
-
-            if (view instanceof ViewGroup && (((ViewGroup) view).getChildCount() > 0))
-                clearForm((ViewGroup) view);
-        }
-    }
 }

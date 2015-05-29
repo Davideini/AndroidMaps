@@ -1,31 +1,17 @@
 package com.sce3.thirdyear.androidmaps.maps;
 
-import android.content.Context;
-import android.content.Intent;
-import android.gesture.GestureOverlayView;
-import android.location.Geocoder;
-import android.location.Location;
-import android.location.LocationListener;
-import android.location.LocationManager;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
+import android.support.v7.widget.SearchView;
 import android.util.Log;
-import android.view.GestureDetector;
-import android.view.GestureDetector.OnDoubleTapListener;
-import android.view.GestureDetector.OnGestureListener;
-
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.MotionEvent;
-import android.view.View;
-import android.widget.Button;
+import android.widget.ListView;
 import android.widget.TextView;
 
-import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.OnMapReadyCallback;
-import com.google.android.gms.maps.Projection;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -33,18 +19,17 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.sce3.thirdyear.androidmaps.R;
 import com.sce3.thirdyear.maps.data.Address;
-import com.sce3.thirdyear.maps.data.MapData;
+import com.sce3.thirdyear.maps.data.tools.LocationsList;
+import com.sce3.thirdyear.maps.data.tools.MapUtility;
+import com.sce3.thirdyear.maps.data.tools.MarkerUtility;
+import com.sce3.thirdyear.maps.data.tools.Utility;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
-import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -53,17 +38,23 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
-import java.util.HashMap;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 import java.util.Map;
 
-public class FindByAddressActivity extends ActionBarActivity implements OnMapReadyCallback {
+public class FindByAddressActivity extends ActionBarActivity implements OnMapReadyCallback, SearchView.OnQueryTextListener {
 
-    GoogleMap mMap;
+    private GoogleMap mMap;
 
-    Marker userMarker = null;
+    private Marker userMarker = null;
+
+    private Marker selectedMarker = null;
+
+    private List<Address> locations = null;
+
+
+    private TextView mStatusView;
 
     private GoogleMap.OnMapClickListener mapClickListener = new GoogleMap.OnMapClickListener() {
         @Override
@@ -76,7 +67,11 @@ public class FindByAddressActivity extends ActionBarActivity implements OnMapRea
 
             // Setting the title for the marker.
             // This will be displayed on taping the marker
-            markerOptions.title(Address.AddressByLatLng(latLng).getFormattedAddress());
+            Address address = Address.AddressByLatLng(latLng);
+            if (address == null)
+                return;
+
+            markerOptions.title(address.getFormattedAddress());
 
             markerOptions.icon(BitmapDescriptorFactory.defaultMarker(BitmapDescriptorFactory.HUE_ORANGE));
 
@@ -90,22 +85,21 @@ public class FindByAddressActivity extends ActionBarActivity implements OnMapRea
 
             // Placing a marker on the touched position
             userMarker = mMap.addMarker(markerOptions);
+
+            selectedMarker = null;
         }
     };
 
-    private GoogleMap.OnInfoWindowClickListener infoClickListener = new GoogleMap.OnInfoWindowClickListener() {
-        @Override
-        public void onInfoWindowClick(Marker marker) {
-
-        }
-    };
-
-    GoogleMap.OnMarkerClickListener markerClickListener = new GoogleMap.OnMarkerClickListener() {
+    private GoogleMap.OnMarkerClickListener markerClickListener = new GoogleMap.OnMarkerClickListener() {
         @Override
         public boolean onMarkerClick(Marker marker) {
-            return false;
+            selectedMarker = marker;
+            marker.setSnippet("true");
+            MarkerUtility.MarkerInfo(marker, mMap, FindByAddressActivity.this);
+            return true;
         }
     };
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -118,65 +112,72 @@ public class FindByAddressActivity extends ActionBarActivity implements OnMapRea
         SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
                 .findFragmentById(R.id.map);
         mapFragment.getMapAsync(this);
-        mMap = mapFragment.getMap();
 
+        mStatusView = (TextView) findViewById(R.id.tbSearch);
     }
 
     private void SetupClickEvents() {
-        Button btnReturn = (Button) findViewById(R.id.btnReturn);
-
-        btnReturn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Address address = Address.AddressByLatLng(userMarker.getPosition());
-                Intent returnIntent = new Intent();
-
-                returnIntent.putExtra("houseNumber", address.getStreetNumber());
-                returnIntent.putExtra("street", address.getStreet());
-                returnIntent.putExtra("city", address.getCity());
-                returnIntent.putExtra("country", address.getCountry());
-                returnIntent.putExtra("lat", address.getLat());
-                returnIntent.putExtra("lng", address.getLng());
-
-                setResult(RESULT_OK, returnIntent);
-                finish();
-            }
-        });
+//        Button btnReturn = (Button) findViewById(R.id.btnReturn);
+//
+//        btnReturn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                if (selectedMarker == null) {
+//                    Toast.makeText(FindByAddressActivity.this, "Select location marker", Toast.LENGTH_LONG).show();
+//                    return;
+//                }
+//                Address address = Address.AddressByLatLng(selectedMarker.getPosition());
+//                Intent returnIntent = new Intent();
+//
+//                returnIntent.putExtra(Address.STREET_NUMBER, address.getStreetNumber());
+//                returnIntent.putExtra(Address.STREET, address.getStreet());
+//                returnIntent.putExtra(Address.CITY, address.getCity());
+//                returnIntent.putExtra(Address.COUNTRY, address.getCountry());
+//                returnIntent.putExtra(Address.LAT, address.getLat());
+//                returnIntent.putExtra(Address.LNG, address.getLng());
+//
+//                setResult(RESULT_OK, returnIntent);
+//                finish();
+//            }
+//        });
     }
+
+    private ListView lvLocations = null;
 
     @Override
-    public void onMapReady(final GoogleMap mMap) {
-        GoogleMapsSetup(mMap);
+    public void onMapReady(final GoogleMap m) {
+        mMap = MapUtility.GoogleMapsSetup(m, mapClickListener, markerClickListener);
 
+        String address = getIntent().getExtras().getString(Address.FORMATTED_ADDRESS);
 
-        SearchMarkers(getIntent().getExtras().getString("Address"));
+        double lat = getIntent().getExtras().getDouble(Address.LAT);
 
-    }
+        double lng = getIntent().getExtras().getDouble(Address.LNG);
 
+        boolean hasMarkers = SearchMarkers(address, lat, lng);
+        lvLocations = (ListView) findViewById(R.id.lvLocations);
+        if (hasMarkers) {
+            if (address != null)
+                LocationsList.MakeListView(address, this, lvLocations);
+            else
+                LocationsList.MakeListView(new LatLng(lat, lng), this, lvLocations);
 
-    private void getJsonByAddress(String address) {
-
-//        String json = getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + address + "&key=AIzaSyDGRonfhxDh8x1jgRKTNZCaOQhuYLJQpJg");
-        String json = getJSON("https://maps.googleapis.com/maps/api/geocode/json?address=" + address);
-        /*
-        Map parm = new HashMap<>();
-        parm.put("address", address);
-        parm.put("key","AIzaSyCb5Yr0b3RYvORfRTqqXR2cTtKte2qI9Hg");
-        try {
-            HttpResponse result =   makeRequest("https://maps.googleapis.com/maps/api/geocode/json", parm);
-        } catch (Exception e) {
-            e.printStackTrace();
         }
-        */
     }
-
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_find_by_address, menu);
+
+
+        MenuItem searchItem = (MenuItem) menu.findItem(R.id.action_search);
+        SearchView mSearchView = (SearchView) searchItem.getActionView();
+        Utility.SetupSearchView(searchItem, mSearchView, this, this);
+
         return true;
     }
+
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -218,31 +219,6 @@ public class FindByAddressActivity extends ActionBarActivity implements OnMapRea
             e.printStackTrace();
         }
         return builder.toString();
-    }
-
-    public HttpResponse makeRequest(String path, Map params) throws Exception {
-        //instantiates httpclient to make request
-        DefaultHttpClient httpclient = new DefaultHttpClient();
-
-        //url with the post data
-        HttpPost httpost = new HttpPost(path);
-
-        //convert parameters into JSON object
-        JSONObject holder = getJsonObjectFromMap(params);
-
-        //passes the results to a string builder/entity
-        StringEntity se = new StringEntity(holder.toString());
-
-        //sets the post request as the resulting string
-        httpost.setEntity(se);
-        //sets a request header so the page receving the request
-        //will know what to do with it
-        httpost.setHeader("Accept", "application/json");
-        httpost.setHeader("Content-type", "application/json");
-
-        //Handles what is returned from the page
-        ResponseHandler responseHandler = new BasicResponseHandler();
-        return (HttpResponse) httpclient.execute(httpost, responseHandler);
     }
 
     private static JSONObject getJsonObjectFromMap(Map params) throws JSONException {
@@ -287,39 +263,50 @@ public class FindByAddressActivity extends ActionBarActivity implements OnMapRea
     }
 
 
-    private void GetMyPosition() {
-        mMap.animateCamera(CameraUpdateFactory.zoomBy(12));
-    }
+    private boolean SearchMarkers(String address, double lat, double lng) {
+        boolean hasMarkers = false;
+        locations = null;
+        mMap.clear();
 
-    private void GoogleMapsSetup(final GoogleMap maps) {
-        // Setup ui
-        maps.getUiSettings().setZoomControlsEnabled(true);
-        maps.getUiSettings().setMyLocationButtonEnabled(true);
-
-        maps.setMyLocationEnabled(true);
-
-        // Setup events
-        maps.setOnMapClickListener(mapClickListener);
-        maps.setOnInfoWindowClickListener(infoClickListener);
-        maps.setOnMarkerClickListener(markerClickListener);
-
-        mMap = maps;
-    }
-
-    private void SearchMarkers(String address) {
-        List<Address> list = Address.SearchApi(address);
-
-        for (Address item : list) {
-            mMap.addMarker(CreateMarker(item, BitmapDescriptorFactory.HUE_BLUE));
+        if (locations == null && address != null && !address.isEmpty()) {
+            locations = Address.SearchApi(address);
         }
+
+        if (locations == null) {
+            locations = new ArrayList<>();
+            locations.add(Address.AddressByLatLng(new LatLng(lat, lng)));
+        }
+
+        if (locations == null) {
+
+        }
+
+        for (Address item : locations) {
+            if (item == null) continue;
+            mMap.addMarker(MapUtility.CreateMarker(item, BitmapDescriptorFactory.HUE_BLUE));
+            hasMarkers = true;
+        }
+        return hasMarkers;
     }
 
-    private MarkerOptions CreateMarker(Address address, float style) {
-        return new MarkerOptions()
-                .title(address.getFormattedAddress())
-                .position(address.getPosition())
-                .icon(BitmapDescriptorFactory.defaultMarker(style));
+
+    public boolean onQueryTextChange(String newText) {
+
+        return false;
     }
 
+    public boolean onQueryTextSubmit(String address) {
+
+
+        SearchMarkers(address, 0, 0);
+        LocationsList.MakeListView(address, this, lvLocations);
+
+        return false;
+    }
+
+    public boolean onClose() {
+
+        return false;
+    }
 
 }

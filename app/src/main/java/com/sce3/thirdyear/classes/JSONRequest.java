@@ -24,20 +24,22 @@ import java.util.concurrent.Future;
 
 public class JSONRequest implements Callable<String> {
     //public final static String SERVER = "192.168.80.1:8081";
-    public final static String SERVER = "10.0.0.3:8081";
+    public final static String SERVER = "10.200.201.176:8081";
     public final static String IMAGE_DIR = "JavaWeb/images";
 
     String address;
     Future<String> future;
+
     public JSONRequest(String address) {
         this.address = address;
         ExecutorService pool = Executors.newFixedThreadPool(1);
-        future=pool.submit(this);
+        future = pool.submit(this);
     }
 
     public String getJSON() throws ExecutionException, InterruptedException {
         return future.get();
     }
+
     public String call() throws IOException {
         return getJSON(address);
     }
@@ -46,7 +48,7 @@ public class JSONRequest implements Callable<String> {
         StringBuilder builder = new StringBuilder();
         HttpClient client = new DefaultHttpClient();
         HttpGet httpGet = new HttpGet(address);
-        HttpConnectionParams.setConnectionTimeout(new BasicHttpParams(),5000);
+        HttpConnectionParams.setConnectionTimeout(new BasicHttpParams(), 5000);
         HttpResponse response = client.execute(httpGet);
         StatusLine statusLine = response.getStatusLine();
         int statusCode = statusLine.getStatusCode();
