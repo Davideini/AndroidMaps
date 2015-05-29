@@ -64,7 +64,7 @@
             android:label="@string/title_activity_change_password" />
         <activity
             android:name=".RegistrationBuyerActivity"
-            android:label="@string/title_activity_registration_buyer"></activity>
+            android:label="@string/title_activity_registration_buyer" />
         <activity
             android:name=".MenuActivity"
             android:label="@string/title_activity_menu" />
@@ -77,6 +77,14 @@
         <activity
             android:name=".maps.FindByAddressActivity"
             android:label="@string/title_activity_find_by_address" />
+        <activity
+            android:name=".showImgsActivity"
+            android:label="@string/title_activity_show_imgs"
+            android:parentActivityName=".MenuActivity" >
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.sce3.thirdyear.androidmaps.MenuActivity" />
+        </activity>
     </application>
 
 </manifest>

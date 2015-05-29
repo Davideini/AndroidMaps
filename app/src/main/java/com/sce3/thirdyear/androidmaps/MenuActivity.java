@@ -6,11 +6,15 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.AsyncTask;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,6 +23,7 @@ import android.view.Window;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -31,6 +36,7 @@ import com.sce3.thirdyear.classes.User;
 
 import junit.framework.Test;
 
+import java.io.InputStream;
 import java.util.ArrayList;
 
 
@@ -45,6 +51,7 @@ public class MenuActivity extends ActionBarActivity   {
     private ArrayList<MenuItemTemplate> menuitems;
     ResultFragment resf;
     private int chosenMenuItem=-1;
+    Bitmap b;
     ///////////////////////////////////////////////////////////
     private User user; //important for profile fragment
 
@@ -108,6 +115,12 @@ public class MenuActivity extends ActionBarActivity   {
         }
 
 
+
+    }
+
+    public void showFullscreen(View view) {
+
+       resf.sentToFullscreenActivity(this);
 
     }
 
@@ -207,4 +220,5 @@ public class MenuActivity extends ActionBarActivity   {
 
         resf.updateTextView();
     }
+
 }
