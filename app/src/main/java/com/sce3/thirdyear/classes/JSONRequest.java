@@ -9,6 +9,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -46,9 +47,11 @@ public class JSONRequest implements Callable<String> {
 
     private String getJSON(String address) throws IOException {
         StringBuilder builder = new StringBuilder();
-        HttpClient client = new DefaultHttpClient();
+        HttpParams httpParameters=new BasicHttpParams();
         HttpGet httpGet = new HttpGet(address);
-        HttpConnectionParams.setConnectionTimeout(new BasicHttpParams(), 5000);
+        HttpConnectionParams.setConnectionTimeout(httpParameters, 5000);
+        HttpConnectionParams.setSoTimeout(httpParameters,5000);
+        HttpClient client = new DefaultHttpClient(httpParameters);
         HttpResponse response = client.execute(httpGet);
         StatusLine statusLine = response.getStatusLine();
         int statusCode = statusLine.getStatusCode();
