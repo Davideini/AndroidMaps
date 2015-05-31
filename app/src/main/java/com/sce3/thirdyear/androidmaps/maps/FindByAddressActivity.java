@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.LatLng;
@@ -43,7 +42,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-public class FindByAddressActivity extends ActionBarActivity implements OnMapReadyCallback, SearchView.OnQueryTextListener {
+public class FindByAddressActivity extends ActionBarActivity implements SearchView.OnQueryTextListener {
 
     private GoogleMap mMap;
 
@@ -100,6 +99,34 @@ public class FindByAddressActivity extends ActionBarActivity implements OnMapRea
         }
     };
 
+    private void setUpMapIfNeeded() {
+        // Do a null check to confirm that we have not already instantiated the map.
+        if (mMap == null) {
+            // Try to obtain the map from the SupportMapFragment.
+            mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
+                    .getMap();
+
+
+            // Check if we were successful in obtaining the map.
+        }
+
+
+        String address = getIntent().getExtras().getString(Address.FORMATTED_ADDRESS);
+
+        double lat = getIntent().getExtras().getDouble(Address.LAT);
+
+        double lng = getIntent().getExtras().getDouble(Address.LNG);
+
+        boolean hasMarkers = SearchMarkers(address, lat, lng);
+        lvLocations = (ListView) findViewById(R.id.lvLocations);
+        if (hasMarkers) {
+            if (address != null)
+                LocationsList.MakeListView(address, this, lvLocations);
+            else
+                LocationsList.MakeListView(new LatLng(lat, lng), this, lvLocations);
+
+        }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -108,10 +135,12 @@ public class FindByAddressActivity extends ActionBarActivity implements OnMapRea
 
 
         SetupClickEvents();
+        Utility.SetupUIKeyboard(findViewById(R.id.mainLayout), FindByAddressActivity.this);
 
-        SupportMapFragment mapFragment = (SupportMapFragment) getSupportFragmentManager()
-                .findFragmentById(R.id.map);
-        mapFragment.getMapAsync(this);
+//        MapFragment mapFragment = (MapFragment) getFragmentManager()
+//                .findFragmentById(R.id.map);
+//        mapFragment.getMapAsync(this);
+        setUpMapIfNeeded();
 
         mStatusView = (TextView) findViewById(R.id.tbSearch);
     }
@@ -144,26 +173,26 @@ public class FindByAddressActivity extends ActionBarActivity implements OnMapRea
 
     private ListView lvLocations = null;
 
-    @Override
-    public void onMapReady(final GoogleMap m) {
-        mMap = MapUtility.GoogleMapsSetup(m, mapClickListener, markerClickListener);
-
-        String address = getIntent().getExtras().getString(Address.FORMATTED_ADDRESS);
-
-        double lat = getIntent().getExtras().getDouble(Address.LAT);
-
-        double lng = getIntent().getExtras().getDouble(Address.LNG);
-
-        boolean hasMarkers = SearchMarkers(address, lat, lng);
-        lvLocations = (ListView) findViewById(R.id.lvLocations);
-        if (hasMarkers) {
-            if (address != null)
-                LocationsList.MakeListView(address, this, lvLocations);
-            else
-                LocationsList.MakeListView(new LatLng(lat, lng), this, lvLocations);
-
-        }
-    }
+//    @Override
+//    public void onMapReady(final GoogleMap m) {
+//        mMap = MapUtility.GoogleMapsSetup(m, mapClickListener, markerClickListener);
+//
+//        String address = getIntent().getExtras().getString(Address.FORMATTED_ADDRESS);
+//
+//        double lat = getIntent().getExtras().getDouble(Address.LAT);
+//
+//        double lng = getIntent().getExtras().getDouble(Address.LNG);
+//
+//        boolean hasMarkers = SearchMarkers(address, lat, lng);
+//        lvLocations = (ListView) findViewById(R.id.lvLocations);
+//        if (hasMarkers) {
+//            if (address != null)
+//                LocationsList.MakeListView(address, this, lvLocations);
+//            else
+//                LocationsList.MakeListView(new LatLng(lat, lng), this, lvLocations);
+//
+//        }
+//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -292,7 +321,7 @@ public class FindByAddressActivity extends ActionBarActivity implements OnMapRea
 
     public boolean onQueryTextChange(String newText) {
 
-        return false;
+        return true;
     }
 
     public boolean onQueryTextSubmit(String address) {
@@ -301,7 +330,8 @@ public class FindByAddressActivity extends ActionBarActivity implements OnMapRea
         SearchMarkers(address, 0, 0);
         LocationsList.MakeListView(address, this, lvLocations);
 
-        return false;
+        mStatusView.clearFocus();
+        return true;
     }
 
     public boolean onClose() {

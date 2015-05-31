@@ -133,4 +133,9 @@ public class MainActivity extends ActionBarActivity {
         Intent i = new Intent(MainActivity.this, AddressActivity.class);
         startActivity(i);
     }
+
+    public void toMapsTest(View view) {
+        Intent i = new Intent(MainActivity.this, MapsTestActivity.class);
+        startActivity(i);
+    }
 }
