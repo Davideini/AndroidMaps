@@ -6,6 +6,8 @@ import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
@@ -67,4 +69,30 @@ public class JSONRequest implements Callable<String> {
         }
         return builder.toString();
     }
+    /*
+    private String postJSON(String address) throws IOException {
+        StringBuilder builder = new StringBuilder();
+        HttpParams httpParameters=new BasicHttpParams();
+        HttpPost httpPost = new HttpPost(address);
+        StringEntity se = new StringEntity(/*json to send/*);
+        httpPost.setEntity(se);
+        HttpClient client = new DefaultHttpClient();
+        HttpResponse response = client.execute(httpPost);
+        StatusLine statusLine = response.getStatusLine();
+        int statusCode = statusLine.getStatusCode();
+        if (statusCode == 200) {
+            HttpEntity entity = response.getEntity();
+            InputStream content = entity.getContent();
+            BufferedReader reader = new BufferedReader(new InputStreamReader(content));
+            String line;
+            while ((line = reader.readLine()) != null) {
+                builder.append(line);
+            }
+        } else {
+            throw new ConnectException("Error connecting to server.");
+            //Log.e(MainActivity.class.toString(), "Failed to get JSON object");
+        }
+        return builder.toString();
+    }
+    */
 }
