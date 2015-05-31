@@ -4,12 +4,17 @@ import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.app.FragmentTransaction;
+import android.app.LocalActivityManager;
+import android.app.TabActivity;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.AsyncTask;
 import android.support.v4.app.ActionBarDrawerToggle;
+import android.support.v4.app.FragmentActivity;
+import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
@@ -25,10 +30,13 @@ import android.widget.ArrayAdapter;
 import android.widget.FrameLayout;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.TabHost;
+import android.widget.TabWidget;
 import android.widget.Toast;
 
 
 import com.sce3.thirdyear.androidmaps.fragments.ResultFragment;
+import com.sce3.thirdyear.androidmaps.fragments.frag;
 import com.sce3.thirdyear.androidmaps.fragments.test;
 import com.sce3.thirdyear.classes.MenuAdapter;
 import com.sce3.thirdyear.classes.MenuItemTemplate;
@@ -39,8 +47,10 @@ import junit.framework.Test;
 import java.io.InputStream;
 import java.util.ArrayList;
 
+import static android.view.View.GONE;
 
-public class MenuActivity extends ActionBarActivity   {
+
+public class MenuActivity extends ActionBarActivity {
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -54,7 +64,9 @@ public class MenuActivity extends ActionBarActivity   {
     Bitmap b;
     ///////////////////////////////////////////////////////////
     private User user; //important for profile fragment
-
+    ////////////////////////////////////////////////////////////
+    private  TabHost myTabHost;
+    private String[] tabsTitles = {"Tab1", "Tab2", "Tab3", "Tab4"};
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -80,7 +92,7 @@ public class MenuActivity extends ActionBarActivity   {
 
         mDrawerList.setAdapter(new MenuAdapter(getApplicationContext(),menuitems));
                 mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-
+        
         //Object a=getSupportActionBar();
         // enable ActionBar app icon to behave as action to toggle nav drawer
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -114,6 +126,8 @@ public class MenuActivity extends ActionBarActivity   {
             selectItem(0);
         }
 
+        myTabHost=(TabHost)findViewById(android.R.id.tabhost);
+        myTabHost.setup();
 
 
     }
@@ -134,14 +148,24 @@ public class MenuActivity extends ActionBarActivity   {
     private void selectItem(int position) {
         // update the main content by replacing fragments
         Fragment fragment;
+        TabWidget t=(TabWidget)findViewById(android.R.id.tabs);
+        if(t.getTabCount()!=0)
+            myTabHost.getTabWidget().removeAllViews();
         if(position==0) {
              resf = new ResultFragment();
             // = (ResultFragment) fragment;
             fragment=resf;
         }
-        else
-        fragment = new test();
-
+        else {
+            fragment = new test();
+            for (int i = 0; i < tabsTitles.length; i++) {
+                String tabName = tabsTitles[i];
+                TabHost.TabSpec spec=myTabHost.newTabSpec(tabName);
+                spec.setContent(R.id.fakeTabContent);
+                spec.setIndicator(tabName);
+                myTabHost.addTab(spec);
+            }
+        }
         //Bundle args = new Bundle();
         //args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
         //fragment.setArguments(args);
@@ -220,5 +244,7 @@ public class MenuActivity extends ActionBarActivity   {
 
         resf.updateTextView();
     }
+
+
 
 }
