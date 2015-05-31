@@ -94,6 +94,41 @@
                     android:hint="@string/apt_num_hint" />
             </LinearLayout>
 
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Floor:"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="20"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/floorEditText"
+                android:hint="Floor #" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/territoryTV"/>
+
+            <EditText
+                android:layout_width="0dp"
+                android:layout_weight="20"
+                android:layout_height="wrap_content"
+                android:inputType="number"
+                android:ems="10"
+                android:id="@+id/territoryEditText"
+                android:hint="@string/territory_hint" />
+
+            </LinearLayout>
+
             <LinearLayout
                 android:orientation="horizontal"
                 android:layout_width="fill_parent"
@@ -195,6 +230,43 @@
                     android:layout_height="wrap_content"
                     android:text="@string/storage"
                     android:id="@+id/storageCheckBox" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Air Condition"
+                    android:id="@+id/airConditionCheckBox" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Renovated"
+                    android:id="@+id/renovatedCheckBox" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Furnished"
+                    android:id="@+id/furnishedCheckBox" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Bars"
+                    android:id="@+id/barsCheckBox" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Unit"
+                    android:id="@+id/unitCheckBox" />
+
+                <CheckBox
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pandoor"
+                    android:id="@+id/pandoorCheckBox" />
+
             </LinearLayout>
 
             <TextView
@@ -223,6 +295,19 @@
                     android:inputType="number" />
 
             </LinearLayout>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/price"
+                android:id="@+id/descriptionTV" />
+
+            <EditText
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:id="@+id/descriptionEditText"
+                android:hint="@string/estimated_price_hint"
+                />
 
             <CheckBox
                 android:layout_width="wrap_content"
