@@ -93,9 +93,10 @@
                 android:layout_height="wrap_content"
                 android:textAppearance="?android:attr/textAppearanceSmall"
                 android:text="Forgot your password?"
-                android:id="@+id/recoverPassTextView"
+                android:id="@+id/ForgotPasswordTextView"
                 android:layout_column="3"
-                android:clickable="true" />
+                android:clickable="true"
+                android:onClick="iForgotPassword"/>
         </TableRow>
 
     </TableLayout>
