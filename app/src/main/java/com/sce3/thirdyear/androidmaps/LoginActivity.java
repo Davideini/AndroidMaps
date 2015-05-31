@@ -23,7 +23,41 @@ public class LoginActivity extends ActionBarActivity {
         setContentView(R.layout.activity_login);
 
     }
+     //st
+    public void iForgotPassword(View v)
+    {
+        TextView emailText = (TextView) findViewById(R.id.emailText);
+        String email=emailText.getText().toString();
+        if(InputValidator.isEmpty(email)|| !InputValidator.Email(email) )
+        {
+            emailText.requestFocus();
+            emailText.setError("This is not an Email");
+        }
+        else
+        {
 
+            String address=String.format("http://%s/JavaMaps/api?action=ForgotPassword&email=%s", JSONRequest.SERVER,email);
+
+            System.out.println(address);
+            try {
+                JSONRequest json=new JSONRequest(address);
+                JSONObject jobj = new JSONObject(json.getJSON());
+                if(jobj.getString("result").equals("success")){
+                    Toast.makeText(LoginActivity.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
+
+                }
+
+                else if(jobj.getString("result").equals("error")){
+                    Toast.makeText(LoginActivity.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                System.out.println(e.getMessage());
+            } catch (Exception e){
+                Toast.makeText(LoginActivity.this, "Error receiving data.", Toast.LENGTH_LONG).show();
+
+            }
+        }
+    }
     public void LoginOnClick(View v){
         TextView emailText = (TextView) findViewById(R.id.emailText);
         TextView passText = (TextView) findViewById(R.id.passText);
