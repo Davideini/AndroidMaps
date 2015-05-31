@@ -1,8 +1,8 @@
 package com.sce3.thirdyear.androidmaps;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -136,6 +136,11 @@ public class MainActivity extends ActionBarActivity {
 
     public void toMapsTest(View view) {
         Intent i = new Intent(MainActivity.this, MapsTestActivity.class);
+        startActivity(i);
+    }
+
+    public void toAddDept(View view) {
+        Intent i = new Intent(MainActivity.this, AddApartment.class);
         startActivity(i);
     }
 }

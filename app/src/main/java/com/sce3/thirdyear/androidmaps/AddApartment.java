@@ -1,25 +1,27 @@
 package com.sce3.thirdyear.androidmaps;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
-import com.google.android.gms.maps.model.LatLng;
 import com.sce3.thirdyear.classes.InputValidator;
 import com.sce3.thirdyear.classes.JSONRequest;
 import com.sce3.thirdyear.classes.SQLiteDB;
 import com.sce3.thirdyear.classes.User;
 import com.sce3.thirdyear.maps.data.Address;
+import com.sce3.thirdyear.maps.data.tools.Utility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 public class AddApartment extends ActionBarActivity {
@@ -29,8 +31,10 @@ public class AddApartment extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_apartment);
+        Utility.SetupUIKeyboard(findViewById(R.id.mainLayout), AddApartment.this);
 
         user = new User(new SQLiteDB(getApplicationContext()));
+
 
         initializeMapFeature();
     }
@@ -58,7 +62,8 @@ public class AddApartment extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public void addNewApt() {
+
+    public void addNewApt(View view) {
         EditText street, city, house_num, apt_num, room_num, area, price, floor_num, territory, descr;
         CheckBox elevator, sunBalcony, mamad, serviceBalcony, parking, hadicappedAccess, storage, rent, sell, ac, renovated, furnished, unit, pandoor, bars;
 
@@ -134,6 +139,31 @@ public class AddApartment extends ActionBarActivity {
         double lng = add2.getLng();
         double lat = add2.getLat();
 
+        Toast.makeText(this, "Lat: " + lat + ", Lng: " + lng, Toast.LENGTH_SHORT).show();
+
+
+        Map<String, String> dict = new HashMap<>();
+
+        dict.put("action", "AddApt");
+        dict.put("city", city.getText().toString());
+        dict.put("isolated_room", mamad.isChecked() ? "0" : "1");
+        dict.put("Lat", String.valueOf(lat));
+        dict.put("Lng", String.valueOf(lng));
+
+        boolean first = true;
+        String delim = "";
+        StringBuilder sb = new StringBuilder(String.format("http://%s/JavaMaps/api?", JSONRequest.SERVER));
+        for (String key : dict.keySet()) {
+
+            if (!first) {
+                delim = "&";
+            }
+            String parm = delim + key + "=" + dict.get(key);
+            sb.append(parm);
+            first = false;
+        }
+
+        String result = sb.toString();
 
         String apartment = String.format("http://%s/JavaMaps/api?action=AddApt&city=%s&price=%s&territory=%s&street=%s&house_num=%s&apt_num=%s&rooms=%s&floor=%s" +
                         "&sizem2=%s&desc=%s&aircondition=%s&elevator=%s&balcony=%s&isolated_room=%s&parking=%s&handicap_access=%s&storage=%s" +
@@ -164,12 +194,12 @@ public class AddApartment extends ActionBarActivity {
     }
 
     public void initializeMapFeature() {
-        Button btn = (Button) findViewById(R.id.getFromMaps);
-        btn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-
-            }
-        });
+//        Button btn = (Button) findViewById(R.id.getFromMaps);
+//        btn.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//
+//            }
+//        });
     }
 }

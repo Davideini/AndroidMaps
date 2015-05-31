@@ -76,7 +76,7 @@ public class Address {
         this.city = city.getText().toString();
         this.street = street.getText().toString();
         this.streetNumber = streetNumber.getText().toString();
-        Address add = Address.FindAddress(this.city + " " + this.streetNumber+ " " + this.city);
+        Address add = Address.FindAddress(this.street + " " + this.streetNumber + " " + this.city);
         this.lat = add.getLat();
         this.lng = add.getLng();
     }
@@ -148,6 +148,8 @@ public class Address {
     }
 
     public LatLng getPosition() {
+
+
         return new LatLng(lat, lng);
     }
 

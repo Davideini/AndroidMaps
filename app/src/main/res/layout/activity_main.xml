@@ -72,6 +72,15 @@
         android:id="@+id/btnMapTest"
         android:onClick="toMapsTest"
         android:layout_alignTop="@+id/btnAddress"
+        android:layout_alignEnd="@+id/regBtn" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="AddApt"
+        android:id="@+id/button2"
+        android:onClick="toAddDept"
+        android:layout_alignTop="@+id/textView"
         android:layout_centerHorizontal="true" />
 
 
