@@ -172,6 +172,18 @@ public class Address {
         return GetLocations(url);
     }
 
+    public static Address FindAddress(String address) {
+
+        List<Address> list = SearchApi(address);
+
+        if (list == null || list.size() == 0) {
+            return new Address(0, 0);
+        }
+
+        return list.get(0);
+    }
+
+
     public static Address AddressByLatLng(LatLng latlng) {
         String parm1 = String.format(BY_LATLNG, latlng.latitude, latlng.longitude);
         String parm2 = String.format(SENSOR, true);

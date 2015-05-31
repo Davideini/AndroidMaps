@@ -3,7 +3,6 @@ package com.sce3.thirdyear.androidmaps.maps;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
@@ -23,24 +22,8 @@ import com.sce3.thirdyear.maps.data.tools.MapUtility;
 import com.sce3.thirdyear.maps.data.tools.MarkerUtility;
 import com.sce3.thirdyear.maps.data.tools.Utility;
 
-import org.apache.http.HttpEntity;
-import org.apache.http.HttpResponse;
-import org.apache.http.StatusLine;
-import org.apache.http.client.ClientProtocolException;
-import org.apache.http.client.HttpClient;
-import org.apache.http.client.methods.HttpGet;
-import org.apache.http.impl.client.DefaultHttpClient;
-import org.json.JSONException;
-import org.json.JSONObject;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 public class FindByAddressActivity extends ActionBarActivity implements SearchView.OnQueryTextListener {
 
@@ -52,6 +35,8 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
     private Marker selectedMarker = null;
 
     private List<Address> locations = null;
+
+    private ListView lvLocations = null;
 
 
     private TextView mStatusView;
@@ -172,28 +157,6 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
 //        });
     }
 
-    private ListView lvLocations = null;
-
-//    @Override
-//    public void onMapReady(final GoogleMap m) {
-//        mMap = MapUtility.GoogleMapsSetup(m, mapClickListener, markerClickListener);
-//
-//        String address = getIntent().getExtras().getString(Address.FORMATTED_ADDRESS);
-//
-//        double lat = getIntent().getExtras().getDouble(Address.LAT);
-//
-//        double lng = getIntent().getExtras().getDouble(Address.LNG);
-//
-//        boolean hasMarkers = SearchMarkers(address, lat, lng);
-//        lvLocations = (ListView) findViewById(R.id.lvLocations);
-//        if (hasMarkers) {
-//            if (address != null)
-//                LocationsList.MakeListView(address, this, lvLocations);
-//            else
-//                LocationsList.MakeListView(new LatLng(lat, lng), this, lvLocations);
-//
-//        }
-//    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -224,75 +187,6 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
         return super.onOptionsItemSelected(item);
     }
 
-    public String getJSON(String address) {
-        StringBuilder builder = new StringBuilder();
-        HttpClient client = new DefaultHttpClient();
-        HttpGet httpGet = new HttpGet(address);
-        try {
-            HttpResponse response = client.execute(httpGet);
-            StatusLine statusLine = response.getStatusLine();
-            int statusCode = statusLine.getStatusCode();
-            if (statusCode == 200) {
-                HttpEntity entity = response.getEntity();
-                InputStream content = entity.getContent();
-                BufferedReader reader = new BufferedReader(new InputStreamReader(content));
-                String line;
-                while ((line = reader.readLine()) != null) {
-                    builder.append(line);
-                }
-            } else {
-                Log.e(FindByAddressActivity.class.toString(), "Failedet JSON object");
-            }
-        } catch (ClientProtocolException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return builder.toString();
-    }
-
-    private static JSONObject getJsonObjectFromMap(Map params) throws JSONException {
-
-        //all the passed parameters from the post request
-        //iterator used to loop through all the parameters
-        //passed in the post request
-        Iterator iter = params.entrySet().iterator();
-
-        //Stores JSON
-        JSONObject holder = new JSONObject();
-
-        //using the earlier example your first entry would get email
-        //and the inner while would get the value which would be 'foo@bar.com'
-        //{ fan: { email : 'foo@bar.com' } }
-
-        //While there is another entry
-        while (iter.hasNext()) {
-            //gets an entry in the params
-            Map.Entry pairs = (Map.Entry) iter.next();
-
-            //creates a key for Map
-            String key = (String) pairs.getKey();
-
-            //Create a new map
-            Map m = (Map) pairs.getValue();
-
-            //object for storing Json
-            JSONObject data = new JSONObject();
-
-            //gets the value
-            Iterator iter2 = m.entrySet().iterator();
-            while (iter2.hasNext()) {
-                Map.Entry pairs2 = (Map.Entry) iter2.next();
-                data.put((String) pairs2.getKey(), (String) pairs2.getValue());
-            }
-
-            //puts email and 'foo@bar.com'  together in map
-            holder.put(key, data);
-        }
-        return holder;
-    }
-
-
     private boolean SearchMarkers(String address, double lat, double lng) {
         boolean hasMarkers = false;
         locations = null;
@@ -319,14 +213,12 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
         return hasMarkers;
     }
 
-
     public boolean onQueryTextChange(String newText) {
 
         return true;
     }
 
     public boolean onQueryTextSubmit(String address) {
-
 
         SearchMarkers(address, 0, 0);
         LocationsList.MakeListView(address, this, lvLocations);
