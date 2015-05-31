@@ -10,7 +10,9 @@
         android:layout_margin="15dp"
         android:src="@android:drawable/ic_menu_report_image"
         android:adjustViewBounds="true"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY"
+        android:onClick="showFullscreen"
+        />
 
     <TextView
         android:layout_width="wrap_content"

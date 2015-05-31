@@ -29,22 +29,22 @@ public class SQLiteDB {
         dbHelper.close();
     }
 
-    public long updateSession(String hash){
-        ContentValues values=new ContentValues();
-        values.put("hash",hash);
+    public long updateSession(String hash) {
+        ContentValues values = new ContentValues();
+        values.put("hash", hash);
         open();
-        long retval=database.update(SESSION_TABLE,values,null,null);
+        long retval = database.update(SESSION_TABLE, values, null, null);
         close();
         return retval;
     }
 
-    public String getSavedSession(){
-       open();
-       Cursor c=database.query(SESSION_TABLE,new String[] {"hash"},null,null,null,null,null,null);
-       c.moveToFirst();
-       String hash=c.getString(c.getColumnIndex("hash"));
-       close();
-       return hash;
+    public String getSavedSession() {
+        open();
+        Cursor c = database.query(SESSION_TABLE, new String[]{"hash"}, null, null, null, null, null, null);
+        c.moveToFirst();
+        String hash = c.getString(c.getColumnIndex("hash"));
+        close();
+        return hash;
     }
 
 }

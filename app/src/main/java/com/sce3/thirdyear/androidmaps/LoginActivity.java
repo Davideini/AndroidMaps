@@ -24,19 +24,19 @@ public class LoginActivity extends ActionBarActivity {
 
     }
 
-    public void LoginOnClick(View v) {
+    public void LoginOnClick(View v){
         TextView emailText = (TextView) findViewById(R.id.emailText);
         TextView passText = (TextView) findViewById(R.id.passText);
-        String address = String.format("http://%s/JavaWeb/api?action=Login&email=%s&password=%s", JSONRequest.SERVER, emailText.getText(), passText.getText());
+        String address=String.format("http://%s/JavaWeb/api?action=Login&email=%s&password=%s",JSONRequest.SERVER,emailText.getText(),passText.getText());
         //TextView res=(TextView)findViewById(R.id.textView3);
 
         System.out.println(address);
         try {
-            JSONRequest json = new JSONRequest(address);
+            JSONRequest json=new JSONRequest(address);
             JSONObject jobj = new JSONObject(json.getJSON());
-            if (jobj.getString("result").equals("success")) {
+            if(jobj.getString("result").equals("success")){
                 //res.setText(jobj.getString("session"));
-                SQLiteDB db = new SQLiteDB(getApplicationContext());
+                SQLiteDB db=new SQLiteDB(getApplicationContext());
                 db.updateSession(jobj.getString("session"));
                 Intent i = new Intent(LoginActivity.this, MainActivity.class);
                 startActivity(i);
@@ -46,12 +46,13 @@ public class LoginActivity extends ActionBarActivity {
                 edit.putString("session",jobj.getString("session"));
                 edit.commit();
                  */
-            } else {
+            }
+            else{
                 Toast.makeText(this, jobj.getString("message"), Toast.LENGTH_LONG).show();
             }
         } catch (JSONException e) {
             System.out.println(e.getMessage());
-        } catch (Exception e) {
+        } catch (Exception e){
             Toast.makeText(this, "Error receiving data.", Toast.LENGTH_LONG).show();
         }
         //Toast.makeText(this.getApplicationContext(),"test",Toast.LENGTH_SHORT);
@@ -85,5 +86,5 @@ public class LoginActivity extends ActionBarActivity {
     public void toRegister(View view) {
         Intent intent = new Intent(LoginActivity.this, RegistrationActivity.class);
         startActivity(intent);
-    }
+  }
 }

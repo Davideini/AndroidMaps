@@ -4,6 +4,9 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -50,7 +53,7 @@ public class HistoryActivity extends ActionBarActivity {
                     }
                     list.add(map);
                 }
-                    ListAdapter theAdapter = new MyListAdapter(this, (List) list);
+                    final ArrayAdapter theAdapter = new MyListAdapter(this, (List) list);
                     ListView lv = (ListView) findViewById(R.id.listView);
                     lv.setAdapter(theAdapter);
             }

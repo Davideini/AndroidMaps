@@ -1,8 +1,5 @@
 package com.sce3.thirdyear.classes;
 
-import android.widget.Toast;
-
-import org.json.JSONException;
 import org.json.JSONObject;
 
 public class User {
@@ -31,8 +28,6 @@ public class User {
             phone1=jobj.getString("phone1");
             phone2=jobj.getString("phone2");
 
-        } catch (JSONException e) {
-            System.out.println(e.getMessage());
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }

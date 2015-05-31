@@ -9,6 +9,7 @@ import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -24,12 +25,11 @@ import java.util.concurrent.Future;
 
 public class JSONRequest implements Callable<String> {
     //public final static String SERVER = "192.168.80.1:8081";
-    public final static String SERVER = "10.200.201.176:8081";
+    public final static String SERVER = "10.200.204.243:81";//"10.0.0.138:81"; //"10.200.204.243:81";
     public final static String IMAGE_DIR = "JavaWeb/images";
 
     String address;
     Future<String> future;
-
     public JSONRequest(String address) {
         this.address = address;
         ExecutorService pool = Executors.newFixedThreadPool(1);
@@ -39,16 +39,17 @@ public class JSONRequest implements Callable<String> {
     public String getJSON() throws ExecutionException, InterruptedException {
         return future.get();
     }
-
     public String call() throws IOException {
         return getJSON(address);
     }
 
     private String getJSON(String address) throws IOException {
         StringBuilder builder = new StringBuilder();
-        HttpClient client = new DefaultHttpClient();
+        HttpParams httpParameters=new BasicHttpParams();
         HttpGet httpGet = new HttpGet(address);
-        HttpConnectionParams.setConnectionTimeout(new BasicHttpParams(), 5000);
+        HttpConnectionParams.setConnectionTimeout(httpParameters, 5000);
+        HttpConnectionParams.setSoTimeout(httpParameters,5000);
+        HttpClient client = new DefaultHttpClient(httpParameters);
         HttpResponse response = client.execute(httpGet);
         StatusLine statusLine = response.getStatusLine();
         int statusCode = statusLine.getStatusCode();
