@@ -35,6 +35,6 @@ public class HistoryTabs  {
             tabHost.addTab(spec);
 
         }
-        return true;
+        return false;
     }
 }
