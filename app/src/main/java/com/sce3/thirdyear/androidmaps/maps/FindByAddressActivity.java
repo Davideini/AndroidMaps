@@ -44,6 +44,7 @@ import java.util.Map;
 
 public class FindByAddressActivity extends ActionBarActivity implements SearchView.OnQueryTextListener {
 
+    // From search results shwo on map
     private GoogleMap mMap;
 
     private Marker userMarker = null;

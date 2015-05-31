@@ -35,6 +35,14 @@ public class Address {
     public static final String POSTAL_CODE = "postalCode";
     public static final String FORMATTED_ADDRESS = "formattedAddress";
 
+    // For matan
+    public static final String SET_ZOOM = "setzoom"; // number between 1-19
+    public static final String SHOW_DAILOG = "showdailog"; // true of false
+    public static final String SEARCHABLE = "searchable"; // true of false
+    public static final String FOR_DEPARTMANTS = "fordepartmants"; // true of false
+
+
+
     // private variables
     private String city;
     private String country;
