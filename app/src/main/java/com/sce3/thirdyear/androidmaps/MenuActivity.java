@@ -38,6 +38,7 @@ import android.widget.Toast;
 import com.sce3.thirdyear.androidmaps.fragments.ResultFragment;
 import com.sce3.thirdyear.androidmaps.fragments.frag;
 import com.sce3.thirdyear.androidmaps.fragments.test;
+import com.sce3.thirdyear.classes.HistoryTabs;
 import com.sce3.thirdyear.classes.MenuAdapter;
 import com.sce3.thirdyear.classes.MenuItemTemplate;
 import com.sce3.thirdyear.classes.User;
@@ -147,31 +148,34 @@ public class MenuActivity extends ActionBarActivity {
 
     private void selectItem(int position) {
         // update the main content by replacing fragments
-        Fragment fragment;
+        Fragment fragment=null;
         TabWidget t=(TabWidget)findViewById(android.R.id.tabs);
         if(t.getTabCount()!=0)
             myTabHost.getTabWidget().removeAllViews();
         if(position==0) {
              resf = new ResultFragment();
+            getFragmentManager().beginTransaction().replace(R.id.content_frame, resf).commit();
             // = (ResultFragment) fragment;
-            fragment=resf;
+            //fragment=resf;
         }
         else {
-            fragment = new test();
+            //fragment = new test();
+            /*
             for (int i = 0; i < tabsTitles.length; i++) {
                 String tabName = tabsTitles[i];
                 TabHost.TabSpec spec=myTabHost.newTabSpec(tabName);
                 spec.setContent(R.id.fakeTabContent);
                 spec.setIndicator(tabName);
                 myTabHost.addTab(spec);
-            }
+            }*/
+            new HistoryTabs(myTabHost,getFragmentManager());
         }
         //Bundle args = new Bundle();
         //args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
         //fragment.setArguments(args);
 
-        FragmentManager fragmentManager = getFragmentManager();
-        fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
+        //FragmentManager fragmentManager = getFragmentManager();
+        //fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         //resf=(ResultFragment) fragmentManager.findFragmentById(R.id.content_frame);
 
 
