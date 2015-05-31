@@ -11,19 +11,26 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.google.android.gms.maps.model.LatLng;
 import com.sce3.thirdyear.classes.InputValidator;
 import com.sce3.thirdyear.classes.JSONRequest;
+import com.sce3.thirdyear.classes.SQLiteDB;
+import com.sce3.thirdyear.classes.User;
+import com.sce3.thirdyear.maps.data.Address;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
 
 public class AddApartment extends ActionBarActivity {
+    private User user;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_apartment);
+
+        user = new User(new SQLiteDB(getApplicationContext()));
 
         initializeMapFeature();
     }
@@ -54,6 +61,7 @@ public class AddApartment extends ActionBarActivity {
     public void addNewApt() {
         EditText street, city, house_num, apt_num, room_num, area, price, floor_num, territory, descr;
         CheckBox elevator, sunBalcony, mamad, serviceBalcony, parking, hadicappedAccess, storage, rent, sell, ac, renovated, furnished, unit, pandoor, bars;
+
 
         street = (EditText) findViewById(R.id.streetNameEditText);
         city = (EditText) findViewById(R.id.cityEditText);
@@ -89,7 +97,6 @@ public class AddApartment extends ActionBarActivity {
         pandoor = (CheckBox) findViewById(R.id.pandoorCheckBox);
 
 
-
         if (!InputValidator.EmptyField(street.getText().toString())) {
             street.requestFocus();
             street.setError("FIELD CANNOT BE EMPTY");
@@ -123,30 +130,33 @@ public class AddApartment extends ActionBarActivity {
             Toast.makeText(getApplicationContext(), "Must Choose Rent\\Sell!", Toast.LENGTH_SHORT).show();
         }
 
-        String apartment=String.format("http://%s/JavaMaps/api?action=AddApt&city=%s&price=%s&territory=%s&street=%s&house_num=%s&apt_num=%s&rooms=%s&floor=%s" +
-                "&sizem2=%s&desc=%s&aircondition=%s&elevator=%s&balcony=%s&isolated_room=%s&parking=%s&handicap_access=%s&storage=%s" +
-                "&bars=%s&sun_balcony=%s&renovated=%s&furnished=%s&unit=%s&pandoor=%s", JSONRequest.SERVER,city.getText().toString(),price.getText().toString(),
-                territory.getText().toString(),street.getText().toString(),house_num.getText().toString(),apt_num.getText().toString(),room_num.getText().toString(),
-                floor_num.getText().toString(),area.getText().toString(),descr.getText().toString(),ac.isChecked()?'0':'1',elevator.isChecked()?'0':'1',serviceBalcony.isChecked()?'0':'1',
-                mamad.isChecked()?'0':'1',parking.isChecked()?'0':'1',hadicappedAccess.isChecked()?'0':'1',storage.isChecked()?'0':'1',bars.isChecked()?'0':'1',sunBalcony.isChecked()?'0':'1',
-                renovated.isChecked()?'0':'1',furnished.isChecked()?'0':'1',unit.isChecked()?'0':'1',pandoor.isChecked()?'0':'1');
+        Address add2 = new Address(street, house_num, city);
+        double lng = add2.getLng();
+        double lat = add2.getLat();
+
+
+        String apartment = String.format("http://%s/JavaMaps/api?action=AddApt&city=%s&price=%s&territory=%s&street=%s&house_num=%s&apt_num=%s&rooms=%s&floor=%s" +
+                        "&sizem2=%s&desc=%s&aircondition=%s&elevator=%s&balcony=%s&isolated_room=%s&parking=%s&handicap_access=%s&storage=%s" +
+                        "&bars=%s&sun_balcony=%s&renovated=%s&furnished=%s&unit=%s&pandoor=%s", JSONRequest.SERVER, user.getID() + "", city.getText().toString(), price.getText().toString(),
+                territory.getText().toString(), street.getText().toString(), house_num.getText().toString(), apt_num.getText().toString(), room_num.getText().toString(),
+                floor_num.getText().toString(), area.getText().toString(), descr.getText().toString(), ac.isChecked() ? '0' : '1', elevator.isChecked() ? '0' : '1', serviceBalcony.isChecked() ? '0' : '1',
+                mamad.isChecked() ? '0' : '1', parking.isChecked() ? '0' : '1', hadicappedAccess.isChecked() ? '0' : '1', storage.isChecked() ? '0' : '1', bars.isChecked() ? '0' : '1', sunBalcony.isChecked() ? '0' : '1',
+                renovated.isChecked() ? '0' : '1', furnished.isChecked() ? '0' : '1', unit.isChecked() ? '0' : '1', pandoor.isChecked() ? '0' : '1');
 
         System.out.println(apartment);
         try {
-            JSONRequest json=new JSONRequest(apartment);
+            JSONRequest json = new JSONRequest(apartment);
             JSONObject jobj = new JSONObject(json.getJSON());
-            if(jobj.getString("result").equals("success")){
+            if (jobj.getString("result").equals("success")) {
                 Toast.makeText(AddApartment.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
                 Intent myIntent = new Intent(AddApartment.this, RegistrationBuyerActivity.class);
                 AddApartment.this.startActivity(myIntent);
-            }
-
-            else if(jobj.getString("result").equals("error")){
+            } else if (jobj.getString("result").equals("error")) {
                 Toast.makeText(AddApartment.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
             }
         } catch (JSONException e) {
             System.out.println(e.getMessage());
-        } catch (Exception e){
+        } catch (Exception e) {
             Toast.makeText(AddApartment.this, "Error receiving data.", Toast.LENGTH_LONG).show();
 
         }
