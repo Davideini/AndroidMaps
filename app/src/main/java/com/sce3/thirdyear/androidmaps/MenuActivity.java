@@ -3,6 +3,7 @@ package com.sce3.thirdyear.androidmaps;
 
 import android.app.Fragment;
 
+import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
@@ -28,6 +29,10 @@ import java.util.ArrayList;
 
 
 public class MenuActivity extends ActionBarActivity {
+    /////////////////////////////////////////////////////////
+    //static keys
+    public  final static String SER_KEY = "menuActivityTOHouseDetails";
+    public  final static String PAR_KEY = "com.easyinfogeek.objectPass.par";
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -115,6 +120,8 @@ public class MenuActivity extends ActionBarActivity {
        resf.sentToFullscreenActivity(this);
 
     }
+
+
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {
         @Override

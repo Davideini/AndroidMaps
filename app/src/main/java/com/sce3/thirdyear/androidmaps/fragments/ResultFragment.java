@@ -17,11 +17,15 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.google.android.gms.internal.la;
+import com.google.android.gms.plus.model.people.Person;
+import com.sce3.thirdyear.androidmaps.HouseDetailsActivity;
+import com.sce3.thirdyear.androidmaps.MenuActivity;
 import com.sce3.thirdyear.androidmaps.R;
 import com.sce3.thirdyear.androidmaps.showImgsActivity;
 import com.sce3.thirdyear.classes.Ad;
@@ -42,6 +46,7 @@ public class ResultFragment extends Fragment {
     ImageView img;
     ArrayList<String> urls;
     TextView desc,address;
+    Button moreBtn;
     boolean isImageFitToScreen;
     Bitmap b;
     public ResultFragment() {
@@ -51,9 +56,9 @@ public class ResultFragment extends Fragment {
         urls.add("http://images.yad2.co.il/Pic/201505/29/2_1/o/o2_1_1_177227_20150529220536.jpg");
         urls.add("http://images.yad2.co.il/Pic/201505/29/2_1/o/o2_1_1_171994_20150529230551.jpg");
         urls.add("http://images.yad2.co.il/Pic/201505/29/2_1/o/o2_1_1_174092_20150529210544.jpg");
-        ads.add(new Ad(new Apartment(1, "yavne",120200, "begin", "duani 8",true, false, true, true, true, false, true, true, false, true, true, true, false, 5.5f,5,123.123f, 34.215661f, 70.5f,"most beautiful apartment"),null ) );
-        ads.add(new Ad(new Apartment(2, "asd",120200, "yud", "wdd 8",true, false, true, true, true, false, true, true, false, true, true, true, false, 5.5f,5,123.123f, 34.215661f, 70.5f,"beautiful apartment"),null ) );
-        ads.add(new Ad(new Apartment(3, "yawfaw",120200, "alef", "wrwfw 1523b",true, false, true, true, true, false, true, true, false, true, true, true, false, 5.5f,5,123.123f, 34.215661f, 70.5f,"efewf eeefefe"),null ) );
+        ads.add(new Ad(new Apartment(1,555,0,"yavne",120200, "begin", "duani 8",true, false, true, true, true, false, true, true, false, true, true, true, false, 5.5f,5,123.123f, 34.215661f, 70.5f,"most beautiful apartment"),null ) );
+        ads.add(new Ad(new Apartment(2,444,1, "asd",120200, "yud", "wdd 8",true, false, true, true, true, false, true, true, false, true, true, true, false, 5.5f,5,123.123f, 34.215661f, 70.5f,"beautiful apartment"),null ) );
+        ads.add(new Ad(new Apartment(3,333,2, "yawfaw",120200, "alef", "wrwfw 1523b",true, false, true, true, true, false, true, true, false, true, true, true, false, 5.5f,5,123.123f, 34.215661f, 70.5f,"efewf eeefefe"),null ) );
 
 
     }
@@ -72,7 +77,19 @@ public class ResultFragment extends Fragment {
         desc=(TextView) view.findViewById(R.id.DescVal);
         address=(TextView) view.findViewById(R.id.AddressVal);
         img=(ImageView)view.findViewById(R.id.imgResButton);
-
+        moreBtn=(Button) view.findViewById(R.id.mDetailsBtn);
+        moreBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(numOfAds < ads.size()){
+                    Intent mIntent = new Intent(getActivity(),HouseDetailsActivity.class);
+                    Bundle mBundle = new Bundle();
+                    mBundle.putSerializable(MenuActivity.SER_KEY,ads.get(numOfAds));
+                    mIntent.putExtras(mBundle);
+                    startActivity(mIntent);
+                }
+            }
+        });
         updateTextView();
         return view;
     }
@@ -86,7 +103,7 @@ public class ResultFragment extends Fragment {
 
         if(numOfAds<ads.size()) {
             address.setText(ads.get(numOfAds).getApartment().getAddress().toString());
-            desc.setText(ads.get(numOfAds).getApartment().getDesc().toString());
+            desc.setText(ads.get(numOfAds).getApartment().getComment().toString());
             setMainImg(numOfAds);
             numOfAds++;
         }
@@ -113,9 +130,7 @@ public class ResultFragment extends Fragment {
        intent.putExtra("aaa",b);
        startActivity(intent);
     }
-    public void getHousedetails() {
 
-    }
 
     public class downloadImg extends AsyncTask<String, Void, Bitmap> {
         ImageView bmImage;

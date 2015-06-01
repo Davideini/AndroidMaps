@@ -1,10 +1,12 @@
 package com.sce3.thirdyear.classes;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
  * Created by win7 on 25/05/2015.
  */
+
 public class Apartment  {
     int id;
     int user_id;
