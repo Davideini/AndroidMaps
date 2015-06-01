@@ -5,8 +5,10 @@ import java.util.Date;
 /**
  * Created by win7 on 25/05/2015.
  */
-public class Apartment {
+public class Apartment  {
     int id;
+    int user_id;
+    int type_id;
     String city;
     int price;
     String territory;
@@ -29,10 +31,12 @@ public class Apartment {
     float longitude;
     float latitude;
     float sizem2;
-    String desc;
+    String comment;
 
-    public Apartment(int id, String city, int price, String territory, String address, boolean aircondition, boolean elevator, boolean balcony, boolean isolated_room, boolean parking, boolean handicap_access, boolean storage, boolean bars, boolean sun_balcony, boolean renovated, boolean furnished, boolean unit, boolean pandoor, float rooms, int floor, float longitude, float latitude, float sizem2,String desc) {
+    public Apartment(int id, int user_id, int type_id, String city, int price, String territory, String address, boolean aircondition, boolean elevator, boolean balcony, boolean isolated_room, boolean parking, boolean handicap_access, boolean storage, boolean bars, boolean sun_balcony, boolean renovated, boolean furnished, boolean unit, boolean pandoor, float rooms, int floor, float longitude, float latitude, float sizem2, String comment) {
         this.id = id;
+        this.user_id = user_id;
+        this.type_id = type_id;
         this.city = city;
         this.price = price;
         this.territory = territory;
@@ -55,12 +59,32 @@ public class Apartment {
         this.longitude = longitude;
         this.latitude = latitude;
         this.sizem2 = sizem2;
-        this.desc=desc;
+        this.comment = comment;
     }
 
-    public int getId() {
-        return id;
+
+    public int getUser_id() {
+        return user_id;
     }
+
+    public void setUser_id(int user_id) {
+        this.user_id = user_id;
+    }
+
+    public int getType_id() {
+        return type_id;
+    }
+
+    public void setType_id(int type_id) {
+        this.type_id = type_id;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {this.comment = comment;}
+    public int getId() {return id;}
 
     public void setId(int id) {
         this.id = id;
@@ -96,13 +120,6 @@ public class Apartment {
 
     public void setAddress(String address) {
         this.address = address;
-    }
-    public String getDesc() {
-        return desc;
-    }
-
-    public void setDesc(String desc) {
-        this.desc = desc;
     }
 
     public boolean isAircondition() {
