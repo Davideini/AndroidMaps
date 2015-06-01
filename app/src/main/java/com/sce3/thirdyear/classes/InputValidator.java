@@ -55,5 +55,20 @@ public final class InputValidator {
     {
         return text.matches("[a-zA-Z0-9 ]+");
     }
+    /*min value smaller than max value
+    * Author: Dj Arkash
+     */
+    public static boolean MinNotMax(int minP,int maxP) {
+        if (minP > maxP) return true;
+        return false;
+    }
+    /*No negative values
+    * Author: Dj Arkash
+     */
+    public static boolean NotNegative(String value)
+    {
+        if(value.charAt(0) == '-') return true;
+        return false;
+    }
 
 }
