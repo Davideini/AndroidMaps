@@ -7,7 +7,7 @@ import java.util.Date;
  * Created by win7 on 25/05/2015.
  */
 
-public class Apartment  {
+public class Apartment implements Serializable {
     int id;
     int user_id;
     int type_id;

@@ -12,6 +12,10 @@ import android.widget.EditText;
 import android.widget.Toast;
 import android.view.View.OnClickListener;
 
+import com.google.android.gms.plus.model.people.Person;
+import com.sce3.thirdyear.classes.Ad;
+import com.sce3.thirdyear.classes.Apartment;
+
 
 public class HouseDetailsActivity extends ActionBarActivity {
     private EditText SN;
@@ -37,7 +41,7 @@ public class HouseDetailsActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_house_details);
-
+ ///////////////////////initial views
         SN = (EditText)findViewById(R.id.StreetN);
         City = (EditText)findViewById(R.id.city);
         HN = (EditText)findViewById(R.id.HouseN);
@@ -55,6 +59,22 @@ public class HouseDetailsActivity extends ActionBarActivity {
         Elevator = (CheckBox)findViewById(R.id.elevator);
         Balcony = (CheckBox)findViewById(R.id.SunBalcony);
         OK = (Button)findViewById(R.id.OKButton);
+///////////////////////////////////////////////////////////////////
+        Apartment ap = (Apartment) getIntent().getSerializableExtra(MenuActivity.SER_KEY);
+        SN.setText(ap.getAddress());
+        City.setText(ap.getCity());
+        //HN.setText(ap.get);
+        Rooms.setText(String.valueOf(ap.getRooms()));
+        service.setChecked(ap.isBalcony());
+        //Mamad.setActivated(ap.);
+        Parking.setChecked(ap.isParking());
+        HandiAccess.setChecked(ap.isHandicap_access());
+        Storage.setChecked(ap.isStorage());
+        Elevator.setChecked(ap.isStorage());
+        Balcony.setChecked(ap.isBalcony());
+
+        //AA.setText();
+
 
 
         OKButtonListner = new OnClickListener(){
