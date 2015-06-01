@@ -140,7 +140,7 @@ public class RegistrationActivity extends ActionBarActivity {
                 else
                 {
 
-                    String address=String.format("http://%s/JavaWeb/api?action=Registration&email=%s&password=%s&fname=%s&lname=%s&phone1=%s&phone2=%s", JSONRequest.SERVER,EmailAddress,Password,FirstName,LastName,PhoneNumber1,PhoneNumber2);
+                    String address=String.format("http://%s/JavaMaps/api?action=Registration&email=%s&password=%s&fname=%s&lname=%s&phone1=%s&phone2=%s", JSONRequest.SERVER,EmailAddress,Password,FirstName,LastName,PhoneNumber1,PhoneNumber2);
 
                     System.out.println(address);
                     try {
@@ -256,7 +256,7 @@ public class RegistrationActivity extends ActionBarActivity {
                 else
                 {
 
-                    String address=String.format("http://%s/JavaWeb/api?action=Registration&email=%s&password=%s&fname=%s&lname=%s&phone1=%s&phone2=%s", JSONRequest.SERVER,EmailAddress,Password,FirstName,LastName,PhoneNumber1,PhoneNumber2);
+                    String address=String.format("http://%s/JavaMaps/api?action=Registration&email=%s&password=%s&fname=%s&lname=%s&phone1=%s&phone2=%s", JSONRequest.SERVER,EmailAddress,Password,FirstName,LastName,PhoneNumber1,PhoneNumber2);
 
                     System.out.println(address);
                     try {
