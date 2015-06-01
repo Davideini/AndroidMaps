@@ -31,8 +31,7 @@ import java.util.ArrayList;
 public class MenuActivity extends ActionBarActivity {
     /////////////////////////////////////////////////////////
     //static keys
-    public  final static String SER_KEY = "menuActivityTOHouseDetails";
-    public  final static String PAR_KEY = "com.easyinfogeek.objectPass.par";
+    public  final static String SER_KEY = "com.sce3.thirdyear.HouseDetailsActivity";
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -121,6 +120,9 @@ public class MenuActivity extends ActionBarActivity {
 
     }
 
+    public void moreDetailsFromRes(View view) {
+        ((ResultFragment)getFragmentManager().findFragmentById(R.id.content_frame)).moreDetails();
+    }
 
 
     private class DrawerItemClickListener implements ListView.OnItemClickListener {

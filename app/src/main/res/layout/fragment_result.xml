@@ -55,7 +55,8 @@
         android:text="more..."
         android:id="@+id/mDetailsBtn"
         android:layout_below="@+id/Desc"
-        android:layout_alignStart="@+id/Desc"/>
+        android:layout_alignStart="@+id/Desc"
+        android:onClick="moreDetailsFromRes"/>
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"

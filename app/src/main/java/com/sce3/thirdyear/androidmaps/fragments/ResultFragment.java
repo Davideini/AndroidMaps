@@ -67,7 +67,19 @@ public class ResultFragment extends Fragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        //moreBtn.setOnClickListener(new View.OnClickListener() {
+          //  @Override
+           /* public void onClick(View v) {
+                //if(numOfAds < ads.size()){
+                Intent mIntent = new Intent(getActivity().getApplicationContext(),HouseDetailsActivity.class);
+                //Bundle mBundle = new Bundle();
+                //mBundle.putSerializable(MenuActivity.SER_KEY,ads.get(numOfAds));
+                //mIntent.putExtras(mBundle);
+                startActivity(mIntent);
 
+                // }
+            }
+        });*/
     }
 
     @Override
@@ -78,18 +90,6 @@ public class ResultFragment extends Fragment {
         address=(TextView) view.findViewById(R.id.AddressVal);
         img=(ImageView)view.findViewById(R.id.imgResButton);
         moreBtn=(Button) view.findViewById(R.id.mDetailsBtn);
-        moreBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                if(numOfAds < ads.size()){
-                    Intent mIntent = new Intent(getActivity(),HouseDetailsActivity.class);
-                    Bundle mBundle = new Bundle();
-                    mBundle.putSerializable(MenuActivity.SER_KEY,ads.get(numOfAds));
-                    mIntent.putExtras(mBundle);
-                    startActivity(mIntent);
-                }
-            }
-        });
         updateTextView();
         return view;
     }
@@ -116,9 +116,13 @@ public class ResultFragment extends Fragment {
        // scaleImage();
 
     }
-    public void getResults()
+    public void moreDetails()
     {
-
+        if((numOfAds-1) < ads.size()) {
+            Intent mIntent = new Intent(this.getActivity().getApplicationContext(), HouseDetailsActivity.class);
+            mIntent.putExtra(MenuActivity.SER_KEY,ads.get(numOfAds-1).getApartment());
+            startActivity(mIntent);
+        }
 
 
     }
@@ -129,6 +133,7 @@ public class ResultFragment extends Fragment {
        Intent intent = new Intent(con, showImgsActivity.class);
        intent.putExtra("aaa",b);
        startActivity(intent);
+
     }
 
 
