@@ -34,7 +34,7 @@ public class MyListAdapter extends ArrayAdapter<Object> {
         final int id = (int) map.get("id");
         String city = (String) map.get("city");
         String address = (String) map.get("address");
-        String price = (String) map.get("price");
+        String price = String.valueOf((int) map.get("price"));
         String filename = (String) map.get("filename");
 
 
@@ -50,7 +50,8 @@ public class MyListAdapter extends ArrayAdapter<Object> {
         ImageView theImageView = (ImageView) theView.findViewById(R.id.imageView2);
         new DownloadImageTask(theImageView).execute(String.format("http://%s/%s/%s", JSONRequest.SERVER, JSONRequest.IMAGE_DIR, filename));
 
-        ImageView delete = (ImageView) theView.findViewById(R.id.deletebtn);
+        //ImageView delete = (ImageView) theView.findViewById(R.id.deletebtn);
+        /*
         delete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -77,7 +78,7 @@ public class MyListAdapter extends ArrayAdapter<Object> {
                     e.printStackTrace();
                 }
             }
-        });
+        });*/
         return theView;
     }
 }

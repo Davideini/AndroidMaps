@@ -62,7 +62,7 @@ public class LoginActivity extends ActionBarActivity {
     public void LoginOnClick(View v){
         TextView emailText = (TextView) findViewById(R.id.emailText);
         TextView passText = (TextView) findViewById(R.id.passText);
-        String address=String.format("http://%s/JavaMaps/api?action=Login&email=%s&password=%s",JSONRequest.SERVER,emailText.getText(),passText.getText());
+        String address=String.format("http://%s/JavaWeb/api?action=Login&email=%s&password=%s",JSONRequest.SERVER,emailText.getText(),passText.getText());
         //TextView res=(TextView)findViewById(R.id.textView3);
 
         System.out.println(address);
