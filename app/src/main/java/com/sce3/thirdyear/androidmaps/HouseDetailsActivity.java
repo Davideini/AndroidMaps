@@ -58,9 +58,12 @@ public class HouseDetailsActivity extends ActionBarActivity {
         Storage = (CheckBox)findViewById(R.id.storage);
         Elevator = (CheckBox)findViewById(R.id.elevator);
         Balcony = (CheckBox)findViewById(R.id.SunBalcony);
-        OK = (Button)findViewById(R.id.OKButton);
+
+        //OK = (Button)findViewById(R.id.OKButton);
+
 ///////////////////////////////////////////////////////////////////
-        Apartment ap = (Apartment) getIntent().getSerializableExtra(MenuActivity.SER_KEY);
+        //get Apartment from some Activity
+        Apartment ap = (Apartment) getIntent().getSerializableExtra(MenuActivity.SER_KEY);//this is the static key from menuActivity
         SN.setText(ap.getAddress());
         City.setText(ap.getCity());
         //HN.setText(ap.get);
@@ -72,11 +75,12 @@ public class HouseDetailsActivity extends ActionBarActivity {
         Storage.setChecked(ap.isStorage());
         Elevator.setChecked(ap.isStorage());
         Balcony.setChecked(ap.isBalcony());
+        price.setText(String.valueOf(ap.getPrice()));
 
         //AA.setText();
 
 
-
+/*
         OKButtonListner = new OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -96,6 +100,7 @@ public class HouseDetailsActivity extends ActionBarActivity {
             }
         };
         OK.setOnClickListener(OKButtonListner);
+        */
     }
 
 

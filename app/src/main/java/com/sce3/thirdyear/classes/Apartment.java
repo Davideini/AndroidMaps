@@ -12,7 +12,7 @@ public class Apartment implements Serializable {
     int user_id;
     int type_id;
     String city;
-    int price;
+    float price;
     String territory;
     String address;
     boolean aircondition;
@@ -100,11 +100,11 @@ public class Apartment implements Serializable {
         this.city = city;
     }
 
-    public int getPrice() {
+    public float getPrice() {
         return price;
     }
 
-    public void setPrice(int price) {
+    public void setPrice(float price) {
         this.price = price;
     }
 
