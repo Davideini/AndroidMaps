@@ -91,6 +91,10 @@
         <activity
             android:name="com.sce3.thirdyear.AddNewApt"
             android:label="@string/title_activity_add_new_apt"></activity>
+        <activity
+            android:name=".SearchActivity"
+            android:label="@string/title_activity_search" >
+        </activity>
     </application>
 
 </manifest>
