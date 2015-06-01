@@ -1,54 +1,30 @@
 package com.sce3.thirdyear.androidmaps;
 
-import android.app.ActionBar;
-import android.app.Activity;
+
 import android.app.Fragment;
-import android.app.FragmentManager;
-import android.app.FragmentTransaction;
-import android.app.LocalActivityManager;
-import android.app.TabActivity;
+
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
-import android.os.AsyncTask;
 import android.support.v4.app.ActionBarDrawerToggle;
-import android.support.v4.app.FragmentActivity;
-import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.Window;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabWidget;
-import android.widget.Toast;
-
-
 import com.sce3.thirdyear.androidmaps.fragments.ResultFragment;
-import com.sce3.thirdyear.androidmaps.fragments.frag;
-import com.sce3.thirdyear.androidmaps.fragments.test;
-import com.sce3.thirdyear.classes.HistoryTabs;
 import com.sce3.thirdyear.classes.MenuAdapter;
 import com.sce3.thirdyear.classes.MenuItemTemplate;
+import com.sce3.thirdyear.classes.MenuTabs;
 import com.sce3.thirdyear.classes.User;
-
-import junit.framework.Test;
-
-import java.io.InputStream;
 import java.util.ArrayList;
-
-import static android.view.View.GONE;
 
 
 public class MenuActivity extends ActionBarActivity {
@@ -67,7 +43,8 @@ public class MenuActivity extends ActionBarActivity {
     private User user; //important for profile fragment
     ////////////////////////////////////////////////////////////
     private  TabHost myTabHost;
-    private String[] tabsTitles = {"Tab1", "Tab2", "Tab3", "Tab4"};
+    private MenuTabs mt;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -129,7 +106,7 @@ public class MenuActivity extends ActionBarActivity {
 
         myTabHost=(TabHost)findViewById(android.R.id.tabhost);
         myTabHost.setup();
-
+        mt=new MenuTabs(myTabHost,getFragmentManager());
 
     }
 
@@ -148,6 +125,7 @@ public class MenuActivity extends ActionBarActivity {
 
     private void selectItem(int position) {
         // update the main content by replacing fragments
+
         Fragment fragment=null;
         TabWidget t=(TabWidget)findViewById(android.R.id.tabs);
         if(t.getTabCount()!=0)
@@ -158,18 +136,15 @@ public class MenuActivity extends ActionBarActivity {
             // = (ResultFragment) fragment;
             //fragment=resf;
         }
-        else {
-            //fragment = new test();
-            /*
-            for (int i = 0; i < tabsTitles.length; i++) {
-                String tabName = tabsTitles[i];
-                TabHost.TabSpec spec=myTabHost.newTabSpec(tabName);
-                spec.setContent(R.id.fakeTabContent);
-                spec.setIndicator(tabName);
-                myTabHost.addTab(spec);
-            }*/
-            new HistoryTabs(myTabHost,getFragmentManager());
+        else if(position==1){
+            mt.createSearchTabs();
         }
+        else if(position==2){
+            mt.createHistoryTabs();
+        }
+        else {getFragmentManager().beginTransaction().replace(R.id.content_frame, resf).commit();}
+
+
         //Bundle args = new Bundle();
         //args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
         //fragment.setArguments(args);
