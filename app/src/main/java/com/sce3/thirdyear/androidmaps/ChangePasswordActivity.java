@@ -86,7 +86,7 @@ public class ChangePasswordActivity extends ActionBarActivity {
                 else
                 {
 
-                    String address=String.format("http://%s/JavaMaps/api?action=ChangeUserPassword&email=%s&password=%s", JSONRequest.SERVER,user.getEmail(),NewPassword);
+                    String address=String.format("http://%s/JavaWeb/api?action=ChangeUserPassword&email=%s&password=%s", JSONRequest.SERVER,user.getEmail(),NewPassword);
 
                     System.out.println(address);
                     try {
