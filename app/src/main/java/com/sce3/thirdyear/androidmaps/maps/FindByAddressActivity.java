@@ -1,5 +1,6 @@
 package com.sce3.thirdyear.androidmaps.maps;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBarActivity;
 import android.support.v7.widget.SearchView;
@@ -7,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -39,6 +41,8 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
     private ListView lvLocations = null;
 
 
+    private String mode = "";
+
     private TextView mStatusView;
 
     private GoogleMap.OnMapClickListener mapClickListener = new GoogleMap.OnMapClickListener() {
@@ -65,11 +69,19 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
                 userMarker.remove();
             }
 
+            float zoom = mMap.getCameraPosition().zoom;
+            if (zoom < 14) {
+                zoom = 16;
+            }
+
             // Animating to the touched position
-            mMap.animateCamera(CameraUpdateFactory.newLatLng(latLng));
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(latLng, zoom));
 
             // Placing a marker on the touched position
             userMarker = mMap.addMarker(markerOptions);
+
+            userMarker.setDraggable(true);
+
 
             selectedMarker = null;
         }
@@ -84,6 +96,24 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
             return true;
         }
     };
+    private GoogleMap.OnMarkerDragListener onMarkerDragListener = new GoogleMap.OnMarkerDragListener() {
+        @Override
+        public void onMarkerDragStart(Marker marker) {
+            Toast.makeText(FindByAddressActivity.this, "Position: " + marker.getPosition().toString(), Toast.LENGTH_SHORT).show();
+        }
+
+        @Override
+        public void onMarkerDrag(Marker marker) {
+
+        }
+
+        @Override
+        public void onMarkerDragEnd(Marker marker) {
+
+            Toast.makeText(FindByAddressActivity.this, "Position: " + marker.getPosition().toString(), Toast.LENGTH_SHORT).show();
+
+        }
+    };
 
     private void setUpMapIfNeeded() {
         // Do a null check to confirm that we have not already instantiated the map.
@@ -92,28 +122,36 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
             mMap = ((SupportMapFragment) getSupportFragmentManager().findFragmentById(R.id.map))
                     .getMap();
 
+            Address address = Address.FindAddress("Ashdod Israel");
+
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(address.getPosition(), 10));
 
             mMap.setOnMapClickListener(mapClickListener);
             mMap.setOnMarkerClickListener(markerClickListener);
+            mMap.setOnMarkerDragListener(onMarkerDragListener);
+
+            mMap.getUiSettings().setZoomControlsEnabled(true);
+            mMap.getUiSettings().setMyLocationButtonEnabled(true);
+            mMap.setMyLocationEnabled(true);
             // Check if we were successful in obtaining the map.
         }
 
 
-        String address = getIntent().getExtras().getString(Address.FORMATTED_ADDRESS);
-
-        double lat = getIntent().getExtras().getDouble(Address.LAT);
-
-        double lng = getIntent().getExtras().getDouble(Address.LNG);
-
-        boolean hasMarkers = SearchMarkers(address, lat, lng);
-        lvLocations = (ListView) findViewById(R.id.lvLocations);
-        if (hasMarkers) {
-            if (address != null)
-                LocationsList.MakeListView(address, this, lvLocations, mMap);
-            else
-                LocationsList.MakeListView(new LatLng(lat, lng), this, lvLocations, mMap);
-
-        }
+//        String address = getIntent().getExtras().getString(Address.FORMATTED_ADDRESS);
+//
+//        double lat = getIntent().getExtras().getDouble(Address.LAT);
+//
+//        double lng = getIntent().getExtras().getDouble(Address.LNG);
+//
+//        boolean hasMarkers = SearchMarkers(address, lat, lng);
+//        lvLocations = (ListView) findViewById(R.id.lvLocations);
+//        if (hasMarkers) {
+//            if (address != null)
+//                LocationsList.MakeListView(address, this, lvLocations, mMap);
+//            else
+//                LocationsList.MakeListView(new LatLng(lat, lng), this, lvLocations, mMap);
+//
+//        }
     }
 
     @Override
@@ -121,39 +159,26 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_find_by_address);
 
-
-        SetupClickEvents();
         //Utility.SetupUIKeyboard(findViewById(R.id.mainLayout), FindByAddressActivity.this);
 
         setUpMapIfNeeded();
+
+        SetupMode(getIntent());
     }
 
-    private void SetupClickEvents() {
-//        Button btnReturn = (Button) findViewById(R.id.btnReturn);
-//
-//        btnReturn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                if (selectedMarker == null) {
-//                    Toast.makeText(FindByAddressActivity.this, "Select location marker", Toast.LENGTH_LONG).show();
-//                    return;
-//                }
-//                Address address = Address.AddressByLatLng(selectedMarker.getPosition());
-//                Intent returnIntent = new Intent();
-//
-//                returnIntent.putExtra(Address.STREET_NUMBER, address.getStreetNumber());
-//                returnIntent.putExtra(Address.STREET, address.getStreet());
-//                returnIntent.putExtra(Address.CITY, address.getCity());
-//                returnIntent.putExtra(Address.COUNTRY, address.getCountry());
-//                returnIntent.putExtra(Address.LAT, address.getLat());
-//                returnIntent.putExtra(Address.LNG, address.getLng());
-//
-//                setResult(RESULT_OK, returnIntent);
-//                finish();
-//            }
-//        });
-    }
+    private void SetupMode(Intent intent) {
+        Bundle data = intent.getExtras();
+        double zoom = data.getDouble(Address.SET_ZOOM);
+        double lat = data.getDouble(Address.LAT);
+        double lng = data.getDouble(Address.LNG);
 
+        boolean searchable = data.getBoolean(Address.SEARCHABLE, true);
+        boolean dialog = data.getBoolean(Address.SHOW_DAILOG, true);
+        boolean forApt = data.getBoolean(Address.FOR_DEPARTMANTS, false);
+
+        String formattedAddress = data.getString(Address.FORMATTED_ADDRESS);
+
+    }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -167,7 +192,6 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
 
         return true;
     }
-
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
@@ -183,6 +207,7 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
 
         return super.onOptionsItemSelected(item);
     }
+
 
     private boolean SearchMarkers(String address, double lat, double lng) {
         boolean hasMarkers = false;
@@ -204,10 +229,19 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
 
         for (Address item : locations) {
             if (item == null) continue;
+
             Marker marker = mMap.addMarker(MapUtility.CreateMarker(item, BitmapDescriptorFactory.HUE_BLUE));
+
             item.setMarker(marker);
+
             hasMarkers = true;
         }
+
+        if (lvLocations == null) {
+            lvLocations = (ListView) findViewById(R.id.lvLocations);
+        }
+        LocationsList.MakeListView(locations, this, lvLocations, mMap);
+
         return hasMarkers;
     }
 
@@ -219,9 +253,8 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
     public boolean onQueryTextSubmit(String address) {
 
         SearchMarkers(address, 0, 0);
-        LocationsList.MakeListView(address, this, lvLocations, mMap);
 
-        mStatusView.clearFocus();
+
         return true;
     }
 

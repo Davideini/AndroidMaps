@@ -8,7 +8,6 @@ import android.graphics.drawable.ColorDrawable;
 import android.view.View;
 import android.view.Window;
 import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -67,9 +66,9 @@ public class MarkerUtility {
         });
 
 
-        ListView lv = (ListView) d.findViewById(R.id.lvInfoLocations);
+        //ListView lv = (ListView) d.findViewById(R.id.lvInfoLocations);
 
-        LocationsList.MakeListView(marker.getPosition(), activity, lv, mMap);
+        //LocationsList.MakeListView(marker.getPosition(), activity, lv, mMap);
 
         d.show();
     }
