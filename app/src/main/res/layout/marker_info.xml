@@ -3,6 +3,7 @@
     android:id="@+id/markerInfo"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
+    android:padding="15dp"
     android:orientation="vertical"
     android:weightSum="1">
 
@@ -10,25 +11,21 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceLarge"
         android:text="Full address"
         android:id="@+id/textView12" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:textAppearance="?android:attr/textAppearanceLarge"
+        android:layout_gravity="center_horizontal"
         android:text="Full Address"
         android:id="@+id/tvFullAddress" />
-
-    <ListView
-        android:layout_width="wrap_content"
-        android:layout_height="207dp"
-        android:layout_alignParentStart="true"
-        android:id="@+id/lvInfoLocations" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Select this"
+        android:layout_gravity="center_horizontal"
         android:id="@+id/btnSelectFromList" />
 </LinearLayout>

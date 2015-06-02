@@ -12,6 +12,7 @@ import android.widget.Toast;
 import com.sce3.thirdyear.classes.InputValidator;
 import com.sce3.thirdyear.classes.JSONRequest;
 import com.sce3.thirdyear.classes.SQLiteDB;
+import com.sce3.thirdyear.maps.data.parser_Json;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -63,13 +64,17 @@ public class LoginActivity extends ActionBarActivity {
         TextView emailText = (TextView) findViewById(R.id.emailText);
         TextView passText = (TextView) findViewById(R.id.passText);
 //        String address=String.format("http://%s/JavaWeb/api?action=Login&email=%s&password=%s",JSONRequest.SERVER,emailText.getText(),passText.getText());
-        String address=String.format("http://%s/JavaMaps/api?action=Login&email=%s&password=%s",JSONRequest.SERVER,emailText.getText(),passText.getText());
+        String address = String.format("http://%s/JavaWeb/api?action=Login&email=%s&password=%s", JSONRequest.SERVER, emailText.getText(), passText.getText());
         //TextView res=(TextView)findViewById(R.id.textView3);
 
         System.out.println(address);
         try {
-            JSONRequest json=new JSONRequest(address);
-            JSONObject jobj = new JSONObject(json.getJSON());
+            //JSONRequest json=new JSONRequest(address);
+            //JSONObject jobj = new JSONObject(json.getJSON());
+
+            JSONObject jobj = parser_Json.getJSONfromURL(address);
+
+
             if(jobj.getString("result").equals("success")){
                 //res.setText(jobj.getString("session"));
                 SQLiteDB db=new SQLiteDB(getApplicationContext());

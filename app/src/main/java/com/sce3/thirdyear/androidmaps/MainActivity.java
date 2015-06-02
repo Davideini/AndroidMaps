@@ -35,7 +35,7 @@ public class MainActivity extends ActionBarActivity {
 
         if (!session.equals("")) {
 //            String address = String.format("http://%s/JavaWeb/api?action=Main&session=%s", JSONRequest.SERVER, session);
-            String address = String.format("http://%s/JavaMaps/api?action=Main&session=%s", JSONRequest.SERVER, session);
+            String address = String.format("http://%s/JavaWeb/api?action=Main&session=%s", JSONRequest.SERVER, session);
             JSONRequest json = new JSONRequest(address);
             System.out.println(address);
             try {

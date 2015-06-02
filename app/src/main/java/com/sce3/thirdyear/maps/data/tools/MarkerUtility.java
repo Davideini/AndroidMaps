@@ -21,8 +21,16 @@ import com.sce3.thirdyear.maps.data.Address;
  */
 public class MarkerUtility {
 
-    public static void MarkerInfo(final Marker marker, GoogleMap mMap, final Activity activity) {
+    public static void MarkerInfo(final Marker marker, GoogleMap mMap, final Activity activity, boolean forApt) {
+        if (forApt) {
+            ForApartment(marker, mMap, activity);
+        } else {
+            ForAddress(marker, mMap, activity);
+        }
+    }
 
+
+    private static void ForAddress(final Marker marker, GoogleMap mMap, final Activity activity) {
         if (marker.getSnippet() == null) {
             mMap.moveCamera(CameraUpdateFactory.zoomIn());
             return;
@@ -64,11 +72,19 @@ public class MarkerUtility {
                 activity.finish();
             }
         });
+        d.show();
+    }
+
+    private static void ForApartment(final Marker marker, GoogleMap mMap, final Activity activity) {
+        final Dialog d = new Dialog(activity);
+        d.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
 
-        //ListView lv = (ListView) d.findViewById(R.id.lvInfoLocations);
+        d.getWindow().setBackgroundDrawable(new ColorDrawable(Color.WHITE));
 
-        //LocationsList.MakeListView(marker.getPosition(), activity, lv, mMap);
+
+        d.setContentView(R.layout.apartment_info);
+
 
         d.show();
     }

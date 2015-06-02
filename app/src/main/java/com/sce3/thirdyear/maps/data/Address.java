@@ -81,6 +81,9 @@ public class Address {
         Address add = Address.FindAddress(this.street + " " + this.streetNumber + " " + this.city);
         this.lat = add.getLat();
         this.lng = add.getLng();
+        this.city = add.getCity();
+        this.street = add.getStreet();
+        this.formattedAddress = add.getFormattedAddress();
     }
 
     // set functions

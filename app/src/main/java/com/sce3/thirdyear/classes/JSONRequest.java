@@ -6,8 +6,6 @@ import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
-import org.apache.http.client.methods.HttpPost;
-import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
@@ -28,7 +26,8 @@ import java.util.concurrent.Future;
 public class JSONRequest implements Callable<String> {
     //public final static String SERVER = "192.168.80.1:8081";
     //public final static String SERVER = "10.200.204.243:81";//"10.0.0.138:81"; //"10.200.204.243:81";
-    public final static String SERVER = "192.168.3.145:8080";
+    //public final static String SERVER = "10.200.201.176:8080";
+    public final static String SERVER = "localhost:8080";
     public final static String IMAGE_DIR = "JavaWeb/images";
 
     String address;

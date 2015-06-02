@@ -24,7 +24,7 @@ import com.sce3.thirdyear.maps.data.tools.Utility;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.sql.SQLInput;
+import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -178,6 +178,7 @@ public class AddApartment extends ActionBarActivity {
             double lng = add2.getLng();
             double lat = add2.getLat();
 
+
             Toast.makeText(this, "Lat: " + lat + ", Lng: " + lng, Toast.LENGTH_SHORT).show();
 
             SQLiteDB db = new SQLiteDB(getApplicationContext());
@@ -187,30 +188,60 @@ public class AddApartment extends ActionBarActivity {
             Map<String, String> dict = new HashMap<>();
 
             dict.put("action", "AddApt");
-            dict.put("user_id", user.getID()+"");
-            dict.put("city", city.getText().toString());
+            dict.put("user_id", String.valueOf(user.getID()));
+            dict.put("type_id", "2");
             dict.put("territory", territory.getText().toString());
-            dict.put("address", street.getText().toString() +" " + house_num.getText().toString() + " " + city.getText().toString());
+            dict.put("city", add2.getCity());
+            dict.put("address", add2.getFormattedAddress());
             dict.put("rooms", room_num.getText().toString());
             dict.put("floor", floor_num.getText().toString());
-            dict.put("Lat", String.valueOf(lat));
-            dict.put("Lng", String.valueOf(lng));
+            dict.put("latitude", String.valueOf(lat));
+            dict.put("longitude", String.valueOf(lng));
             dict.put("sizem2", area.getText().toString());
-            dict.put("desc", descr.getText().toString());
+            dict.put("comment", descr.getText().toString());
             dict.put("price", price.getText().toString());
-            dict.put("aircondition", ac.isChecked() ? "1" : "0");
-            dict.put("elevator", elevator.isChecked() ? "1" : "0");
-            dict.put("balcony", serviceBalcony.isChecked() ? "1" : "0");
-            dict.put("isolated_room", mamad.isChecked() ? "1" : "0");
-            dict.put("parking", parking.isChecked() ? "1" : "0");
-            dict.put("handicap_access", hadicappedAccess.isChecked() ? "1" : "0");
-            dict.put("storage", storage.isChecked() ? "1" : "0");
-            dict.put("bars", bars.isChecked() ? "1" : "0");
-            dict.put("sun_balcony", sunBalcony.isChecked() ? "1" : "0");
-            dict.put("renovated", renovated.isChecked() ? "1" : "0");
-            dict.put("furnished", furnished.isChecked() ? "1" : "0");
-            dict.put("unit", unit.isChecked() ? "1" : "0");
-            dict.put("pandoor", pandoor.isChecked() ? "1" : "0");
+            dict.put("aircondition", String.valueOf(ac.isChecked()));
+            dict.put("elevator", String.valueOf(elevator.isChecked()));
+            dict.put("balcony", String.valueOf(serviceBalcony.isChecked()));
+            dict.put("isolated_room", String.valueOf(mamad.isChecked()));
+            dict.put("parking", String.valueOf(parking.isChecked()));
+            dict.put("handicap_access", String.valueOf(hadicappedAccess.isChecked()));
+            dict.put("storage", String.valueOf(storage.isChecked()));
+            dict.put("bars", String.valueOf(bars.isChecked()));
+            dict.put("sun_balcony", String.valueOf(sunBalcony.isChecked()));
+            dict.put("renovated", String.valueOf(renovated.isChecked()));
+            dict.put("furnished", String.valueOf(furnished.isChecked()));
+            dict.put("unit", String.valueOf(unit.isChecked()));
+            dict.put("pandoor", String.valueOf(pandoor.isChecked()));
+            dict.put("add_date", Calendar.getInstance().getTime().toString());
+
+//
+//            dict.put("user_id", "");
+//            dict.put("type_id", "");
+//            dict.put("territory", "");
+//            dict.put("city", "");
+//            dict.put("address", "");
+//            dict.put("rooms", "");
+//            dict.put("floor", "");
+//            dict.put("latitude", "");
+//            dict.put("longitude", "");
+//            dict.put("sizem2", "");
+//            dict.put("comment", "");
+//            dict.put("price", "");
+//            dict.put("add_date", "");
+//            dict.put("aircondition", "");
+//            dict.put("elevator", "");
+//            dict.put("balcony", "");
+//            dict.put("isolated_room", "");
+//            dict.put("parking", "");
+//            dict.put("handicap_access", "");
+//            dict.put("storage", "");
+//            dict.put("bars", "");
+//            dict.put("sun_balcony", "");
+//            dict.put("renovated", "");
+//            dict.put("furnished", "");
+//            dict.put("unit", "");
+//            dict.put("pandoor", "");
 
 
 //        dict.put("Lat", String.valueOf(lat));

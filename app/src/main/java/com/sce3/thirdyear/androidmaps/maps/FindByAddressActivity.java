@@ -8,7 +8,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
@@ -40,6 +39,10 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
 
     private ListView lvLocations = null;
 
+    private float zoom;
+    private boolean searchable;
+    private boolean dialog;
+    private boolean forApt;
 
     private String mode = "";
 
@@ -90,16 +93,17 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
     private GoogleMap.OnMarkerClickListener markerClickListener = new GoogleMap.OnMarkerClickListener() {
         @Override
         public boolean onMarkerClick(Marker marker) {
-            selectedMarker = marker;
-            marker.setSnippet("true");
-            MarkerUtility.MarkerInfo(marker, mMap, FindByAddressActivity.this);
+            if (dialog) {
+                selectedMarker = marker;
+                marker.setSnippet("true");
+                MarkerUtility.MarkerInfo(marker, mMap, FindByAddressActivity.this, forApt);
+            }
             return true;
         }
     };
     private GoogleMap.OnMarkerDragListener onMarkerDragListener = new GoogleMap.OnMarkerDragListener() {
         @Override
         public void onMarkerDragStart(Marker marker) {
-            Toast.makeText(FindByAddressActivity.this, "Position: " + marker.getPosition().toString(), Toast.LENGTH_SHORT).show();
         }
 
         @Override
@@ -109,8 +113,6 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
 
         @Override
         public void onMarkerDragEnd(Marker marker) {
-
-            Toast.makeText(FindByAddressActivity.this, "Position: " + marker.getPosition().toString(), Toast.LENGTH_SHORT).show();
 
         }
     };
@@ -123,8 +125,8 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
                     .getMap();
 
             Address address = Address.FindAddress("Ashdod Israel");
-
-            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(address.getPosition(), 10));
+            zoom = getIntent().getExtras().getFloat(Address.SET_ZOOM, 10);
+            mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(address.getPosition(), zoom));
 
             mMap.setOnMapClickListener(mapClickListener);
             mMap.setOnMarkerClickListener(markerClickListener);
@@ -136,22 +138,6 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
             // Check if we were successful in obtaining the map.
         }
 
-
-//        String address = getIntent().getExtras().getString(Address.FORMATTED_ADDRESS);
-//
-//        double lat = getIntent().getExtras().getDouble(Address.LAT);
-//
-//        double lng = getIntent().getExtras().getDouble(Address.LNG);
-//
-//        boolean hasMarkers = SearchMarkers(address, lat, lng);
-//        lvLocations = (ListView) findViewById(R.id.lvLocations);
-//        if (hasMarkers) {
-//            if (address != null)
-//                LocationsList.MakeListView(address, this, lvLocations, mMap);
-//            else
-//                LocationsList.MakeListView(new LatLng(lat, lng), this, lvLocations, mMap);
-//
-//        }
     }
 
     @Override
@@ -168,15 +154,18 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
 
     private void SetupMode(Intent intent) {
         Bundle data = intent.getExtras();
-        double zoom = data.getDouble(Address.SET_ZOOM);
-        double lat = data.getDouble(Address.LAT);
-        double lng = data.getDouble(Address.LNG);
+        zoom = data.getFloat(Address.SET_ZOOM, 10);
+        double lat = data.getDouble(Address.LAT, 0);
+        double lng = data.getDouble(Address.LNG, 0);
 
-        boolean searchable = data.getBoolean(Address.SEARCHABLE, true);
-        boolean dialog = data.getBoolean(Address.SHOW_DAILOG, true);
-        boolean forApt = data.getBoolean(Address.FOR_DEPARTMANTS, false);
+        searchable = data.getBoolean(Address.SEARCHABLE, true);
+        dialog = data.getBoolean(Address.SHOW_DAILOG, true);
+        forApt = data.getBoolean(Address.FOR_DEPARTMANTS, false);
 
-        String formattedAddress = data.getString(Address.FORMATTED_ADDRESS);
+        String formattedAddress = data.getString(Address.FORMATTED_ADDRESS, "");
+
+        SearchMarkers(formattedAddress, lat, lng);
+
 
     }
 
@@ -185,11 +174,15 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_find_by_address, menu);
 
+        Bundle data = getIntent().getExtras();
 
-        MenuItem searchItem = (MenuItem) menu.findItem(R.id.action_search);
-        SearchView mSearchView = (SearchView) searchItem.getActionView();
-        Utility.SetupSearchView(searchItem, mSearchView, this, this);
+        searchable = data.getBoolean(Address.SEARCHABLE, true);
 
+        if (searchable) {
+            MenuItem searchItem = (MenuItem) menu.findItem(R.id.action_search);
+            SearchView mSearchView = (SearchView) searchItem.getActionView();
+            Utility.SetupSearchView(searchItem, mSearchView, this, this);
+        }
         return true;
     }
 
@@ -228,7 +221,10 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
         }
 
         for (Address item : locations) {
-            if (item == null) continue;
+            if (item == null) {
+                locations.remove(item);
+                continue;
+            }
 
             Marker marker = mMap.addMarker(MapUtility.CreateMarker(item, BitmapDescriptorFactory.HUE_BLUE));
 
