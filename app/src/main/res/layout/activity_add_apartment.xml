@@ -8,14 +8,17 @@
         android:id="@+id/ll1"
         android:layout_width="fill_parent"
         android:layout_height="fill_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:paddingStart="10dp"
+        android:paddingEnd="10dp">
 
         <TextView
             android:id="@+id/LocationTVAddApt"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:text="@string/location" />
+            android:text="@string/location"
+            android:textColor="#66CCCC"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -37,20 +40,7 @@
                 android:hint="@string/street_name_hint"
                 android:inputType="textPersonName" />
 
-            <TextView
-                android:id="@+id/cityTV"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/city" />
 
-            <EditText
-                android:id="@+id/cityEditText"
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="50"
-                android:ems="10"
-                android:hint="@string/city_hint"
-                android:inputType="textPersonName" />
 
 
         </LinearLayout>
@@ -97,18 +87,19 @@
             android:orientation="horizontal">
 
             <TextView
+                android:id="@+id/cityTV"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Floor:" />
+                android:text="@string/city" />
 
             <EditText
-                android:id="@+id/floorEditText"
+                android:id="@+id/cityEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="20"
+                android:layout_weight="50"
                 android:ems="10"
-                android:hint="Floor #"
-                android:inputType="number" />
+                android:hint="@string/city_hint"
+                android:inputType="textPersonName" />
 
             <TextView
                 android:layout_width="wrap_content"
@@ -119,23 +110,38 @@
                 android:id="@+id/territoryEditText"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_weight="20"
+                android:layout_weight="50"
                 android:ems="10"
                 android:hint="@string/territory_hint"
                 android:inputType="number" />
 
         </LinearLayout>
 
+
+
         <LinearLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
-            <Button
-                android:id="@+id/getFromMaps"
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="@string/select_from_map" />
+                android:text="Floor:" />
+
+            <EditText
+                android:id="@+id/floorEditText"
+                android:layout_width="70dp"
+                android:layout_height="wrap_content"
+                android:ems="10"
+                android:hint="Floor #"
+                android:inputType="number" />
+
+            <!--&lt;!&ndash;<Button&ndash;&gt;-->
+                <!--&lt;!&ndash;android:id="@+id/getFromMaps"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_width="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:layout_height="wrap_content"&ndash;&gt;-->
+                <!--&lt;!&ndash;android:text="@string/select_from_map" />&ndash;&gt;-->
         </LinearLayout>
 
         <TextView
@@ -143,7 +149,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:text="@string/structure" />
+            android:text="@string/structure"
+            android:textColor="#66CCCC"/>
 
 
         <LinearLayout
@@ -271,7 +278,27 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:paddingTop="10dp"
-            android:text="@string/additional_details_tv" />
+            android:text="@string/additional_details_tv"
+            android:textColor="#66CCCC"/>
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/imageButton"
+            android:src="@drawable/ic_take_photo"
+            android:onClick="takePicture"
+            android:background="#fff3f3f3"/>
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Take Picture"-->
+            <!--android:onClick="takePicture" />-->
+
+        <ImageView
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:id="@+id/camImageView"/>
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -297,13 +324,14 @@
             android:id="@+id/descriptionTV"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/price" />
+            android:text="Description:" />
 
         <EditText
             android:id="@+id/descriptionEditText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:hint="@string/estimated_price_hint" />
+            android:hint="Short description about additional info."
+            android:maxLength="100"/>
 
         <CheckBox
             android:id="@+id/sellCheckBox"

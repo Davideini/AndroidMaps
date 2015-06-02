@@ -1,13 +1,17 @@
 package com.sce3.thirdyear.androidmaps;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.sce3.thirdyear.classes.InputValidator;
@@ -26,6 +30,9 @@ import java.util.Map;
 
 public class AddApartment extends ActionBarActivity {
     private User user;
+    static final int REQUEST_IMAGE_CAPTURE = 1;
+    ImageView mImageView;
+    ImageButton mImageButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -33,8 +40,9 @@ public class AddApartment extends ActionBarActivity {
         setContentView(R.layout.activity_add_apartment);
         Utility.SetupUIKeyboard(findViewById(R.id.mainLayout), AddApartment.this);
 
-        user = new User(new SQLiteDB(getApplicationContext()));
-
+//        user = new User(new SQLiteDB(getApplicationContext()));
+        mImageView = (ImageView) findViewById(R.id.camImageView);
+//        mImageButton = (ImageButton) findViewById(R.id.imageButton);
 
         initializeMapFeature();
     }
@@ -62,6 +70,27 @@ public class AddApartment extends ActionBarActivity {
         return super.onOptionsItemSelected(item);
     }
 
+
+    public void takePicture(View view){
+
+        mImageButton = (ImageButton) findViewById(R.id.imageButton);
+        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+        if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
+            startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
+        }
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
+            Bundle extras = data.getExtras();
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
+//            mImageView.setImageBitmap(imageBitmap);
+
+//            ImageButton imageButton;
+            mImageButton.setImageBitmap(imageBitmap);
+        }
+    }
 
     public void addNewApt(View view) {
         EditText street, city, house_num, apt_num, room_num, area, price, floor_num, territory, descr;
@@ -106,90 +135,127 @@ public class AddApartment extends ActionBarActivity {
             street.requestFocus();
             street.setError("FIELD CANNOT BE EMPTY");
         }
-        if (!InputValidator.EmptyField(city.getText().toString())) {
-            city.requestFocus();
-            city.setError("FIELD CANNOT BE EMPTY");
-        }
-        if (!InputValidator.EmptyField(house_num.getText().toString())) {
-            house_num.requestFocus();
-            house_num.setError("FIELD CANNOT BE EMPTY");
-        }
-        if (!InputValidator.EmptyField(apt_num.getText().toString())) {
-            apt_num.requestFocus();
-            apt_num.setError("FIELD CANNOT BE EMPTY");
-        }
-        if (!InputValidator.EmptyField(room_num.getText().toString())) {
-            room_num.requestFocus();
-            room_num.setError("FIELD CANNOT BE EMPTY");
-        }
-        if (!InputValidator.EmptyField(area.getText().toString())) {
-            area.requestFocus();
-            area.setError("FIELD CANNOT BE EMPTY");
-        }
-        if (!InputValidator.EmptyField(price.getText().toString())) {
-            price.requestFocus();
-            price.setError("FIELD CANNOT BE EMPTY");
-        }
+//        else if (!InputValidator.EmptyField(city.getText().toString())) {
+//            city.requestFocus();
+//            city.setError("FIELD CANNOT BE EMPTY");
+//        }
+//        else if (!InputValidator.EmptyField(house_num.getText().toString())) {
+//            house_num.requestFocus();
+//            house_num.setError("FIELD CANNOT BE EMPTY");
+//        }
+//        else if (!InputValidator.EmptyField(apt_num.getText().toString())) {
+//            apt_num.requestFocus();
+//            apt_num.setError("FIELD CANNOT BE EMPTY");
+//        }
+//        else if (!InputValidator.EmptyField(floor_num.getText().toString())) {
+//            apt_num.requestFocus();
+//            apt_num.setError("FIELD CANNOT BE EMPTY");
+//        }
+//        else if (!InputValidator.EmptyField(territory.getText().toString())) {
+//            apt_num.requestFocus();
+//            apt_num.setError("FIELD CANNOT BE EMPTY");
+//        }
+//        else if (!InputValidator.EmptyField(room_num.getText().toString())) {
+//            room_num.requestFocus();
+//            room_num.setError("FIELD CANNOT BE EMPTY");
+//        }
+//        else if (!InputValidator.EmptyField(area.getText().toString())) {
+//            area.requestFocus();
+//            area.setError("FIELD CANNOT BE EMPTY");
+//        }
+//        else if (!InputValidator.EmptyField(price.getText().toString())) {
+//            price.requestFocus();
+//            price.setError("FIELD CANNOT BE EMPTY");
+//        }
+//
+//        else if (!(rent.isChecked() && !(sell.isChecked()))) {
+//            Toast.makeText(getApplicationContext(), "Must Choose Rent\\Sell!", Toast.LENGTH_SHORT).show();
+//        }
 
-        if (!(rent.isChecked() || sell.isChecked())) {
-            Toast.makeText(getApplicationContext(), "Must Choose Rent\\Sell!", Toast.LENGTH_SHORT).show();
-        }
+        else {
+            Address add2 = new Address(street, house_num, city);
+            double lng = add2.getLng();
+            double lat = add2.getLat();
 
-        Address add2 = new Address(street, house_num, city);
-        double lng = add2.getLng();
-        double lat = add2.getLat();
+            Toast.makeText(this, "Lat: " + lat + ", Lng: " + lng, Toast.LENGTH_SHORT).show();
 
-        Toast.makeText(this, "Lat: " + lat + ", Lng: " + lng, Toast.LENGTH_SHORT).show();
+            user = new User(new SQLiteDB(getApplicationContext()));
 
 
-        Map<String, String> dict = new HashMap<>();
+            Map<String, String> dict = new HashMap<>();
 
-        dict.put("action", "AddApt");
-        dict.put("city", city.getText().toString());
-        dict.put("isolated_room", mamad.isChecked() ? "0" : "1");
-        dict.put("Lat", String.valueOf(lat));
-        dict.put("Lng", String.valueOf(lng));
+            dict.put("action", "AddApt");
+//            dict.put("user_id", user.getID()+"");
+            dict.put("city", city.getText().toString());
+            dict.put("territory", territory.getText().toString());
+            dict.put("address", street.getText().toString() +" " + house_num.getText().toString() + " " + city.getText().toString());
+            dict.put("rooms", room_num.getText().toString());
+            dict.put("floor", floor_num.getText().toString());
+            dict.put("Lat", String.valueOf(lat));
+            dict.put("Lng", String.valueOf(lng));
+            dict.put("sizem2", area.getText().toString());
+            dict.put("desc", descr.getText().toString());
+            dict.put("price", price.getText().toString());
+            dict.put("aircondition", ac.isChecked() ? "1" : "0");
+            dict.put("elevator", elevator.isChecked() ? "1" : "0");
+            dict.put("balcony", serviceBalcony.isChecked() ? "1" : "0");
+            dict.put("isolated_room", mamad.isChecked() ? "1" : "0");
+            dict.put("parking", parking.isChecked() ? "1" : "0");
+            dict.put("handicap_access", hadicappedAccess.isChecked() ? "1" : "0");
+            dict.put("storage", storage.isChecked() ? "1" : "0");
+            dict.put("bars", bars.isChecked() ? "1" : "0");
+            dict.put("sun_balcony", sunBalcony.isChecked() ? "1" : "0");
+            dict.put("renovated", renovated.isChecked() ? "1" : "0");
+            dict.put("furnished", furnished.isChecked() ? "1" : "0");
+            dict.put("unit", unit.isChecked() ? "1" : "0");
+            dict.put("pandoor", pandoor.isChecked() ? "1" : "0");
 
-        boolean first = true;
-        String delim = "";
-        StringBuilder sb = new StringBuilder(String.format("http://%s/JavaMaps/api?", JSONRequest.SERVER));
-        for (String key : dict.keySet()) {
 
-            if (!first) {
-                delim = "&";
+//        dict.put("Lat", String.valueOf(lat));
+//        dict.put("Lng", String.valueOf(lng));
+
+            boolean first = true;
+            String delim = "";
+            StringBuilder sb = new StringBuilder(String.format("http://%s/JavaMaps/api?", JSONRequest.SERVER));
+            for (String key : dict.keySet()) {
+
+                if (!first) {
+                    delim = "&";
+                }
+                String parm = delim + key + "=" + dict.get(key);
+                sb.append(parm);
+                first = false;
             }
-            String parm = delim + key + "=" + dict.get(key);
-            sb.append(parm);
-            first = false;
+
+            String result = sb.toString();
+
+//            String apartment = String.format("http://%s/JavaMaps/api?action=AddApt&city=%s&price=%s&territory=%s&street=%s&house_num=%s&apt_num=%s&rooms=%s&floor=%s" +
+//                            "&sizem2=%s&desc=%s&aircondition=%s&elevator=%s&balcony=%s&isolated_room=%s&parking=%s&handicap_access=%s&storage=%s" +
+//                            "&bars=%s&sun_balcony=%s&renovated=%s&furnished=%s&unit=%s&pandoor=%s", JSONRequest.SERVER, user.getID() + "", city.getText().toString(), price.getText().toString(),
+//                    territory.getText().toString(), street.getText().toString(), house_num.getText().toString(), apt_num.getText().toString(), room_num.getText().toString(),
+//                    floor_num.getText().toString(), area.getText().toString(), descr.getText().toString(), ac.isChecked() ? '0' : '1', elevator.isChecked() ? '0' : '1', serviceBalcony.isChecked() ? '0' : '1',
+//                    mamad.isChecked() ? '0' : '1', parking.isChecked() ? '0' : '1', hadicappedAccess.isChecked() ? '0' : '1', storage.isChecked() ? '0' : '1', bars.isChecked() ? '0' : '1', sunBalcony.isChecked() ? '0' : '1',
+//                    renovated.isChecked() ? '0' : '1', furnished.isChecked() ? '0' : '1', unit.isChecked() ? '0' : '1', pandoor.isChecked() ? '0' : '1');
+
+            System.out.println(result);
+//            try {
+//                JSONRequest json = new JSONRequest(result);
+//                JSONObject jobj = new JSONObject(json.getJSON());
+//                if (jobj.getString("result").equals("success")) {
+//                    Toast.makeText(AddApartment.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
+//                    Intent myIntent = new Intent(AddApartment.this, RegistrationBuyerActivity.class);
+//                    AddApartment.this.startActivity(myIntent);
+//                } else if (jobj.getString("result").equals("error")) {
+//                    Toast.makeText(AddApartment.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
+//                }
+//            } catch (JSONException e) {
+//                System.out.println(e.getMessage());
+//            } catch (Exception e) {
+//                Toast.makeText(AddApartment.this, "Error receiving data.", Toast.LENGTH_LONG).show();
+//
+//            }
         }
 
-        String result = sb.toString();
-
-        String apartment = String.format("http://%s/JavaMaps/api?action=AddApt&city=%s&price=%s&territory=%s&street=%s&house_num=%s&apt_num=%s&rooms=%s&floor=%s" +
-                        "&sizem2=%s&desc=%s&aircondition=%s&elevator=%s&balcony=%s&isolated_room=%s&parking=%s&handicap_access=%s&storage=%s" +
-                        "&bars=%s&sun_balcony=%s&renovated=%s&furnished=%s&unit=%s&pandoor=%s", JSONRequest.SERVER, user.getID() + "", city.getText().toString(), price.getText().toString(),
-                territory.getText().toString(), street.getText().toString(), house_num.getText().toString(), apt_num.getText().toString(), room_num.getText().toString(),
-                floor_num.getText().toString(), area.getText().toString(), descr.getText().toString(), ac.isChecked() ? '0' : '1', elevator.isChecked() ? '0' : '1', serviceBalcony.isChecked() ? '0' : '1',
-                mamad.isChecked() ? '0' : '1', parking.isChecked() ? '0' : '1', hadicappedAccess.isChecked() ? '0' : '1', storage.isChecked() ? '0' : '1', bars.isChecked() ? '0' : '1', sunBalcony.isChecked() ? '0' : '1',
-                renovated.isChecked() ? '0' : '1', furnished.isChecked() ? '0' : '1', unit.isChecked() ? '0' : '1', pandoor.isChecked() ? '0' : '1');
-
-        System.out.println(apartment);
-        try {
-            JSONRequest json = new JSONRequest(apartment);
-            JSONObject jobj = new JSONObject(json.getJSON());
-            if (jobj.getString("result").equals("success")) {
-                Toast.makeText(AddApartment.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
-                Intent myIntent = new Intent(AddApartment.this, RegistrationBuyerActivity.class);
-                AddApartment.this.startActivity(myIntent);
-            } else if (jobj.getString("result").equals("error")) {
-                Toast.makeText(AddApartment.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
-            }
-        } catch (JSONException e) {
-            System.out.println(e.getMessage());
-        } catch (Exception e) {
-            Toast.makeText(AddApartment.this, "Error receiving data.", Toast.LENGTH_LONG).show();
-
-        }
 
     }
 

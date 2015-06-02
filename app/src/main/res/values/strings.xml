@@ -37,8 +37,8 @@
     <string name="street_name_hint">Street name</string>
     <string name="number">Number:</string>
     <string name="location">Location</string>
-    <string name="house_number">House Number:</string>
-    <string name="apt_number">Apt. Number:</string>
+    <string name="house_number">House #:</string>
+    <string name="apt_number">Apt. #:</string>
     <string name="city_hint">City</string>
     <string name="city">City:</string>
     <string name="structure">Structure</string>
