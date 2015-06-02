@@ -42,9 +42,9 @@ public class MyListAdapter extends ArrayAdapter<Object> {
         TextView addressText = (TextView) theView.findViewById(R.id.textView7);
         TextView priceText = (TextView) theView.findViewById(R.id.textView8);
 
-        cityText.setText(city);
-        addressText.setText(address);
-        priceText.setText(price);
+        cityText.setText("City: " + city);
+        addressText.setText("Address: " + address);
+        priceText.setText("Price: " + price);
 
 
         ImageView theImageView = (ImageView) theView.findViewById(R.id.imageView2);

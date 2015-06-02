@@ -15,6 +15,12 @@ import android.view.View.OnClickListener;
 import com.google.android.gms.plus.model.people.Person;
 import com.sce3.thirdyear.classes.Ad;
 import com.sce3.thirdyear.classes.Apartment;
+import com.sce3.thirdyear.classes.JSONRequest;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.util.concurrent.ExecutionException;
 
 
 public class HouseDetailsActivity extends ActionBarActivity {
@@ -63,6 +69,25 @@ public class HouseDetailsActivity extends ActionBarActivity {
         Apartment ap = (Apartment) getIntent().getSerializableExtra(MenuActivity.SER_KEY);
         SN.setText(ap.getAddress());
         City.setText(ap.getCity());
+        price.setText(String.valueOf(ap.getPrice()));
+        String address = String.format("http://%s/JavaWeb/api?action=getUserInfo&user_id=%d", JSONRequest.SERVER, ap.getUser_id());
+        System.out.println(address);
+        JSONRequest json = new JSONRequest(address);
+        try {
+            JSONObject jobj = new JSONObject(json.getJSON());
+            JSONObject jdata= jobj.getJSONObject("data");
+            Apartment apartment=null;
+            if (jobj.getString("result").equals("success")) {
+                CP.setText(jdata.getString("phone1"));
+                CE.setText(jdata.getString("email"));
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
         //HN.setText(ap.get);
         Rooms.setText(String.valueOf(ap.getRooms()));
         service.setChecked(ap.isBalcony());
