@@ -4,6 +4,7 @@ import android.content.Context;
 import android.widget.EditText;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.sce3.thirdyear.maps.data.tools.GPSTracker;
 
 import org.json.JSONArray;
@@ -42,7 +43,6 @@ public class Address {
     public static final String FOR_DEPARTMANTS = "fordepartmants"; // true of false
 
 
-
     // private variables
     private String city;
     private String country;
@@ -52,15 +52,17 @@ public class Address {
     private String streetNumber;
     private String postalCode;
     private String formattedAddress;
+    private Marker marker;
 
     public Address() {
 
     }
 
-    public Address(EditText street, EditText city){
+    public Address(EditText street, EditText city) {
         this.city = city.getText().toString();
         this.street = street.getText().toString();
     }
+
     public Address(EditText street, EditText city, EditText country, EditText zip) {
         this.city = city.getText().toString();
         this.street = street.getText().toString();
@@ -155,6 +157,11 @@ public class Address {
 
     @Override
     public String toString() {
+        String fromated = this.formattedAddress;
+
+        if (fromated != null && !fromated.isEmpty()) {
+            return fromated;
+        }
         StringBuilder sb = new StringBuilder();
 
         if (street != null && !street.isEmpty()) {
@@ -327,4 +334,11 @@ public class Address {
         return (rad * 180 / Math.PI);
     }
 
+    public void setMarker(Marker marker) {
+        this.marker = marker;
+    }
+
+    public Marker getMarker() {
+        return marker;
+    }
 }

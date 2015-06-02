@@ -61,25 +61,13 @@ public class ResultFragment extends Fragment {
         ads.add(new Ad(new Apartment(3,333,2, "yawfaw",120200, "alef", "wrwfw 1523b",true, false, true, true, true, false, true, true, false, true, true, true, false, 5.5f,5,123.123f, 34.215661f, 70.5f,"efewf eeefefe"),null ) );
 
 
+
     }
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        //moreBtn.setOnClickListener(new View.OnClickListener() {
-          //  @Override
-           /* public void onClick(View v) {
-                //if(numOfAds < ads.size()){
-                Intent mIntent = new Intent(getActivity().getApplicationContext(),HouseDetailsActivity.class);
-                //Bundle mBundle = new Bundle();
-                //mBundle.putSerializable(MenuActivity.SER_KEY,ads.get(numOfAds));
-                //mIntent.putExtras(mBundle);
-                startActivity(mIntent);
-
-                // }
-            }
-        });*/
     }
 
     @Override
