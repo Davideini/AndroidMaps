@@ -69,7 +69,7 @@ public class MarkerUtility {
 
         ListView lv = (ListView) d.findViewById(R.id.lvInfoLocations);
 
-        LocationsList.MakeListView(marker.getPosition(), activity, lv);
+        LocationsList.MakeListView(marker.getPosition(), activity, lv, mMap);
 
         d.show();
     }

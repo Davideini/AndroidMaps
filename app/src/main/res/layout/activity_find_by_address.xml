@@ -3,11 +3,11 @@
     android:id="@+id/mainLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
-    android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.sce3.thirdyear.androidmaps.maps.FindByAddressActivity">
+    <!--android:paddingLeft="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingRight="@dimen/activity_horizontal_margin"-->
+    <!--android:paddingTop="@dimen/activity_vertical_margin"-->
+    <!--android:paddingBottom="@dimen/activity_vertical_margin"-->
 
 
     <fragment xmlns:android="http://schemas.android.com/apk/res/android"
@@ -27,9 +27,5 @@
         android:layout_alignParentStart="true"
         android:layout_below="@+id/map" />
 
-    <TextView
-        android:id="@+id/tbSearch"
-        android:layout_width="100dp"
-        android:layout_height="20dp" />
 
 </RelativeLayout>

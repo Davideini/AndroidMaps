@@ -93,6 +93,8 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
                     .getMap();
 
 
+            mMap.setOnMapClickListener(mapClickListener);
+            mMap.setOnMarkerClickListener(markerClickListener);
             // Check if we were successful in obtaining the map.
         }
 
@@ -107,9 +109,9 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
         lvLocations = (ListView) findViewById(R.id.lvLocations);
         if (hasMarkers) {
             if (address != null)
-                LocationsList.MakeListView(address, this, lvLocations);
+                LocationsList.MakeListView(address, this, lvLocations, mMap);
             else
-                LocationsList.MakeListView(new LatLng(lat, lng), this, lvLocations);
+                LocationsList.MakeListView(new LatLng(lat, lng), this, lvLocations, mMap);
 
         }
     }
@@ -121,14 +123,9 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
 
 
         SetupClickEvents();
-        Utility.SetupUIKeyboard(findViewById(R.id.mainLayout), FindByAddressActivity.this);
+        //Utility.SetupUIKeyboard(findViewById(R.id.mainLayout), FindByAddressActivity.this);
 
-//        MapFragment mapFragment = (MapFragment) getFragmentManager()
-//                .findFragmentById(R.id.map);
-//        mapFragment.getMapAsync(this);
         setUpMapIfNeeded();
-
-        mStatusView = (TextView) findViewById(R.id.tbSearch);
     }
 
     private void SetupClickEvents() {
@@ -207,7 +204,8 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
 
         for (Address item : locations) {
             if (item == null) continue;
-            mMap.addMarker(MapUtility.CreateMarker(item, BitmapDescriptorFactory.HUE_BLUE));
+            Marker marker = mMap.addMarker(MapUtility.CreateMarker(item, BitmapDescriptorFactory.HUE_BLUE));
+            item.setMarker(marker);
             hasMarkers = true;
         }
         return hasMarkers;
@@ -221,7 +219,7 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
     public boolean onQueryTextSubmit(String address) {
 
         SearchMarkers(address, 0, 0);
-        LocationsList.MakeListView(address, this, lvLocations);
+        LocationsList.MakeListView(address, this, lvLocations, mMap);
 
         mStatusView.clearFocus();
         return true;

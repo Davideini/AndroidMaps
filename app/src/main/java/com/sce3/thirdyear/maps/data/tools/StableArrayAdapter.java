@@ -3,18 +3,20 @@ package com.sce3.thirdyear.maps.data.tools;
 import android.content.Context;
 import android.widget.ArrayAdapter;
 
+import com.sce3.thirdyear.maps.data.Address;
+
 import java.util.HashMap;
 import java.util.List;
 
 /**
  * Created by David on 27/05/2015.
  */
-public class StableArrayAdapter extends ArrayAdapter<String> {
+public class StableArrayAdapter extends ArrayAdapter<Address> {
 
-    HashMap<String, Integer> mIdMap = new HashMap<String, Integer>();
+    HashMap<Address, Integer> mIdMap = new HashMap<Address, Integer>();
 
     public StableArrayAdapter(Context context, int textViewResourceId,
-                              List<String> objects) {
+                              List<Address> objects) {
         super(context, textViewResourceId, objects);
         for (int i = 0; i < objects.size(); ++i) {
             mIdMap.put(objects.get(i), i);
@@ -23,7 +25,7 @@ public class StableArrayAdapter extends ArrayAdapter<String> {
 
     @Override
     public long getItemId(int position) {
-        String item = getItem(position);
+        Address item = getItem(position);
         return mIdMap.get(item);
     }
 
