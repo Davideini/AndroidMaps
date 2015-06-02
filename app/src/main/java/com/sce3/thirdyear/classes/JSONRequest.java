@@ -28,7 +28,7 @@ import java.util.concurrent.Future;
 public class JSONRequest implements Callable<String> {
     //public final static String SERVER = "192.168.80.1:8081";
     //public final static String SERVER = "10.200.204.243:81";//"10.0.0.138:81"; //"10.200.204.243:81";
-    public final static String SERVER = "10.200.204.136:8081";
+    public final static String SERVER = "192.168.3.145:8080";
     public final static String IMAGE_DIR = "JavaWeb/images";
 
     String address;
