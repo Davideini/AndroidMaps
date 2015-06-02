@@ -10,176 +10,296 @@
     android:id="@+id/mainLayout"
     tools:context="com.sce3.thirdyear.androidmaps.maps.AddressActivity">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Street"
-        android:id="@+id/textView9"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+    <TableLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tbStreet"
-        android:layout_below="@+id/textView9"
-        android:layout_alignParentStart="true"
-        android:width="200dp" />
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="House number"
-        android:id="@+id/textView9"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:weightSum="1">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tbhouseNumber"
-        android:layout_below="@+id/textView9"
-        android:layout_alignParentStart="true"
-        android:width="200dp" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Street"
+                    android:id="@+id/textViewStreetAddress"
+                    android:layout_weight="0.74" />
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="City"
-        android:id="@+id/textView9"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="House number"
+                    android:id="@+id/textViewHousenumberAddress"
+                    android:layout_column="1"
+                    android:layout_weight="0.10" />
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tbCity"
-        android:layout_below="@+id/textView9"
-        android:layout_alignParentStart="true"
-        android:width="200dp" />
+            </LinearLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Country"
-        android:id="@+id/textView9"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+        </TableRow>
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tbCountry"
-        android:layout_below="@+id/textView9"
-        android:layout_alignParentStart="true"
-        android:width="200dp" />
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceSmall"
-        android:text="Distance"
-        android:id="@+id/textView9"
-        android:layout_alignParentTop="true"
-        android:layout_alignParentStart="true" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:weightSum="1">
 
-    <EditText
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:id="@+id/tbDistance"
-        android:layout_below="@+id/textView9"
-        android:layout_alignParentStart="true"
-        android:width="200dp" />
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tbStreet"
+                    android:layout_below="@+id/textViewStreetAddress"
+                    android:layout_alignParentStart="true"
+                    android:width="200dp"
+                    android:layout_column="0"
+                    android:text=""/>
 
+                <EditText
+                    android:layout_width="100dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tbhouseNumber"
+                    android:width="200dp"
+                    android:layout_weight="0.80"
+                    android:text=""/>
+            </LinearLayout>
+        </TableRow>
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/btn_group">
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Find in map"
-            android:id="@+id/btnFindInMap"
-            android:layout_gravity="center_horizontal" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:weightSum="1">
 
-        <Button
-            style="?android:attr/buttonStyleSmall"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Clear"
-            android:id="@+id/btnClear"
-            android:clickable="false" />
-    </LinearLayout>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Country"
+                    android:id="@+id/textViewCountryAddress"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_weight="0.56"
+                    />
 
-    <LinearLayout
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:id="@+id/linearLayout"
-        android:layout_gravity="center_horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="City"
+                    android:id="@+id/textViewCityAddress"/>
+            </LinearLayout>
+        </TableRow>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/linearLayout3">
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tbCity"
+                    android:width="200dp"
+                    android:text=""/>
+
+                <EditText
+                    android:layout_width="144dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tbCountry"
+                    android:width="200dp"
+                    android:text=""/>
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Distance"
+                    android:id="@+id/textViewDistanceAddress"
+
+                    android:layout_weight="0.37" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Name"
+                    android:id="@+id/textviewnameaddress"/>
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:weightSum="1">
+
+                <EditText
+                    android:layout_width="151dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tbDistance"
+                    android:width="200dp"
+                    android:text=""/>
+
+                <EditText
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/editTextNameAddress"
+                    android:text="" />
+            </LinearLayout>
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Latitude"
-                android:id="@+id/textView13"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true" />
+                android:id="@+id/btn_group"
+                android:weightSum="1">
 
-            <EditText
-                android:layout_width="121dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/tbLat"
-                android:layout_below="@+id/textView9"
-                android:layout_alignParentStart="true"
-                android:width="200dp" />
-        </LinearLayout>
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Find in map"
+                    android:id="@+id/btnFindInMap"
+                    android:layout_gravity="center_horizontal" />
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="wrap_content"
-            android:layout_height="match_parent"
-            android:id="@+id/linearLayout2">
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Clear"
+                    android:id="@+id/btnClear"
+                    android:clickable="false" />
+            </LinearLayout>
+        </TableRow>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textAppearance="?android:attr/textAppearanceSmall"
-                android:text="Longitude "
-                android:id="@+id/textView14"
-                android:layout_alignParentTop="true"
-                android:layout_alignParentStart="true" />
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
 
-            <EditText
-                android:layout_width="120dp"
-                android:layout_height="wrap_content"
-                android:id="@+id/tbLng"
-                android:layout_below="@+id/textView9"
-                android:layout_alignParentStart="true"
-                android:width="200dp" />
-        </LinearLayout>
-    </LinearLayout>
 
-    <Button
-        style="?android:attr/buttonStyleSmall"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Show on map"
-        android:id="@+id/btnShowOnMap" />
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                android:weightSum="1">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Latitude"
+                    android:id="@+id/textViewLatitudeAddress"
+                    android:layout_weight="0.72"
+                    />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textAppearance="?android:attr/textAppearanceSmall"
+                    android:text="Longitude "
+                    android:id="@+id/textViewLongitudeAddress"
+                    />
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <EditText
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tbLat"
+                    android:layout_below="@+id/textViewStreetAddress"
+                    android:layout_alignParentStart="true"
+                    android:width="200dp"
+                    android:layout_weight="1"
+                    android:text=""/>
+
+                <EditText
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:id="@+id/tbLng"
+                    android:layout_alignParentStart="true"
+                    android:width="200dp"
+                    android:text=""/>
+            </LinearLayout>
+
+        </TableRow>
+
+        <TableRow
+            android:layout_width="fill_parent"
+            android:layout_height="fill_parent">
+
+            <LinearLayout
+                android:orientation="horizontal"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent">
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Show on map"
+                    android:id="@+id/btnShowOnMap" />
+
+                <Button
+                    style="?android:attr/buttonStyleSmall"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Register Location"
+                    android:id="@+id/buttonRegisterLocationAddress"
+                    android:onClick="registerLocation"/>
+
+            </LinearLayout>
+        </TableRow>
+    </TableLayout>
+
 
 </LinearLayout>
