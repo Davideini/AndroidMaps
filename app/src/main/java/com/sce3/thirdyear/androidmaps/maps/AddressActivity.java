@@ -12,9 +12,17 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.model.LatLng;
+import com.sce3.thirdyear.androidmaps.MainActivity;
 import com.sce3.thirdyear.androidmaps.R;
+import com.sce3.thirdyear.classes.InputValidator;
+import com.sce3.thirdyear.classes.JSONRequest;
+import com.sce3.thirdyear.classes.SQLiteDB;
+import com.sce3.thirdyear.classes.User;
 import com.sce3.thirdyear.maps.data.Address;
 import com.sce3.thirdyear.maps.data.tools.Utility;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.text.DecimalFormat;
 
@@ -164,4 +172,56 @@ public class AddressActivity extends ActionBarActivity {
         Utility.ClearForm(group);
     }
 
+    public void registerLocation(View view) {
+        EditText street = (EditText) findViewById(R.id.tbStreet);
+        EditText city = (EditText) findViewById(R.id.tbCity);
+        EditText country = (EditText) findViewById(R.id.tbCountry);
+        EditText houseNumber = (EditText) findViewById(R.id.tbhouseNumber);
+        EditText lat = (EditText) findViewById(R.id.tbLat);
+        EditText lng = (EditText) findViewById(R.id.tbLng);
+        EditText name = (EditText) findViewById(R.id.editTextNameAddress);
+
+        String Street = street.getText().toString();
+        String City = city.getText().toString();
+        String Country = country.getText().toString();
+        String HouseNumber = houseNumber.getText().toString();
+        String Lat = lat.getText().toString();
+        String Lng = lng.getText().toString();
+        String Name = name.getText().toString();
+        String addresstosend = "" + Street + " " + HouseNumber + " " + City + " " + Country;
+        if (!InputValidator.EmptyField(Street)) {
+            street.requestFocus();
+            street.setError("FIELD CANNOT BE EMPTY");
+        } else if (!InputValidator.Name(City)) {
+            city.requestFocus();
+            city.setError("ENTER ONLY ALPHABETICAL CHARACTER");
+        } else if (!InputValidator.EmptyField(Country)) {
+            country.requestFocus();
+            country.setError("FIELD CANNOT BE EMPTY");
+        } else {
+         User user = new User(new SQLiteDB(getApplicationContext()));
+            String address = String.format("http://%s/JavaMaps/api?action=Registration_Location&userid=%s&lati=%s&lngi=%s&addresstosend=%s&name=%s", JSONRequest.SERVER, user.getID(), Lat, Lng, addresstosend, Name);
+            //String address = String.format("http://%s/JavaMaps/api?action=aaa", JSONRequest.SERVER);
+
+            System.out.println(address);
+            try {
+                JSONRequest json = new JSONRequest(address);
+                JSONObject jobj = new JSONObject(json.getJSON());
+                if (jobj.getString("result").equals("success")) {
+                    Toast.makeText(AddressActivity.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
+
+//                Intent i = new Intent(RegistrationActivity.this, MainActivity.class);
+//                startActivity(i);
+
+                } else if (jobj.getString("result").equals("error")) {
+                    Toast.makeText(AddressActivity.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                Toast.makeText(AddressActivity.this, "Error receiving data.", Toast.LENGTH_LONG).show();
+
+            }
+        }
+    }
 }
