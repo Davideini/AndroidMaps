@@ -24,6 +24,7 @@ import com.sce3.thirdyear.maps.data.tools.Utility;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.sql.SQLInput;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -179,13 +180,14 @@ public class AddApartment extends ActionBarActivity {
 
             Toast.makeText(this, "Lat: " + lat + ", Lng: " + lng, Toast.LENGTH_SHORT).show();
 
-            user = new User(new SQLiteDB(getApplicationContext()));
+            SQLiteDB db = new SQLiteDB(getApplicationContext());
+            user = new User(db);
 
 
             Map<String, String> dict = new HashMap<>();
 
             dict.put("action", "AddApt");
-//            dict.put("user_id", user.getID()+"");
+            dict.put("user_id", user.getID()+"");
             dict.put("city", city.getText().toString());
             dict.put("territory", territory.getText().toString());
             dict.put("address", street.getText().toString() +" " + house_num.getText().toString() + " " + city.getText().toString());
@@ -216,7 +218,7 @@ public class AddApartment extends ActionBarActivity {
 
             boolean first = true;
             String delim = "";
-            StringBuilder sb = new StringBuilder(String.format("http://%s/JavaMaps/api?", JSONRequest.SERVER));
+            StringBuilder sb = new StringBuilder(String.format("http://%s/JavaWeb/api?", JSONRequest.SERVER));
             for (String key : dict.keySet()) {
 
                 if (!first) {
@@ -226,7 +228,7 @@ public class AddApartment extends ActionBarActivity {
                 sb.append(parm);
                 first = false;
             }
-
+            sb.append("&session=" + db.getSavedSession());
             String result = sb.toString();
 
 //            String apartment = String.format("http://%s/JavaMaps/api?action=AddApt&city=%s&price=%s&territory=%s&street=%s&house_num=%s&apt_num=%s&rooms=%s&floor=%s" +
@@ -238,22 +240,22 @@ public class AddApartment extends ActionBarActivity {
 //                    renovated.isChecked() ? '0' : '1', furnished.isChecked() ? '0' : '1', unit.isChecked() ? '0' : '1', pandoor.isChecked() ? '0' : '1');
 
             System.out.println(result);
-//            try {
-//                JSONRequest json = new JSONRequest(result);
-//                JSONObject jobj = new JSONObject(json.getJSON());
-//                if (jobj.getString("result").equals("success")) {
-//                    Toast.makeText(AddApartment.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
-//                    Intent myIntent = new Intent(AddApartment.this, RegistrationBuyerActivity.class);
-//                    AddApartment.this.startActivity(myIntent);
-//                } else if (jobj.getString("result").equals("error")) {
-//                    Toast.makeText(AddApartment.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
-//                }
-//            } catch (JSONException e) {
-//                System.out.println(e.getMessage());
-//            } catch (Exception e) {
-//                Toast.makeText(AddApartment.this, "Error receiving data.", Toast.LENGTH_LONG).show();
-//
-//            }
+            try {
+                JSONRequest json = new JSONRequest(result);
+                JSONObject jobj = new JSONObject(json.getJSON());
+                if (jobj.getString("result").equals("success")) {
+                    Toast.makeText(AddApartment.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
+                    Intent myIntent = new Intent(AddApartment.this, RegistrationBuyerActivity.class);
+                    AddApartment.this.startActivity(myIntent);
+                } else if (jobj.getString("result").equals("error")) {
+                    Toast.makeText(AddApartment.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
+                }
+            } catch (JSONException e) {
+                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                Toast.makeText(AddApartment.this, "Error receiving data.", Toast.LENGTH_LONG).show();
+
+            }
         }
 
 

@@ -16,7 +16,7 @@ public class User {
     {}
     /*st*/
     public User(SQLiteDB db) {
-        String address = String.format("http://%s/JavaMaps/api?action=GetUserUsingSession&session=%s", JSONRequest.SERVER, db.getSavedSession());
+        String address = String.format("http://%s/JavaWeb/api?action=GetUserUsingSession&session=%s", JSONRequest.SERVER, db.getSavedSession());
 
         try {
             JSONRequest json = new JSONRequest(address);
@@ -27,6 +27,7 @@ public class User {
             password=jobj.getString("password");
             phone1=jobj.getString("phone1");
             phone2=jobj.getString("phone2");
+            id=jobj.getInt("id");
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
