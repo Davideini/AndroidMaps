@@ -12,6 +12,7 @@ import android.view.View.OnClickListener;
 import android.widget.EditText;
 import android.widget.Toast;
 
+import com.sce3.thirdyear.androidmaps.maps.AddressActivity;
 import com.sce3.thirdyear.classes.InputValidator;
 import com.sce3.thirdyear.classes.JSONRequest;
 
@@ -38,8 +39,11 @@ public class RegistrationActivity extends ActionBarActivity {
         setContentView(R.layout.activity_registration);
 
         buy=(CheckBox)findViewById(R.id.checkBoxBuyer);
+        buy.setVisibility(View.INVISIBLE);
         next = (Button)findViewById(R.id.buttonNext);
+
         next.setEnabled(false);
+        next.setVisibility(View.INVISIBLE);
         finish=(Button)findViewById(R.id.buttonFinish);
         FN=(EditText)findViewById(R.id.TextBoxFN);
         LN=(EditText)findViewById(R.id.TextBoxLN);
@@ -148,7 +152,7 @@ public class RegistrationActivity extends ActionBarActivity {
                         JSONObject jobj = new JSONObject(json.getJSON());
                         if(jobj.getString("result").equals("success")){
                             Toast.makeText(RegistrationActivity.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
-                            Intent myIntent = new Intent(RegistrationActivity.this, RegistrationBuyerActivity.class);
+                            Intent myIntent = new Intent(RegistrationActivity.this, AddressActivity.class);
                             RegistrationActivity.this.startActivity(myIntent);
                         }
 
@@ -267,7 +271,7 @@ public class RegistrationActivity extends ActionBarActivity {
 
                             Intent i = new Intent(RegistrationActivity.this, MainActivity.class);
                             startActivity(i);
-//
+
                         }
 
                         else if(jobj.getString("result").equals("error")){
