@@ -19,6 +19,7 @@ public class MenuTabs {
     private Context context;
     final static String [] names ={"Liked","Unliked","ALL"};
     final static String [] searchTabs={"By Address","Custom Search"};
+    final static String [] profileTabs={"Personal Details" ,"My Ads"};
     Fragment fragment = null;
     public MenuTabs(TabHost tabhost,FragmentManager fm)
     {
@@ -34,27 +35,34 @@ public class MenuTabs {
             spec.setIndicator(tabName);
             tabHost.addTab(spec);
         }
-//the first fragment
         fm.beginTransaction().replace(R.id.content_frame, new frag()).commit();
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
 
             @Override
             public void onTabChanged(String tabId) {
-              /*  Fragment fragment = null;
-                if (tabHost.getCurrentTabTag().equals(names[0]))
-                    fragment = new frag(); //change to like or unlike or all
-                else if (tabHost.getCurrentTabTag().equals(names[1]))
-                    fragment = new test(); //change to like or unlike or all
-                else if (tabHost.getCurrentTabTag().equals(names[2]))
-                    fragment = new ResultFragment(); //change to like or unlike or all
-                if (fragment != null) {
-                    fm.beginTransaction().replace(R.id.content_frame, fragment).commit();
-                }*/
                 setContent(tabId);
             }
         });
     }
 
+
+    public void createProfileTabs() {
+        for (int i = 0; i < profileTabs.length; i++) {
+            String tabName = profileTabs[i];
+            TabHost.TabSpec spec = tabHost.newTabSpec(tabName);
+            spec.setContent(R.id.fakeTabContent);
+            spec.setIndicator(tabName);
+            tabHost.addTab(spec);
+        }
+        fm.beginTransaction().replace(R.id.content_frame, new frag()).commit();
+        tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
+
+            @Override
+            public void onTabChanged(String tabId) {
+                setContent(tabId);
+            }
+        });
+    }
     public void createSearchTabs() {
         for (int i = 0; i < searchTabs.length; i++) {
             String tabName = searchTabs[i];
@@ -63,20 +71,11 @@ public class MenuTabs {
             spec.setIndicator(tabName);
             tabHost.addTab(spec);
         }
-///the first fragment
         fm.beginTransaction().replace(R.id.content_frame, new frag()).commit();
         tabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
 
             @Override
             public void onTabChanged(String tabId) {
-               /*
-                if (tabHost.getCurrentTabTag().equals(searchTabs[0]))
-                    fragment = new frag(); //change to like or unlike or all
-                else if (tabHost.getCurrentTabTag().equals(searchTabs[1]))
-                    fragment = new test(); //change to like or unlike or all
-                if (fragment != null) {
-                    fm.beginTransaction().replace(R.id.content_frame, fragment).commit();
-                }*/
                 setContent(tabId);
             }
         });
@@ -88,12 +87,16 @@ public class MenuTabs {
             fragment = new frag(); //change to like or unlike or all
         else if (tabHost.getCurrentTabTag().equals(searchTabs[1]))
             fragment = new test(); //change to like or unlike or all
-        if (tag.equals(names[0]))
+        else if (tag.equals(names[0]))
             fragment = new frag(); //change to like or unlike or all
         else if (tag.equals(names[1]))
             fragment = new test(); //change to like or unlike or all
         else if (tag.equals(names[2]))
             fragment = new ResultFragment(); //change to like or unlike or all
+        else if (tag.equals(profileTabs[0]))
+            fragment = new frag(); //change to like or unlike or all
+        else if (tag.equals(profileTabs[1]))
+            fragment = new test(); //change to like or unlike or all
         if (fragment != null) {
             fm.beginTransaction().replace(R.id.content_frame, fragment).commit();
         }

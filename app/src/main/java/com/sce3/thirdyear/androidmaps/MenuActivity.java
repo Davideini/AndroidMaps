@@ -32,6 +32,13 @@ public class MenuActivity extends ActionBarActivity {
     /////////////////////////////////////////////////////////
     //static keys
     public  final static String SER_KEY = "com.sce3.thirdyear.HouseDetailsActivity";
+    ////////////////////static Drawer category
+    public final static  int Profile =0;
+    public final static  int Search = 1;
+    public final static  int History = 2;
+    public final static  int About = 3;
+    public final static  int Logout = 4;
+
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -136,19 +143,22 @@ public class MenuActivity extends ActionBarActivity {
         // update the main content by replacing fragments
 
         Fragment fragment=null;
+
         TabWidget t=(TabWidget)findViewById(android.R.id.tabs);
         if(t.getTabCount()!=0)
             myTabHost.getTabWidget().removeAllViews();
-        if(position==0) {
+        if(position==MenuActivity.Profile) {
+           // resf = new ResultFragment();
+            //mt.createProfileTabs();
              resf = new ResultFragment();
             getFragmentManager().beginTransaction().replace(R.id.content_frame, resf).commit();
             // = (ResultFragment) fragment;
             //fragment=resf;
         }
-        else if(position==1){
+        else if(position==MenuActivity.Search){
             mt.createSearchTabs();
         }
-        else if(position==2){
+        else if(position==MenuActivity.History){
             mt.createHistoryTabs();
         }
         else {getFragmentManager().beginTransaction().replace(R.id.content_frame, resf).commit();}
