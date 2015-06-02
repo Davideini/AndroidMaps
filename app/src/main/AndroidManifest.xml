@@ -77,7 +77,7 @@
         <activity
             android:name=".maps.FindByAddressActivity"
             android:label="@string/title_activity_find_by_address"
-            android:screenOrientation="portrait" />
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".showImgsActivity"
             android:label="@string/title_activity_show_imgs"

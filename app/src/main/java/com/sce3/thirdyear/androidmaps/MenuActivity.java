@@ -21,6 +21,7 @@ import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabWidget;
 import com.sce3.thirdyear.androidmaps.fragments.ResultFragment;
+import com.sce3.thirdyear.androidmaps.maps.AddressActivity;
 import com.sce3.thirdyear.classes.MenuAdapter;
 import com.sce3.thirdyear.classes.MenuItemTemplate;
 import com.sce3.thirdyear.classes.MenuTabs;
@@ -181,6 +182,8 @@ public class MenuActivity extends ActionBarActivity {
         getSupportActionBar().setIcon(menuitems.get(position).getIcon());
         getSupportActionBar().setTitle(menuitems.get(position).getTitle());
         mDrawerLayout.closeDrawer(mDrawerList);
+
+
     }
 
     @Override
@@ -213,6 +216,16 @@ public class MenuActivity extends ActionBarActivity {
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
             return true;
+        }
+        if(id ==R.id.action_addApartment)
+        {
+            Intent i=new Intent(this, AddApartment.class);
+            startActivity(i);
+        }
+        if(id==R.id.action_AddLocation)
+        {
+            Intent i=new Intent(this, AddressActivity.class);
+            startActivity(i);
         }
         return super.onOptionsItemSelected(item);
     }

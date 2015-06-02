@@ -6,6 +6,7 @@ import android.content.Context;
 import android.widget.TabHost;
 
 import com.sce3.thirdyear.androidmaps.R;
+import com.sce3.thirdyear.androidmaps.fragments.HistoryFragment;
 import com.sce3.thirdyear.androidmaps.fragments.ResultFragment;
 import com.sce3.thirdyear.androidmaps.fragments.frag;
 import com.sce3.thirdyear.androidmaps.fragments.test;
@@ -88,7 +89,7 @@ public class MenuTabs {
         else if (tabHost.getCurrentTabTag().equals(searchTabs[1]))
             fragment = new test(); //change to like or unlike or all
         else if (tag.equals(names[0]))
-            fragment = new frag(); //change to like or unlike or all
+            fragment = new HistoryFragment(); //change to like or unlike or all
         else if (tag.equals(names[1]))
             fragment = new test(); //change to like or unlike or all
         else if (tag.equals(names[2]))
@@ -98,7 +99,11 @@ public class MenuTabs {
         else if (tag.equals(profileTabs[1]))
             fragment = new test(); //change to like or unlike or all
         if (fragment != null) {
-            fm.beginTransaction().replace(R.id.content_frame, fragment).commit();
+            {
+                fm.beginTransaction().replace(R.id.content_frame, fragment).commit();
+                tabHost.setCurrentTab(0);
+            }
+
         }
     }
 
