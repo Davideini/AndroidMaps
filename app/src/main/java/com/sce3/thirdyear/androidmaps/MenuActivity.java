@@ -20,7 +20,12 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabWidget;
+
+import com.google.android.gms.internal.cl;
+import com.sce3.thirdyear.androidmaps.fragments.HistoryFragment;
 import com.sce3.thirdyear.androidmaps.fragments.ResultFragment;
+import com.sce3.thirdyear.androidmaps.fragments.frag;
+import com.sce3.thirdyear.androidmaps.fragments.test;
 import com.sce3.thirdyear.androidmaps.maps.AddressActivity;
 import com.sce3.thirdyear.classes.MenuAdapter;
 import com.sce3.thirdyear.classes.MenuItemTemplate;
@@ -34,6 +39,9 @@ public class MenuActivity extends ActionBarActivity {
     //static keys
     public  final static String SER_KEY = "com.sce3.thirdyear.HouseDetailsActivity";
     ////////////////////static Drawer category
+    final static String [] historyTabs ={"Liked","Unliked","ALL"};
+    final static String [] searchTabs={"By Address","Custom Search"};
+    final static String [] profileTabs={"Personal Details" ,"My Ads"};
     public final static  int Profile =0;
     public final static  int Search = 1;
     public final static  int History = 2;
@@ -49,6 +57,7 @@ public class MenuActivity extends ActionBarActivity {
     private TypedArray menuIcons;
     private ArrayList<MenuItemTemplate> menuitems;
     ResultFragment resf;
+    Fragment fragment=null;
     private int chosenMenuItem=-1;
     Bitmap b;
     ///////////////////////////////////////////////////////////
@@ -110,15 +119,19 @@ public class MenuActivity extends ActionBarActivity {
         };
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
+////////////////////////////////////////////////////////////////
+        myTabHost=(TabHost)findViewById(android.R.id.tabhost);
+        myTabHost.setup();
+        mt=new MenuTabs(myTabHost,getFragmentManager(),this);
+////////////////////////////////////////////////////
         if (savedInstanceState == null) {
             ///here we can put the automatic search
 //            Toast.makeText(this,"sfsf",Toast.LENGTH_LONG);
             selectItem(0);
         }
 
-        myTabHost=(TabHost)findViewById(android.R.id.tabhost);
-        myTabHost.setup();
-        mt=new MenuTabs(myTabHost,getFragmentManager());
+
+
 
     }
 
@@ -142,27 +155,35 @@ public class MenuActivity extends ActionBarActivity {
 
     private void selectItem(int position) {
         // update the main content by replacing fragments
-
-        Fragment fragment=null;
-
+        fragment=null;
         TabWidget t=(TabWidget)findViewById(android.R.id.tabs);
-        if(t.getTabCount()!=0)
-            myTabHost.getTabWidget().removeAllViews();
+        int count=t.getTabCount();
+       if(t.getTabCount()!=0) {
+            //t.removeAllViews();
+            myTabHost.setCurrentTab(0);
+            myTabHost.clearAllTabs();
+        }
+            //myTabHost.getTabWidget().removeAllViews();
         if(position==MenuActivity.Profile) {
+            mt.createTabs(MenuActivity.profileTabs);
+            //fragment = new ResultFragment();
            // resf = new ResultFragment();
             //mt.createProfileTabs();
-             resf = new ResultFragment();
-            getFragmentManager().beginTransaction().replace(R.id.content_frame, resf).commit();
+             //resf = new ResultFragment();
+            //getFragmentManager().beginTransaction().replace(R.id.content_frame, resf).commit();
             // = (ResultFragment) fragment;
             //fragment=resf;
         }
         else if(position==MenuActivity.Search){
-            mt.createSearchTabs();
+            mt.createTabs(MenuActivity.searchTabs);
         }
         else if(position==MenuActivity.History){
-            mt.createHistoryTabs();
+            mt.createTabs(MenuActivity.historyTabs);
+
         }
-        else {getFragmentManager().beginTransaction().replace(R.id.content_frame, resf).commit();}
+        else {
+            fragment=new ResultFragment();
+            getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();}
 
 
         //Bundle args = new Bundle();
@@ -172,10 +193,17 @@ public class MenuActivity extends ActionBarActivity {
         //FragmentManager fragmentManager = getFragmentManager();
         //fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         //resf=(ResultFragment) fragmentManager.findFragmentById(R.id.content_frame);
+        if(position==MenuActivity.History||position==MenuActivity.Search) {
+            myTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
 
+                @Override
+                public void onTabChanged(String tabId) {
+                    setContent(tabId);
+                }
+            });
+            myTabHost.setCurrentTab(0);
 
-
-
+        }
         // update selected item and title, then close the drawer
         mDrawerList.setItemChecked(position, true);
         getSupportActionBar().setDisplayShowHomeEnabled(true);
@@ -256,6 +284,29 @@ public class MenuActivity extends ActionBarActivity {
         resf.updateTextView();
     }
 
+    public void setContent(String tag){
+
+        if (tag.equals(searchTabs[0]))
+            fragment = new frag(); //change to like or unlike or all
+        else if (tag.equals(searchTabs[1]))
+            fragment = new test(); //change to like or unlike or all
+        else if (tag.equals(historyTabs[0]))
+            fragment = new HistoryFragment(); //change to like or unlike or all
+        else if (tag.equals(historyTabs[1]))
+            fragment = new test(); //change to like or unlike or all
+        else if (tag.equals(historyTabs[2]))
+            fragment = new ResultFragment(); //change to like or unlike or all
+        else if (tag.equals(profileTabs[0]))
+            fragment = new frag(); //change to like or unlike or all
+        else if (tag.equals(profileTabs[1]))
+            fragment = new test(); //change to like or unlike or all
+        if (fragment != null) {
+            {
+                getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+            }
+
+        }
+    }
 
 
 }
