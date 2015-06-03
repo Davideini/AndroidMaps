@@ -225,7 +225,9 @@ public class MenuActivity extends ActionBarActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
-        inflater.inflate(R.menu.menu_main, menu);
+        inflater.inflate(R.menu.menu_menu, menu);
+        //MenuItem item = menu.findItem(R.id.action_addApartment);
+        //item.
         return super.onCreateOptionsMenu(menu);
 
     }
@@ -245,12 +247,12 @@ public class MenuActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-        if(id ==R.id.action_addApartment)
+        if(id ==R.id.add_appartment)
         {
             Intent i=new Intent(this, AddApartment.class);
             startActivity(i);
         }
-        if(id==R.id.action_AddLocation)
+        if(id==R.id.add_location)
         {
             Intent i=new Intent(this, AddressActivity.class);
             startActivity(i);

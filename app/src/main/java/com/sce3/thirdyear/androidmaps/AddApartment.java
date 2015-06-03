@@ -276,8 +276,9 @@ public class AddApartment extends ActionBarActivity {
                 JSONObject jobj = new JSONObject(json.getJSON());
                 if (jobj.getString("result").equals("success")) {
                     Toast.makeText(AddApartment.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
-                    Intent myIntent = new Intent(AddApartment.this, RegistrationBuyerActivity.class);
-                    AddApartment.this.startActivity(myIntent);
+                    //Intent myIntent = new Intent(AddApartment.this, RegistrationBuyerActivity.class);
+                    //AddApartment.this.startActivity(myIntent);
+                    finish();
                 } else if (jobj.getString("result").equals("error")) {
                     Toast.makeText(AddApartment.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
                 }
