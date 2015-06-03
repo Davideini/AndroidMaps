@@ -20,7 +20,7 @@ public class NormalActivity extends ActionBarActivity {
         setContentView(R.layout.activity_normal);
 
 
-        List<Apartment> list = Apartment.SearchApi("e");
+        List<Apartment> list = Apartment.SearchApi("i");
         for (Apartment apt : list) {
             Address address = Address.FindAddress(apt.getAddress() + " " + apt.getCity());
             if (address.getLat() < 20 || address.getLng() < 0 || address.getFormattedAddress() == null || address.getFormattedAddress().isEmpty()) {
