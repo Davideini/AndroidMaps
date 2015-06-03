@@ -68,11 +68,11 @@
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Map test"
+        android:text="Search Apartments"
         android:id="@+id/btnMapTest"
-        android:onClick="toMapsTest"
-        android:layout_alignTop="@+id/btnAddress"
-        android:layout_alignEnd="@+id/regBtn" />
+        android:onClick="toSearchApartments"
+        android:layout_alignParentTop="true"
+        android:layout_alignStart="@+id/btnMessage" />
 
     <Button
         android:layout_width="wrap_content"
@@ -80,10 +80,18 @@
         android:text="AddApt"
         android:id="@+id/button2"
         android:onClick="toAddDept"
-        android:layout_alignTop="@+id/textView"
-        android:layout_centerHorizontal="true" />
+        android:layout_alignTop="@+id/regBtn"
+        android:layout_alignParentStart="true" />
 
-
+    <Button
+        style="?android:attr/buttonStyleSmall"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Dont touch"
+        android:id="@+id/btnDont"
+        android:onClick="onDontTouch"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentEnd="true" />
 
 
 </RelativeLayout>

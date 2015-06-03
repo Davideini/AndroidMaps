@@ -6,12 +6,16 @@
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <uses-permission android:name="com.google.android.providers.gsf.permission.READ_GSERVICES" />
-    <uses-feature android:name="android.hardware.camera"
-        android:required="true" />
-    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
-    <!--<uses-permission android:name="android.permission.CAMERA"/>-->
 
-    <!--<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>-->
+    <uses-feature
+        android:name="android.hardware.camera"
+        android:required="true" />
+
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    <!-- <uses-permission android:name="android.permission.CAMERA"/> -->
+
+
+    <!-- <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/> -->
 
 
     <!--
@@ -85,7 +89,7 @@
         <activity
             android:name=".maps.FindByAddressActivity"
             android:label="@string/title_activity_find_by_address"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".showImgsActivity"
             android:label="@string/title_activity_show_imgs"
@@ -99,11 +103,13 @@
             android:label="@string/title_activity_maps_test" />
         <activity
             android:name="com.sce3.thirdyear.AddNewApt"
-            android:label="@string/title_activity_add_new_apt"></activity>
+            android:label="@string/title_activity_add_new_apt" />
         <activity
             android:name=".SearchActivity"
-            android:label="@string/title_activity_search" >
-        </activity>
+            android:label="@string/title_activity_search"></activity>
+        <activity
+            android:name=".NormalActivity"
+            android:label="@string/title_activity_normal"></activity>
     </application>
 
 </manifest>

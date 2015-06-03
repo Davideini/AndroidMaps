@@ -1,13 +1,30 @@
 package com.sce3.thirdyear.classes;
 
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.sce3.thirdyear.maps.data.Address;
+import com.sce3.thirdyear.maps.data.parser_Json;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.Serializable;
-import java.util.Date;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by win7 on 25/05/2015.
  */
 
 public class Apartment implements Serializable {
+
+    // private const
+    private static final String SERVER_URL = "http://%s/JavaWeb/api?action=SearchAddress&%s";
+    private static final String BY_LATLNG_DIST = "latlng=%s,%s&distance=%s";
+    private static final String BY_ADDRESS = "address=%s";
+    private static final String UPDATE = "update=true";
+
     int id;
     int user_id;
     int type_id;
@@ -34,6 +51,9 @@ public class Apartment implements Serializable {
     float latitude;
     float sizem2;
     String comment;
+
+    Marker marker;
+
 
     public Apartment(int id, int user_id, int type_id, String city, int price, String territory, String address, boolean aircondition, boolean elevator, boolean balcony, boolean isolated_room, boolean parking, boolean handicap_access, boolean storage, boolean bars, boolean sun_balcony, boolean renovated, boolean furnished, boolean unit, boolean pandoor, float rooms, int floor, float longitude, float latitude, float sizem2, String comment) {
         this.id = id;
@@ -64,6 +84,17 @@ public class Apartment implements Serializable {
         this.comment = comment;
     }
 
+    public Apartment() {
+
+    }
+
+    public Marker getMarker() {
+        return marker;
+    }
+
+    public void setMarker(Marker marker) {
+        this.marker = marker;
+    }
 
     public int getUser_id() {
         return user_id;
@@ -85,8 +116,13 @@ public class Apartment implements Serializable {
         return comment;
     }
 
-    public void setComment(String comment) {this.comment = comment;}
-    public int getId() {return id;}
+    public void setComment(String comment) {
+        this.comment = comment;
+    }
+
+    public int getId() {
+        return id;
+    }
 
     public void setId(int id) {
         this.id = id;
@@ -269,5 +305,117 @@ public class Apartment implements Serializable {
     }
 
 
+    public static List<Apartment> SearchApi(String address) {
+        address = address.replaceAll("[' ']", "%20");
+        String parm1 = String.format(BY_ADDRESS, address);
+        String params = parm1;
+        String url = String.format(SERVER_URL, JSONRequest.SERVER, params);
+
+        return GetApartments(url);
+    }
+
+    public static void Update(Apartment apartment, Address address) {
+        String parm1 = String.format("id=%s&city=%s", apartment.getId(), address.getCity());
+        String parm2 = String.format(BY_ADDRESS, address.getFormattedAddress());
+        parm2 = parm2.replaceAll("[' ']", "%20");
+
+        String parm3 = String.format(BY_LATLNG_DIST, address.getLat(), address.getLng(), 0);
+        String params = UPDATE + "&" + parm1 + "&" + parm2 + "&" + parm3;
+        String url = String.format(SERVER_URL, JSONRequest.SERVER, params);
+        System.out.print(url);
+        GetApartments(url);
+    }
+
+    public static List<Apartment> AddressByLatLng(LatLng latLng, float distance) {
+        String parm1 = String.format(BY_LATLNG_DIST, latLng.latitude, latLng.longitude, distance);
+        String params = parm1;
+        String url = String.format(SERVER_URL, JSONRequest.SERVER, params);
+        return GetApartments(url);
+    }
+
+    private static List<Apartment> GetApartments(String url) {
+
+        List<Apartment> apartments = new ArrayList<>();
+
+        try {
+            JSONObject jsonObject = parser_Json.getJSONfromURL(url);
+
+            String Status = jsonObject.getString("result");
+            if (Status.equalsIgnoreCase("success")) {
+                JSONArray results = jsonObject.getJSONArray("data");
+                for (int j = 0; j < results.length(); j++) {
+                    JSONObject json = results.getJSONObject(j);
+                    apartments.add(ApartmentFromJSON(json));
+                }
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+        return apartments;
+    }
+
+
+    private static Apartment ApartmentFromJSON(JSONObject json) {
+        Apartment apartment = new Apartment();
+        try {
+            apartment.setParking(getBool(json, "parking"));
+            apartment.setRenovated(getBool(json, "renovated"));
+            apartment.setRooms(((float) json.getDouble("rooms")));
+            apartment.setCity(json.getString("city"));
+            apartment.setAddress(json.getString("address"));
+            apartment.setLatitude(((float) json.getDouble("latitude")));
+            apartment.setLongitude(((float) json.getDouble("longitude")));
+            apartment.setStorage(getBool(json, "storage"));
+            apartment.setBalcony(getBool(json, "balcony"));
+            apartment.setHandicap_access(getBool(json, "handicap_access"));
+            apartment.setIsolated_room(getBool(json, "isolated_room"));
+            apartment.setElevator(getBool(json, "elevator"));
+            apartment.setFurnished(getBool(json, "furnished"));
+            apartment.setPrice((float) json.getDouble("price"));
+            apartment.setId(json.getInt("id"));
+            apartment.setSizem2((float) json.getDouble("sizem2"));
+            apartment.setFloor(json.getInt("floor"));
+            apartment.setSun_balcony(getBool(json, "sun_balcony"));
+            apartment.setType_id(json.getInt("type_id"));
+            apartment.setAircondition(getBool(json, "aircondition"));
+            apartment.setBars(getBool(json, "bars"));
+            apartment.setUnit(getBool(json, "unit"));
+            apartment.setUser_id(json.getInt("user_id"));
+            apartment.setPandoor(getBool(json, "pandoor"));
+            apartment.setComment(json.getString("comment"));
+            apartment.setTerritory(json.getString("territory"));
+
+        } catch (Exception e) {
+        }
+        return apartment;
+    }
+
+
+    private static boolean getBool(JSONObject json, String key) {
+        boolean bool = true;
+        try {
+            bool = json.getBoolean(key);
+        } catch (Exception e) {
+            try {
+                bool = new Integer(1).equals(json.get(key));
+            } catch (JSONException e1) {
+                try {
+                    bool = "true" == json.getString(key).toLowerCase();
+                } catch (JSONException e2) {
+
+                }
+            }
+        }
+        return bool;
+    }
+
+    @Override
+    public String toString() {
+        return address;
+    }
+
+    public LatLng getPosition() {
+        return new LatLng(latitude, longitude);
+    }
 }
 

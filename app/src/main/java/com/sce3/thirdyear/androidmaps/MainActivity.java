@@ -11,8 +11,10 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sce3.thirdyear.androidmaps.maps.AddressActivity;
+import com.sce3.thirdyear.androidmaps.maps.FindByAddressActivity;
 import com.sce3.thirdyear.classes.JSONRequest;
 import com.sce3.thirdyear.classes.SQLiteDB;
+import com.sce3.thirdyear.maps.data.Address;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -142,6 +144,17 @@ public class MainActivity extends ActionBarActivity {
 
     public void toAddDept(View view) {
         Intent i = new Intent(MainActivity.this, AddApartment.class);
+        startActivity(i);
+    }
+
+    public void toSearchApartments(View view) {
+        Intent i = new Intent(MainActivity.this, FindByAddressActivity.class);
+        i.putExtra(Address.FOR_DEPARTMANTS, true);
+        startActivity(i);
+    }
+
+    public void onDontTouch(View view) {
+        Intent i = new Intent(MainActivity.this, NormalActivity.class);
         startActivity(i);
     }
 }

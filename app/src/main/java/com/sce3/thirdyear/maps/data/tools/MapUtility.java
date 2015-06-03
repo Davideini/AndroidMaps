@@ -7,6 +7,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.sce3.thirdyear.classes.Apartment;
 import com.sce3.thirdyear.maps.data.Address;
 
 /**
@@ -42,6 +43,13 @@ public class MapUtility {
         return maps;
     }
 
+
+    public static MarkerOptions CreateMarker(Apartment apartment, float style) {
+        return new MarkerOptions()
+                .title(apartment.getAddress())
+                .position(apartment.getPosition())
+                .icon(BitmapDescriptorFactory.defaultMarker(style));
+    }
 
     public static MarkerOptions CreateMarker(Address address, float style) {
         return new MarkerOptions()
