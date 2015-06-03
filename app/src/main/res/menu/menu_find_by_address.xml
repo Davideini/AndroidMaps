@@ -2,11 +2,33 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.sce3.thirdyear.androidmaps.maps.FindByAddressActivity">
+    <!--<item-->
+    <!--android:id="@+id/action_maps_help"-->
+    <!--android:title="@string/txt_help"-->
+    <!--android:icon="@android:drawable/ic_menu_help"-->
+    <!--app:showAsAction="always"-->
+    <!--/>-->
+
+
+    <!--<item-->
+    <!--android:id="@+id/action_locations"-->
+    <!--android:title="@string/txt_locations"-->
+    <!--android:icon="@android:drawable/ic_dialog_map"-->
+    <!--app:showAsAction="always"-->
+    />
+
     <item
         android:id="@+id/action_search"
         android:title="Search"
         android:icon="@android:drawable/ic_menu_search"
-        app:showAsAction="ifRoom|collapseActionView"
+        app:showAsAction="always"
         app:actionViewClass="android.support.v7.widget.SearchView" />
+
+    <item
+        android:id="@+id/action_clear_search"
+        android:title="Clear"
+        android:icon="@android:drawable/ic_menu_close_clear_cancel"
+        app:showAsAction="always" />
+
 
 </menu>

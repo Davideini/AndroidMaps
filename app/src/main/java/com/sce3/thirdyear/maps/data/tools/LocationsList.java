@@ -1,12 +1,15 @@
 package com.sce3.thirdyear.maps.data.tools;
 
 import android.app.Activity;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.Marker;
 import com.sce3.thirdyear.maps.data.Address;
 
@@ -18,24 +21,4 @@ import java.util.List;
 public class LocationsList {
 
 
-    public static void MakeListView(List<Address> addresses, Activity context, ListView listview, final GoogleMap mMap) {
-        final StableArrayAdapter adapter = new StableArrayAdapter(context,
-                android.R.layout.simple_list_item_1, addresses);
-        listview.setAdapter(adapter);
-
-        listview.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-
-            @Override
-            public void onItemClick(AdapterView<?> parent, final View view,
-                                    int position, long id) {
-                final Address item = (Address) parent.getItemAtPosition(position);
-
-                Marker marker = item.getMarker();
-
-                mMap.animateCamera(CameraUpdateFactory.newLatLngZoom(marker.getPosition(), 12));
-
-            }
-
-        });
-    }
 }

@@ -4,13 +4,16 @@ import android.app.Activity;
 import android.app.SearchManager;
 import android.app.SearchableInfo;
 import android.content.Context;
+import android.support.v4.app.Fragment;
 import android.support.v7.widget.SearchView;
+import android.util.TypedValue;
 import android.view.MenuItem;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 
 import java.util.List;
 
@@ -96,6 +99,17 @@ public class Utility {
             InputMethodManager inputMethodManager = (InputMethodManager) activity.getSystemService(Activity.INPUT_METHOD_SERVICE);
             inputMethodManager.hideSoftInputFromWindow(activity.getCurrentFocus().getWindowToken(), 0);
         } catch (Exception e) {
+        }
+    }
+
+    public static void resizeFragment(Fragment f, int newWidth, int newHeight, Activity acivity) {
+        float ht_px = newHeight > 1 ? TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, newHeight, acivity.getResources().getDisplayMetrics()) : newHeight;
+        float wt_px = newWidth > 1 ? TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, newWidth, acivity.getResources().getDisplayMetrics()) : newWidth;
+        if (f != null) {
+            View view = f.getView();
+            RelativeLayout.LayoutParams p = new RelativeLayout.LayoutParams((int) wt_px, (int) ht_px);
+            view.setLayoutParams(p);
+            view.requestLayout();
         }
     }
 }
