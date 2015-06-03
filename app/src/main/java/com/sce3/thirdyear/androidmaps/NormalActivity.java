@@ -6,11 +6,6 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.Toast;
 
-import com.sce3.thirdyear.classes.Apartment;
-import com.sce3.thirdyear.maps.data.Address;
-
-import java.util.List;
-
 
 public class NormalActivity extends ActionBarActivity {
 
@@ -19,15 +14,15 @@ public class NormalActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_normal);
 
-
-        List<Apartment> list = Apartment.SearchApi("i");
-        for (Apartment apt : list) {
-            Address address = Address.FindAddress(apt.getAddress() + " " + apt.getCity());
-            if (address.getLat() < 20 || address.getLng() < 0 || address.getFormattedAddress() == null || address.getFormattedAddress().isEmpty()) {
-                continue;
-            }
-            Apartment.Update(apt, address);
-        }
+//
+//        List<Apartment> list = Apartment.SearchApi("i");
+//        for (Apartment apt : list) {
+//            Address address = Address.FindAddress(apt.getAddress() + " " + apt.getCity());
+//            if (address.getLat() < 20 || address.getLng() < 0 || address.getFormattedAddress() == null || address.getFormattedAddress().isEmpty()) {
+//                continue;
+//            }
+//            Apartment.Update(apt, address);
+//        }
 
         Toast.makeText(this, "Success Update Apartments!", Toast.LENGTH_LONG).show();
     }
