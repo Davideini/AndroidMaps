@@ -79,7 +79,7 @@ public class AddApartment extends ActionBarActivity {
 
     public void takePicture(View view){
 
-        mImageButton = (ImageButton) findViewById(R.id.imageButton);
+        //mImageButton = (ImageButton) findViewById(R.id.imageButton);
         Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
         if (takePictureIntent.resolveActivity(getPackageManager()) != null) {
             startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE);
