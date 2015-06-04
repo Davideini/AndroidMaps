@@ -79,7 +79,8 @@
             android:label="@string/title_activity_registration_buyer" />
         <activity
             android:name=".MenuActivity"
-            android:label="@string/title_activity_menu" />
+            android:label="@string/title_activity_menu"
+            android:screenOrientation="portrait"/>
         <activity
             android:name=".AddApartment"
             android:label="@string/title_activity_add_apartment" />

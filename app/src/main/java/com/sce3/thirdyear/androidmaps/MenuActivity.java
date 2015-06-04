@@ -19,6 +19,7 @@ import android.widget.TabHost;
 import android.widget.TabWidget;
 import com.sce3.thirdyear.androidmaps.fragments.HistoryFragment;
 import com.sce3.thirdyear.androidmaps.fragments.ResultFragment;
+import com.sce3.thirdyear.androidmaps.fragments.UserDetailsFragment;
 import com.sce3.thirdyear.androidmaps.fragments.frag;
 import com.sce3.thirdyear.androidmaps.fragments.test;
 import com.sce3.thirdyear.androidmaps.maps.AddressActivity;
@@ -293,7 +294,7 @@ public class MenuActivity extends ActionBarActivity {
         else if (tag.equals(historyTabs[2]))
             fragment = new ResultFragment(); //change to like or unlike or all
         else if (tag.equals(profileTabs[0]))
-            fragment = new frag(); //change to like or unlike or all
+            fragment = new UserDetailsFragment(); //change to like or unlike or all
         else if (tag.equals(profileTabs[1]))
             fragment = new test(); //change to like or unlike or all
         if (fragment != null) {
