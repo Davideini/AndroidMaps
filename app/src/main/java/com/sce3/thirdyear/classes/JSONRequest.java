@@ -61,17 +61,21 @@ public class JSONRequest implements Callable<String> {
     private String getJSON(String address) throws IOException {
         StringBuilder builder = new StringBuilder();
         HttpParams httpParameters=new BasicHttpParams();
+        HttpResponse response;
         if(JSON!=null){
             HttpPost httpPost = new HttpPost(address);
-            StringEntity se = new StringEntity(JSON.toString());
+            StringEntity se = new StringEntity("data=" + JSON.toString());
             httpPost.setEntity(se);
+            HttpClient client = new DefaultHttpClient(httpParameters);
+            response = client.execute(httpPost);
         } else {
             HttpConnectionParams.setConnectionTimeout(httpParameters, 5000);
             HttpConnectionParams.setSoTimeout(httpParameters,5000);
+            HttpGet httpGet = new HttpGet(address);
+            HttpClient client = new DefaultHttpClient(httpParameters);
+            response = client.execute(httpGet);
         }
-        HttpGet httpGet = new HttpGet(address);
-        HttpClient client = new DefaultHttpClient(httpParameters);
-        HttpResponse response = client.execute(httpGet);
+
         StatusLine statusLine = response.getStatusLine();
         int statusCode = statusLine.getStatusCode();
         if (statusCode == 200) {
