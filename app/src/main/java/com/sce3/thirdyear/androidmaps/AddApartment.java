@@ -24,6 +24,8 @@ import com.sce3.thirdyear.maps.data.tools.Utility;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
 import java.util.Calendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -185,6 +187,7 @@ public class AddApartment extends ActionBarActivity {
             user = new User(db);
 
 
+
             Map<String, String> dict = new HashMap<>();
 
             dict.put("action", "AddApt");
@@ -262,6 +265,15 @@ public class AddApartment extends ActionBarActivity {
             sb.append("&session=" + db.getSavedSession());
             String result = sb.toString();
 
+            String link = result.replaceAll(" ", "%20");
+
+//            String encodedUrl = null;
+//            try {
+//                encodedUrl = URLEncoder.encode(result, "UTF-8");
+//            } catch (UnsupportedEncodingException ignored) {
+//                // Can be safely ignored because UTF-8 is always supported
+//            }
+
 //            String apartment = String.format("http://%s/JavaMaps/api?action=AddApt&city=%s&price=%s&territory=%s&street=%s&house_num=%s&apt_num=%s&rooms=%s&floor=%s" +
 //                            "&sizem2=%s&desc=%s&aircondition=%s&elevator=%s&balcony=%s&isolated_room=%s&parking=%s&handicap_access=%s&storage=%s" +
 //                            "&bars=%s&sun_balcony=%s&renovated=%s&furnished=%s&unit=%s&pandoor=%s", JSONRequest.SERVER, user.getID() + "", city.getText().toString(), price.getText().toString(),
@@ -270,14 +282,15 @@ public class AddApartment extends ActionBarActivity {
 //                    mamad.isChecked() ? '0' : '1', parking.isChecked() ? '0' : '1', hadicappedAccess.isChecked() ? '0' : '1', storage.isChecked() ? '0' : '1', bars.isChecked() ? '0' : '1', sunBalcony.isChecked() ? '0' : '1',
 //                    renovated.isChecked() ? '0' : '1', furnished.isChecked() ? '0' : '1', unit.isChecked() ? '0' : '1', pandoor.isChecked() ? '0' : '1');
 
-            System.out.println(result);
+            System.out.println(link);
             try {
-                JSONRequest json = new JSONRequest(result);
+                JSONRequest json = new JSONRequest(link);
                 JSONObject jobj = new JSONObject(json.getJSON());
                 if (jobj.getString("result").equals("success")) {
                     Toast.makeText(AddApartment.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
-                    Intent myIntent = new Intent(AddApartment.this, RegistrationBuyerActivity.class);
-                    AddApartment.this.startActivity(myIntent);
+//                    Intent myIntent = new Intent(AddApartment.this, RegistrationBuyerActivity.class);
+//                    AddApartment.this.startActivity(myIntent);
+                    finish();
                 } else if (jobj.getString("result").equals("error")) {
                     Toast.makeText(AddApartment.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
                 }

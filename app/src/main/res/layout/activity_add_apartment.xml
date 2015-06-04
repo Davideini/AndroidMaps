@@ -113,7 +113,7 @@
                 android:layout_weight="50"
                 android:ems="10"
                 android:hint="@string/territory_hint"
-                android:inputType="number" />
+                android:inputType="textPersonName" />
 
         </LinearLayout>
 
