@@ -6,10 +6,13 @@ import org.apache.http.HttpResponse;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -32,8 +35,16 @@ public class JSONRequest implements Callable<String> {
     public final static String IMAGE_DIR = "JavaWeb/images";
 
     String address;
+    JSONObject JSON;
     Future<String> future;
     public JSONRequest(String address) {
+        this.address = address;
+        ExecutorService pool = Executors.newFixedThreadPool(1);
+        future = pool.submit(this);
+    }
+
+    public JSONRequest(String address,JSONObject JSON) {
+        this.JSON = JSON;
         this.address = address;
         ExecutorService pool = Executors.newFixedThreadPool(1);
         future = pool.submit(this);
@@ -42,6 +53,7 @@ public class JSONRequest implements Callable<String> {
     public String getJSON() throws ExecutionException, InterruptedException {
         return future.get();
     }
+
     public String call() throws IOException {
         return getJSON(address);
     }
@@ -49,9 +61,15 @@ public class JSONRequest implements Callable<String> {
     private String getJSON(String address) throws IOException {
         StringBuilder builder = new StringBuilder();
         HttpParams httpParameters=new BasicHttpParams();
+        if(JSON!=null){
+            HttpPost httpPost = new HttpPost(address);
+            StringEntity se = new StringEntity(JSON.toString());
+            httpPost.setEntity(se);
+        } else {
+            HttpConnectionParams.setConnectionTimeout(httpParameters, 5000);
+            HttpConnectionParams.setSoTimeout(httpParameters,5000);
+        }
         HttpGet httpGet = new HttpGet(address);
-        HttpConnectionParams.setConnectionTimeout(httpParameters, 5000);
-        HttpConnectionParams.setSoTimeout(httpParameters,5000);
         HttpClient client = new DefaultHttpClient(httpParameters);
         HttpResponse response = client.execute(httpGet);
         StatusLine statusLine = response.getStatusLine();
@@ -70,30 +88,5 @@ public class JSONRequest implements Callable<String> {
         }
         return builder.toString();
     }
-    /*
-    private String postJSON(String address) throws IOException {
-        StringBuilder builder = new StringBuilder();
-        HttpParams httpParameters=new BasicHttpParams();
-        HttpPost httpPost = new HttpPost(address);
-        StringEntity se = new StringEntity(/*json to send/*);
-        httpPost.setEntity(se);
-        HttpClient client = new DefaultHttpClient();
-        HttpResponse response = client.execute(httpPost);
-        StatusLine statusLine = response.getStatusLine();
-        int statusCode = statusLine.getStatusCode();
-        if (statusCode == 200) {
-            HttpEntity entity = response.getEntity();
-            InputStream content = entity.getContent();
-            BufferedReader reader = new BufferedReader(new InputStreamReader(content));
-            String line;
-            while ((line = reader.readLine()) != null) {
-                builder.append(line);
-            }
-        } else {
-            throw new ConnectException("Error connecting to server.");
-            //Log.e(MainActivity.class.toString(), "Failed to get JSON object");
-        }
-        return builder.toString();
-    }
-    */
+
 }

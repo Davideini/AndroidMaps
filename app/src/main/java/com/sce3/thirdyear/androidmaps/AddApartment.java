@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
+import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -24,6 +25,7 @@ import com.sce3.thirdyear.maps.data.tools.Utility;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Calendar;
@@ -36,6 +38,7 @@ public class AddApartment extends ActionBarActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     ImageView mImageView;
     ImageButton mImageButton;
+    Bitmap imageBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -87,7 +90,7 @@ public class AddApartment extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            Bitmap imageBitmap = (Bitmap) extras.get("data");
+            imageBitmap = (Bitmap) extras.get("data");
 //            mImageView.setImageBitmap(imageBitmap);
 
 //            ImageButton imageButton;
@@ -217,7 +220,9 @@ public class AddApartment extends ActionBarActivity {
             dict.put("unit", String.valueOf(unit.isChecked()));
             dict.put("pandoor", String.valueOf(pandoor.isChecked()));
             dict.put("add_date", Calendar.getInstance().getTime().toString());
-
+            String imageBase64=getImageBase64(imageBitmap);
+            dict.put("image",imageBase64);
+            dict.put("session",db.getSavedSession());
 //
 //            dict.put("user_id", "");
 //            dict.put("type_id", "");
@@ -249,7 +254,7 @@ public class AddApartment extends ActionBarActivity {
 
 //        dict.put("Lat", String.valueOf(lat));
 //        dict.put("Lng", String.valueOf(lng));
-
+            /*
             boolean first = true;
             String delim = "";
             StringBuilder sb = new StringBuilder(String.format("http://%s/JavaWeb/api?", JSONRequest.SERVER));
@@ -266,7 +271,8 @@ public class AddApartment extends ActionBarActivity {
             String result = sb.toString();
 
             String link = result.replaceAll(" ", "%20");
-
+*/
+            String link = String.format("http://%s/JavaWeb/api?action=AddApt",JSONRequest.SERVER);
 //            String encodedUrl = null;
 //            try {
 //                encodedUrl = URLEncoder.encode(result, "UTF-8");
@@ -284,7 +290,8 @@ public class AddApartment extends ActionBarActivity {
 
             System.out.println(link);
             try {
-                JSONRequest json = new JSONRequest(link);
+                JSONObject data = new JSONObject(dict);
+                JSONRequest json = new JSONRequest(link,data);
                 JSONObject jobj = new JSONObject(json.getJSON());
                 if (jobj.getString("result").equals("success")) {
                     Toast.makeText(AddApartment.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
@@ -313,5 +320,12 @@ public class AddApartment extends ActionBarActivity {
 //
 //            }
 //        });
+    }
+    private String getImageBase64(Bitmap bmp){
+            ByteArrayOutputStream stream = new ByteArrayOutputStream();
+            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            byte[] byteArray = stream.toByteArray();
+            String base64encoded= Base64.encodeToString(byteArray, Base64.DEFAULT);
+            return base64encoded;
     }
 }

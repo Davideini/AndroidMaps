@@ -124,7 +124,7 @@ public class SearchActivity extends ActionBarActivity {
                     MinFloor.setError("FIELD MinFloor CANNOT BE larger than MaxFloor");
                 }
                 else{
-                    String address=String.format("http://%s/JavaMaps/api?action=Search&city=%s&rooms=%s&price1=%s&price2=%s&floor1=%s&floor2=%s", JSONRequest.SERVER,CityName,RoomsNum,MinimumPrice,MaxinumPrice,MinimumFloor,MaximumFloor);
+                    String address=String.format("http://%s/JavaWeb/api?action=Search&city=%s&rooms=%s&price1=%s&price2=%s&floor1=%s&floor2=%s", JSONRequest.SERVER,CityName,RoomsNum,MinimumPrice,MaxinumPrice,MinimumFloor,MaximumFloor);
                     System.out.println(address);
 
                     try {
