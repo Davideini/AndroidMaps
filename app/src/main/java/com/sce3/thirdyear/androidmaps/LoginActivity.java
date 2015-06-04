@@ -38,7 +38,7 @@ public class LoginActivity extends ActionBarActivity {
         else
         {
 
-            String address=String.format("http://%s/JavaMaps/api?action=ForgotPassword&email=%s", JSONRequest.SERVER,email);
+            String address=String.format("http://%s/JavaWeb/api?action=ForgotPassword&email=%s", JSONRequest.SERVER,email);
 
             System.out.println(address);
             try {

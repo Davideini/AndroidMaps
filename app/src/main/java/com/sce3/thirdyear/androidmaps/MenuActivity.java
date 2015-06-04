@@ -1,8 +1,5 @@
 package com.sce3.thirdyear.androidmaps;
-
-
 import android.app.Fragment;
-
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
@@ -20,8 +17,6 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabWidget;
-
-import com.google.android.gms.internal.cl;
 import com.sce3.thirdyear.androidmaps.fragments.HistoryFragment;
 import com.sce3.thirdyear.androidmaps.fragments.ResultFragment;
 import com.sce3.thirdyear.androidmaps.fragments.frag;
@@ -32,7 +27,6 @@ import com.sce3.thirdyear.classes.MenuItemTemplate;
 import com.sce3.thirdyear.classes.MenuTabs;
 import com.sce3.thirdyear.classes.User;
 import java.util.ArrayList;
-
 
 public class MenuActivity extends ActionBarActivity {
     /////////////////////////////////////////////////////////
