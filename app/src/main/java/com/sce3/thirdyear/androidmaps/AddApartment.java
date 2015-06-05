@@ -208,7 +208,9 @@ public class AddApartment extends ActionBarActivity {
             dict.put("elevator", String.valueOf(elevator.isChecked()));
             dict.put("balcony", String.valueOf(serviceBalcony.isChecked()));
             dict.put("isolated_room", String.valueOf(mamad.isChecked()));
-            dict.put("parking", String.valueOf(parking.isChecked()));
+            dict.put("parking", String.valueOf(parking.isChecked()
+
+            ));
             dict.put("handicap_access", String.valueOf(hadicappedAccess.isChecked()));
             dict.put("storage", String.valueOf(storage.isChecked()));
             dict.put("bars", String.valueOf(bars.isChecked()));
@@ -289,6 +291,7 @@ public class AddApartment extends ActionBarActivity {
             System.out.println(link);
             try {
                 JSONObject data = new JSONObject(dict);
+                System.out.println(data);
                 JSONRequest json = new JSONRequest(link,data);
                 JSONObject jobj = new JSONObject(json.getJSON());
                 if (jobj.getString("result").equals("success")) {
@@ -321,7 +324,7 @@ public class AddApartment extends ActionBarActivity {
     }
     private String getImageBase64(Bitmap bmp){
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bmp.compress(Bitmap.CompressFormat.PNG, 100, stream);
+            bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             byte[] byteArray = stream.toByteArray();
             String base64encoded= Base64.encodeToString(byteArray, Base64.DEFAULT);
             return base64encoded;
