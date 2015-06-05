@@ -94,15 +94,13 @@ public class AddApartment extends ActionBarActivity {
 //            mImageView.setImageBitmap(imageBitmap);
 
 //            ImageButton imageButton;
-            mImageButton.setImageBitmap(imageBitmap);
+            //mImageButton.setImageBitmap(imageBitmap);
         }
     }
 
     public void addNewApt(View view) {
         EditText street, city, house_num, apt_num, room_num, area, price, floor_num, territory, descr;
         CheckBox elevator, sunBalcony, mamad, serviceBalcony, parking, hadicappedAccess, storage, rent, sell, ac, renovated, furnished, unit, pandoor, bars;
-
-
         street = (EditText) findViewById(R.id.streetNameEditText);
         city = (EditText) findViewById(R.id.cityEditText);
         house_num = (EditText) findViewById(R.id.houseNumEditText);

@@ -10,6 +10,7 @@ import android.graphics.Matrix;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.net.Uri;
+import android.net.wifi.p2p.WifiP2pManager;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.app.Fragment;
@@ -17,10 +18,13 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.android.gms.internal.la;
 import com.google.android.gms.plus.model.people.Person;
@@ -31,15 +35,21 @@ import com.sce3.thirdyear.androidmaps.showImgsActivity;
 import com.sce3.thirdyear.classes.Ad;
 import com.sce3.thirdyear.classes.Apartment;
 import com.sce3.thirdyear.classes.DownloadImageTask;
+import com.sce3.thirdyear.classes.JSONRequest;
+import com.sce3.thirdyear.classes.SQLiteDB;
+
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 /**
  * A simple {@link Fragment} subclass.
  */
-public class ResultFragment extends Fragment {
+public class ResultFragment extends Fragment  {
 
     ArrayList<Ad> ads;
     int numOfAds=0;
@@ -49,6 +59,7 @@ public class ResultFragment extends Fragment {
     Button moreBtn;
     boolean isImageFitToScreen;
     Bitmap b;
+    ImageButton okBtn,cancelBtn;
     public ResultFragment() {
 
         ads = new ArrayList<Ad>();
@@ -78,6 +89,21 @@ public class ResultFragment extends Fragment {
         address=(TextView) view.findViewById(R.id.AddressVal);
         img=(ImageView)view.findViewById(R.id.imgResButton);
         moreBtn=(Button) view.findViewById(R.id.mDetailsBtn);
+        okBtn=(ImageButton) view.findViewById(R.id.okBtn);
+        cancelBtn=(ImageButton) view.findViewById(R.id.cancelBtn);
+        okBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onDecisionButtonClick(v);
+            }
+        });
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                onDecisionButtonClick(v);
+                updateTextView();
+            }
+        });
         updateTextView();
         return view;
     }
@@ -153,6 +179,43 @@ public class ResultFragment extends Fragment {
             bmImage.setClickable(true);
         }
 
+    }
+
+    public void onDecisionButtonClick(View v)
+    {
+        if(numOfAds<ads.size()) {
+            SQLiteDB db = new SQLiteDB(getActivity().getApplicationContext());
+            String session_str = db.getSavedSession();
+            int desc = 0;
+            if (v.getTag().equals("ok")) {
+                desc = 0;
+                Toast.makeText(getActivity().getBaseContext(), "ok pressed!!", Toast.LENGTH_LONG).show();
+
+            } else if (v.getTag().equals("no")) {
+                desc = 1;
+                Toast.makeText(getActivity().getBaseContext(), "no pressed!!", Toast.LENGTH_LONG).show();
+            }
+
+            String address = String.format("http://%s/JavaWeb/api?action=addHistory&apartment_id=%s&deleted=%s&session=%s", JSONRequest.SERVER, String.valueOf(ads.get(numOfAds).getApartment().getId()), String.valueOf(desc), session_str);
+            JSONRequest json = new JSONRequest(address);
+            try {
+                JSONObject jobj = new JSONObject(json.getJSON());
+                if (jobj.getString("result").equals("success")) {
+                    Log.d("transferToHistory", "decision done!!!");
+                    Toast.makeText(getActivity().getApplicationContext(), "decision done!!!", Toast.LENGTH_SHORT).show();
+                } else {
+                    Toast.makeText(getActivity().getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                    Log.d("ErroTansfer", "error to tranfer");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            } catch (ExecutionException e) {
+                e.printStackTrace();
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
     }
 
 }

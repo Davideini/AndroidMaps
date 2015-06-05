@@ -218,7 +218,6 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
             hasMarkers = true;
         }
 
-
         makeApartmentListView();
 
         return hasMarkers;

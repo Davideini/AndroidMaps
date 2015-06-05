@@ -17,6 +17,9 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabWidget;
+
+
+import com.sce3.thirdyear.androidmaps.fragments.About;
 import com.sce3.thirdyear.androidmaps.fragments.HistoryFragment;
 import com.sce3.thirdyear.androidmaps.fragments.ResultFragment;
 import com.sce3.thirdyear.androidmaps.fragments.UserDetailsFragment;
@@ -161,6 +164,7 @@ public class MenuActivity extends ActionBarActivity {
             //myTabHost.getTabWidget().removeAllViews();
         if(position==MenuActivity.Profile) {
             mt.createTabs(MenuActivity.profileTabs);
+            fragment = new UserDetailsFragment();
             //fragment = new ResultFragment();
            // resf = new ResultFragment();
             //mt.createProfileTabs();
@@ -171,16 +175,21 @@ public class MenuActivity extends ActionBarActivity {
         }
         else if(position==MenuActivity.Search){
             mt.createTabs(MenuActivity.searchTabs);
+            fragment = new test();
         }
         else if(position==MenuActivity.History){
             mt.createTabs(MenuActivity.historyTabs);
+            fragment = new HistoryFragment();
+        }
+        else if(position==MenuActivity.About){
 
+            fragment = new About();
         }
         else {
             fragment=new ResultFragment();
-            getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();}
-
-
+            }
+        getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
+///////////////this the way how to move things to Fragments
         //Bundle args = new Bundle();
         //args.putInt(PlanetFragment.ARG_PLANET_NUMBER, position);
         //fragment.setArguments(args);
@@ -188,7 +197,7 @@ public class MenuActivity extends ActionBarActivity {
         //FragmentManager fragmentManager = getFragmentManager();
         //fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         //resf=(ResultFragment) fragmentManager.findFragmentById(R.id.content_frame);
-        if(position==MenuActivity.History||position==MenuActivity.Search) {
+        if(position==MenuActivity.History||position==MenuActivity.Search||position==MenuActivity.Profile) {
             myTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
 
                 @Override
@@ -221,8 +230,6 @@ public class MenuActivity extends ActionBarActivity {
         // Inflate the menu; this adds items to the action bar if it is present.
         MenuInflater inflater = getMenuInflater();
         inflater.inflate(R.menu.menu_menu, menu);
-        //MenuItem item = menu.findItem(R.id.action_addApartment);
-        //item.
         return super.onCreateOptionsMenu(menu);
 
     }
@@ -276,15 +283,15 @@ public class MenuActivity extends ActionBarActivity {
         // Pass any configuration change to the drawer toggls
         mDrawerToggle.onConfigurationChanged(newConfig);
     }
-    public void okClick(View view) {
+    /*public void okClick(View view) {
 
         resf.updateTextView();
-    }
+    }*/
 
     public void setContent(String tag){
 
         if (tag.equals(searchTabs[0]))
-            fragment = new frag(); //change to like or unlike or all
+            fragment = new test(); //change to like or unlike or all
         else if (tag.equals(searchTabs[1]))
             fragment = new test(); //change to like or unlike or all
         else if (tag.equals(historyTabs[0]))

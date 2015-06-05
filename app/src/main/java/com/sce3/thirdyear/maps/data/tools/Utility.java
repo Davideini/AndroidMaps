@@ -15,6 +15,9 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 import android.widget.RelativeLayout;
 
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.SupportMapFragment;
+
 import java.util.List;
 
 /**
@@ -102,7 +105,7 @@ public class Utility {
         }
     }
 
-    public static void resizeFragment(Fragment f, int newWidth, int newHeight, Activity acivity) {
+    public static void resizeFragment(SupportMapFragment f, int newWidth, int newHeight, Activity acivity) {
         float ht_px = newHeight > 1 ? TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, newHeight, acivity.getResources().getDisplayMetrics()) : newHeight;
         float wt_px = newWidth > 1 ? TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, newWidth, acivity.getResources().getDisplayMetrics()) : newWidth;
         if (f != null) {

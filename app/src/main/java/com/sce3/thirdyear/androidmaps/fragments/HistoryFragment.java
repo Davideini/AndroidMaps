@@ -173,8 +173,6 @@ public class HistoryFragment extends Fragment {
         } catch (Exception e){
             Toast.makeText(getActivity().getApplicationContext(),"Error receiving data.",Toast.LENGTH_LONG).show();
         }
-
-
         return view;
 
     }
