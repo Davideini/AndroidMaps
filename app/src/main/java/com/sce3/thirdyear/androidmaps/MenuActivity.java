@@ -20,6 +20,7 @@ import android.widget.TabWidget;
 
 
 import com.sce3.thirdyear.androidmaps.fragments.About;
+import com.sce3.thirdyear.androidmaps.fragments.CustomSearchFragment;
 import com.sce3.thirdyear.androidmaps.fragments.HistoryFragment;
 import com.sce3.thirdyear.androidmaps.fragments.ResultFragment;
 import com.sce3.thirdyear.androidmaps.fragments.UserDetailsFragment;
@@ -293,7 +294,7 @@ public class MenuActivity extends ActionBarActivity {
         if (tag.equals(searchTabs[0]))
             fragment = new test(); //change to like or unlike or all
         else if (tag.equals(searchTabs[1]))
-            fragment = new test(); //change to like or unlike or all
+            fragment = new CustomSearchFragment(); //change to like or unlike or all
         else if (tag.equals(historyTabs[0]))
             fragment = new HistoryFragment(); //change to like or unlike or all
         else if (tag.equals(historyTabs[1]))

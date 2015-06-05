@@ -36,8 +36,9 @@ public class SearchActivity extends ActionBarActivity {
     private CheckBox AirCondition;
     private CheckBox AptPicOnly;
     private Button search;
+////////////////////////////////////////////////////////
     private View.OnClickListener SEARCHButtonListner;
-
+///////////////////////////////////////////////////////
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -132,9 +133,10 @@ public class SearchActivity extends ActionBarActivity {
                         JSONObject jobj = new JSONObject(json.getJSON());
                         if(jobj.getString("result").equals("success")){
                             Toast.makeText(SearchActivity.this, "Apartments found", Toast.LENGTH_LONG).show();
-
+///////////////////////////////////////////////////////////////////////////////////////////////
                             Intent i = new Intent(SearchActivity.this, MainActivity.class);
                             startActivity(i);
+////////////////////////////////////////////////////////////////////////////////////////////////////
                         }
 
                         else if(jobj.getString("result").equals("error")){
