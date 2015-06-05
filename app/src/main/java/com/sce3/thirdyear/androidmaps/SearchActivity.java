@@ -131,7 +131,7 @@ public class SearchActivity extends ActionBarActivity {
                         JSONRequest json=new JSONRequest(address);
                         JSONObject jobj = new JSONObject(json.getJSON());
                         if(jobj.getString("result").equals("success")){
-                            Toast.makeText(SearchActivity.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
+                            Toast.makeText(SearchActivity.this, "Apartments found", Toast.LENGTH_LONG).show();
 
                             Intent i = new Intent(SearchActivity.this, MainActivity.class);
                             startActivity(i);

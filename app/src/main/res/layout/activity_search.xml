@@ -46,11 +46,6 @@
                     android:hint="Enter City"
                     android:maxLength="14"/>
 
-                <HorizontalScrollView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:id="@+id/horizontalScrollView" />
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -330,11 +325,6 @@
 
             </LinearLayout>
         </TableRow>
-
-        <ScrollView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:id="@+id/scrollView" />
 
     </TableLayout>
 
