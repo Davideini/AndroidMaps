@@ -88,6 +88,62 @@ public class Apartment implements Serializable {
 
     }
 
+    public Apartment(String id, String user_id, String type_id, String city, String price, String territory, String address, String aircondition, String elevator, String balcony, String isolated_room, String parking, String handicap_access, String storage, String bars, String sun_balcony, String renovated, String furnished, String unit, String pandoor, String rooms, String floor, String longitude, String latitude, String sizem2, String comment) {
+        this.id = Integer.parseInt(id);
+        this.user_id = Integer.parseInt(user_id);
+        this.type_id = Integer.parseInt(type_id);
+        this.city = city;
+        this.price = Integer.parseInt(price);
+        this.territory = territory;
+        this.address = address;
+        if(aircondition == "true" || aircondition == "1")
+            this.aircondition = true;
+        else this.aircondition = false;
+        if(elevator == "true" || elevator == "1")
+            this.elevator = true;
+        else this.elevator = false;
+        if(balcony == "true" || balcony == "1")
+            this.balcony = true;
+        else this.balcony = false;
+        if(isolated_room == "true" || isolated_room == "1")
+            this.isolated_room = true;
+        else this.isolated_room = false;
+        if(parking == "true" || parking == "1")
+            this.parking = true;
+        else this.parking = false;
+        if(handicap_access == "true" || handicap_access == "1")
+            this.handicap_access = true;
+        else this.handicap_access = false;
+        if(storage == "true" || storage == "1")
+            this.storage = true;
+        else this.storage = false;
+        if(bars == "true" || bars == "1")
+            this.bars = true;
+        else this.bars = false;
+        if(sun_balcony == "true" || sun_balcony == "1")
+            this.sun_balcony = true;
+        else this.sun_balcony = false;
+        if(renovated == "true" || renovated == "1")
+            this.renovated = true;
+        else this.renovated = false;
+        if(furnished == "true" || furnished == "1")
+            this.furnished = true;
+        else this.furnished = false;
+        if(unit == "true" || unit == "1")
+            this.unit = true;
+        else this.unit = false;
+        if(pandoor == "true" || pandoor == "1")
+            this.pandoor = true;
+        else this.pandoor = false;
+
+        this.rooms = Float.parseFloat(rooms);
+        this.floor = Integer.parseInt(floor);
+        this.longitude = Float.parseFloat(longitude);
+        this.latitude = Float.parseFloat(latitude);
+        this.sizem2 = Float.parseFloat(sizem2);
+        this.comment = comment;
+    }
+
     public Marker getMarker() {
         return marker;
     }

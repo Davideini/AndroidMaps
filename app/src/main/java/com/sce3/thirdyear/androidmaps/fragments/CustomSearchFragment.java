@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
@@ -13,14 +14,18 @@ import android.widget.Toast;
 
 import com.sce3.thirdyear.androidmaps.MenuActivity;
 import com.sce3.thirdyear.androidmaps.R;
+import com.sce3.thirdyear.androidmaps.SearchActivity;
 import com.sce3.thirdyear.classes.Ad;
+import com.sce3.thirdyear.classes.Apartment;
 import com.sce3.thirdyear.classes.InputValidator;
 import com.sce3.thirdyear.classes.JSONRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by win7 on 06/06/2015.
@@ -80,7 +85,7 @@ public class CustomSearchFragment extends Fragment {
                 final String MaxinumPrice = MaxPrice.getText().toString();
                 final String MinimumFloor = MinFloor.getText().toString();
                 final String MaximumFloor = MaxFloor.getText().toString();
-
+                final List<String> list = new ArrayList<String>();
                 if (InputValidator.isEmpty(CityName)) {
                     City.requestFocus();
                     City.setError("FIELD CANNOT BE EMPTY");
@@ -130,6 +135,24 @@ public class CustomSearchFragment extends Fragment {
                         if (jobj.getString("result").equals("success")) {
                             Toast.makeText(getActivity(), "Apartments found", Toast.LENGTH_LONG).show();
 //////////////////////////////////////////////////////////////////////////////////////////////////
+                            JSONArray arr = jobj.getJSONArray("data");
+                            for(int i=0;i<arr.length();i++){
+                                list.add(arr.get(i).toString());
+                            }
+                            Apartment[] apartments = new Apartment[list.size()/29];
+                            ArrayList<String> imgSrcs = new ArrayList<String>(list.size()/29);
+                            Ad[] ads = new Ad[arr.length()/29];
+                                /*Inserting values into apartments and imgSrcs*/
+                            for(int i=0,j=0;i<list.size()/29&&j<list.size();i++){
+                                apartments[i] = new Apartment(list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString(),list.get(j++).toString());
+                                    /*++j to skip unnecessary column apartment_id which we already have at id*/
+                                imgSrcs.add(i,list.get(++j).toString());
+                                j++;
+                            }
+                                /*Inserting values into ads*/
+                            for(int i=0;i<list.size()/29;i++){
+                                MenuActivity.resultsAds.add(new Ad(apartments[i],imgSrcs));
+                            }
                             //put in all the data to MenuActivity.resultsAds
                             //create new Arraylist for Ads and copt he result to the resultAds
                              MenuActivity.resultIndex=0;//init the index
