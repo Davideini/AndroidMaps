@@ -17,6 +17,7 @@ import android.widget.AdapterView;
 import android.widget.ListView;
 import android.widget.TabHost;
 import android.widget.TabWidget;
+import android.widget.Toast;
 
 
 import com.sce3.thirdyear.androidmaps.fragments.About;
@@ -28,11 +29,18 @@ import com.sce3.thirdyear.androidmaps.fragments.frag;
 import com.sce3.thirdyear.androidmaps.fragments.test;
 import com.sce3.thirdyear.androidmaps.maps.AddressActivity;
 import com.sce3.thirdyear.classes.Ad;
+import com.sce3.thirdyear.classes.JSONRequest;
 import com.sce3.thirdyear.classes.MenuAdapter;
 import com.sce3.thirdyear.classes.MenuItemTemplate;
 import com.sce3.thirdyear.classes.MenuTabs;
+import com.sce3.thirdyear.classes.SQLiteDB;
 import com.sce3.thirdyear.classes.User;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.ArrayList;
+import java.util.concurrent.ExecutionException;
 
 public class MenuActivity extends ActionBarActivity {
     /////////////////////////////////////////////////////////
@@ -196,6 +204,13 @@ public class MenuActivity extends ActionBarActivity {
         else if(position==MenuActivity.RESULTS) {
             fragment=new ResultFragment();
             }
+        else if(position==MenuActivity.Logout){
+            logOut();
+            Intent intent = new Intent(MenuActivity.this, LoginActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // To clean up all activities
+            startActivity(intent);
+            finish();
+        }
         getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
 ///////////////this the way how to move things to Fragments
         //Bundle args = new Bundle();
@@ -277,6 +292,7 @@ public class MenuActivity extends ActionBarActivity {
             getFragmentManager().beginTransaction().replace(R.id.content_frame,new ResultFragment()).commit();
             //((MenuItem)findViewById(R.id.search_result)).setIcon(R.drawable.ic_resultsfilled);
         }
+
         return super.onOptionsItemSelected(item);
     }
 
@@ -332,6 +348,26 @@ public class MenuActivity extends ActionBarActivity {
                 getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
             }
 
+        }
+    }
+    private void logOut(){
+        SQLiteDB db = new SQLiteDB(getApplicationContext());
+        String session = db.getSavedSession();
+        String address = String.format("http://%s/JavaWeb/api?action=Logout&session=%s", JSONRequest.SERVER, session);
+        System.out.println(address);
+        JSONRequest json = new JSONRequest(address);
+        JSONObject jobj;
+        try {
+            jobj = new JSONObject(json.getJSON());
+            if (!jobj.getString("result").equals("success")) {
+                Toast.makeText(getApplicationContext(), "Error logging out.", Toast.LENGTH_SHORT).show();
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
         }
     }
 

@@ -220,9 +220,9 @@ public class AddApartment extends ActionBarActivity {
             dict.put("unit", String.valueOf(unit.isChecked()));
             dict.put("pandoor", String.valueOf(pandoor.isChecked()));
             dict.put("add_date", Calendar.getInstance().getTime().toString());
-            String imageBase64=getImageBase64(imageBitmap);
-            dict.put("image",imageBase64);
-            dict.put("session",db.getSavedSession());
+            //String imageBase64=getImageBase64(imageBitmap);
+            //dict.put("image",imageBase64);
+            //dict.put("session",db.getSavedSession());
 //
 //            dict.put("user_id", "");
 //            dict.put("type_id", "");
@@ -254,7 +254,7 @@ public class AddApartment extends ActionBarActivity {
 
 //        dict.put("Lat", String.valueOf(lat));
 //        dict.put("Lng", String.valueOf(lng));
-            /*
+
             boolean first = true;
             String delim = "";
             StringBuilder sb = new StringBuilder(String.format("http://%s/JavaWeb/api?", JSONRequest.SERVER));
@@ -271,8 +271,8 @@ public class AddApartment extends ActionBarActivity {
             String result = sb.toString();
 
             String link = result.replaceAll(" ", "%20");
-*/
-            String link = String.format("http://%s/JavaWeb/api?action=AddApt",JSONRequest.SERVER);
+
+            //String link = String.format("http://%s/JavaWeb/api?action=AddApt",JSONRequest.SERVER);
 //            String encodedUrl = null;
 //            try {
 //                encodedUrl = URLEncoder.encode(result, "UTF-8");
@@ -290,9 +290,9 @@ public class AddApartment extends ActionBarActivity {
 
             System.out.println(link);
             try {
-                JSONObject data = new JSONObject(dict);
-                System.out.println(data);
-                JSONRequest json = new JSONRequest(link,data);
+                //JSONObject data = new JSONObject(dict);
+                //System.out.println(data);
+                JSONRequest json = new JSONRequest(link);
                 JSONObject jobj = new JSONObject(json.getJSON());
                 if (jobj.getString("result").equals("success")) {
                     Toast.makeText(AddApartment.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
