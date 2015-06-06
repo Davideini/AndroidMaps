@@ -12,6 +12,7 @@ import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -32,7 +33,7 @@ public class JSONRequest implements Callable<String> {
     //public final static String SERVER = "10.200.201.176:8080";
     //public final static String SERVER = "10.0.0.14:8080";
     //public final static String SERVER = "192.168.1.2:8081";
-    public final static String SERVER = "192.168.43.26:8081";
+    public final static String SERVER = "192.168.3.151:8080";
     public final static String IMAGE_DIR = "JavaWeb/images";
 
     String address;
@@ -65,8 +66,9 @@ public class JSONRequest implements Callable<String> {
         HttpResponse response;
         if(JSON!=null){
             HttpPost httpPost = new HttpPost(address);
-            StringEntity se = new StringEntity("data=" + JSON.toString());
-            httpPost.setEntity(se);
+            StringEntity entity = new StringEntity(JSON.toString(), HTTP.UTF_8);
+            entity.setContentType("application/json");
+            httpPost.setEntity(entity);
             HttpClient client = new DefaultHttpClient(httpParameters);
             response = client.execute(httpPost);
         } else {
