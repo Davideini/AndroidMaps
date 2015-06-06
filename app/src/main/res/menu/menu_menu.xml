@@ -13,4 +13,8 @@
         android:title="AddLocation"
         android:icon="@drawable/ic_location"
         app:showAsAction="always"/>
+    <item android:id="@+id/search_result"
+        android:title="searchResult"
+        android:icon="@drawable/ic_results"
+        app:showAsAction="always"/>
 </menu>

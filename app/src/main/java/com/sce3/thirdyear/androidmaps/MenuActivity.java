@@ -47,6 +47,7 @@ public class MenuActivity extends ActionBarActivity {
     public final static  int History = 2;
     public final static  int About = 3;
     public final static  int Logout = 4;
+    public final static  int RESULTS =5;
 ////////////////////////////////////////////////////////////////////////
     //public ArrayList<Ad> results;
     public static ArrayList<Ad> resultsAds;
@@ -132,7 +133,7 @@ public class MenuActivity extends ActionBarActivity {
         if (savedInstanceState == null) {
             ///here we can put the automatic search
 //            Toast.makeText(this,"sfsf",Toast.LENGTH_LONG);
-            selectItem(0);
+            selectItem(MenuActivity.Search);
         }
 
 
@@ -192,7 +193,7 @@ public class MenuActivity extends ActionBarActivity {
 
             fragment = new About();
         }
-        else {
+        else if(position==MenuActivity.RESULTS) {
             fragment=new ResultFragment();
             }
         getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
@@ -212,15 +213,15 @@ public class MenuActivity extends ActionBarActivity {
                     setContent(tabId);
                 }
             });
-            myTabHost.setCurrentTab(0);
+            myTabHost.setCurrentTab(3);
 
         }
-        // update selected item and title, then close the drawer
-        mDrawerList.setItemChecked(position, true);
-        getSupportActionBar().setDisplayShowHomeEnabled(true);
-        getSupportActionBar().setIcon(menuitems.get(position).getIcon());
-        getSupportActionBar().setTitle(menuitems.get(position).getTitle());
-        mDrawerLayout.closeDrawer(mDrawerList);
+
+            mDrawerList.setItemChecked(position, true);
+            getSupportActionBar().setDisplayShowHomeEnabled(true);
+            getSupportActionBar().setIcon(menuitems.get(position).getIcon());
+            getSupportActionBar().setTitle(menuitems.get(position).getTitle());
+            mDrawerLayout.closeDrawer(mDrawerList);
 
 
     }
@@ -265,6 +266,16 @@ public class MenuActivity extends ActionBarActivity {
         {
             Intent i=new Intent(this, AddressActivity.class);
             startActivity(i);
+        }
+        if(id==R.id.search_result){
+            //selectItem(MenuActivity.RESULTS);
+            if(myTabHost.getTabWidget().getTabCount()!=0) {
+                //t.removeAllViews();
+                myTabHost.setCurrentTab(0);
+                myTabHost.clearAllTabs();
+            }
+            getFragmentManager().beginTransaction().replace(R.id.content_frame,new ResultFragment()).commit();
+            //((MenuItem)findViewById(R.id.search_result)).setIcon(R.drawable.ic_resultsfilled);
         }
         return super.onOptionsItemSelected(item);
     }
@@ -311,7 +322,7 @@ public class MenuActivity extends ActionBarActivity {
         else if (tag.equals(historyTabs[1]))
             fragment = new test(); //change to like or unlike or all
         else if (tag.equals(historyTabs[2]))
-            fragment = new ResultFragment(); //change to like or unlike or all
+            fragment = new test(); //change to like or unlike or all
         else if (tag.equals(profileTabs[0]))
             fragment = new UserDetailsFragment(); //change to like or unlike or all
         else if (tag.equals(profileTabs[1]))
