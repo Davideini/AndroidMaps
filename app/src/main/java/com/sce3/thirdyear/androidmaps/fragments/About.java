@@ -13,14 +13,15 @@ import com.sce3.thirdyear.androidmaps.R;
  * Created by win7 on 05/06/2015.
  */
 public class About extends Fragment {
-    public About(){}
+    public About() {
+    }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         //
         // return super.onCreateView(R.layout.about_fragment, container, false);
-        View v=inflater.inflate(R.layout.about_fragment, container, false);
+        View v = inflater.inflate(R.layout.about_fragment, container, false);
         return v;
     }
 

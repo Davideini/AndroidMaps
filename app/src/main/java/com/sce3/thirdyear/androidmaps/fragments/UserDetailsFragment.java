@@ -13,7 +13,6 @@ import android.widget.Toast;
 
 import com.sce3.thirdyear.androidmaps.MainActivity;
 import com.sce3.thirdyear.androidmaps.R;
-import com.sce3.thirdyear.androidmaps.UpdateUserDetailsActivity;
 import com.sce3.thirdyear.classes.InputValidator;
 import com.sce3.thirdyear.classes.JSONRequest;
 import com.sce3.thirdyear.classes.SQLiteDB;
@@ -35,27 +34,29 @@ public class UserDetailsFragment extends Fragment {
     private EditText Phone1;
     private EditText Phone2;
     private User user;
-    public UserDetailsFragment(){
+
+    public UserDetailsFragment() {
 
     }
+
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.activity_update_user_details,container,false);
+        View view = inflater.inflate(R.layout.activity_update_user_details, container, false);
 
-        user=new User(new SQLiteDB(getActivity()));
-        revert=(Button) view.findViewById(R.id.buttonRevertDetailsChanges);
-        finish=(Button) view.findViewById(R.id.buttonFinish);
-        FN=(EditText)view.findViewById(R.id.TextBoxFN);
-        LN=(EditText)view.findViewById(R.id.TextBoxLN);
-        Phone1=(EditText)view.findViewById(R.id.TextBoxPN1);
-        Phone2=(EditText)view.findViewById(R.id.TextBoxPN2);
+        user = new User(new SQLiteDB(getActivity()));
+        revert = (Button) view.findViewById(R.id.buttonRevertDetailsChanges);
+        finish = (Button) view.findViewById(R.id.buttonFinish);
+        FN = (EditText) view.findViewById(R.id.TextBoxFN);
+        LN = (EditText) view.findViewById(R.id.TextBoxLN);
+        Phone1 = (EditText) view.findViewById(R.id.TextBoxPN1);
+        Phone2 = (EditText) view.findViewById(R.id.TextBoxPN2);
         FN.setText(user.getFname());
         LN.setText(user.getLname());
         Phone1.setText((user.getPhone1()));
         Phone2.setText((user.getPhone2()));
 
-        FinishButtonListener=new View.OnClickListener() {
+        FinishButtonListener = new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -75,7 +76,7 @@ public class UserDetailsFragment extends Fragment {
                 } else if (!InputValidator.Name(LastName)) {
                     LN.requestFocus();
                     LN.setError("ENTER ONLY ALPHABETICAL CHARACTER");
-                }  else if (!InputValidator.EmptyField(PhoneNumber1)) {
+                } else if (!InputValidator.EmptyField(PhoneNumber1)) {
                     Phone1.requestFocus();
                     Phone1.setError("FIELD CANNOT BE EMPTY");
                 } else if (!InputValidator.Phone(PhoneNumber1)) {
@@ -90,13 +91,13 @@ public class UserDetailsFragment extends Fragment {
                     Phone2.setError("Please enter a valid Phone number\n" +
                             "you can right the same number as in phone number 1");
                 } else {
-                    String address=String.format("http://%s/JavaMaps/api?action=UpdateUserDetails&email=%s&fname=%s&lname=%s&phone1=%s&phone2=%s", JSONRequest.SERVER,user.getEmail(),FirstName,LastName,PhoneNumber1,PhoneNumber2);
+                    String address = String.format("http://%s/JavaMaps/api?action=UpdateUserDetails&email=%s&fname=%s&lname=%s&phone1=%s&phone2=%s", JSONRequest.SERVER, user.getEmail(), FirstName, LastName, PhoneNumber1, PhoneNumber2);
 
                     System.out.println(address);
                     try {
-                        JSONRequest json=new JSONRequest(address);
+                        JSONRequest json = new JSONRequest(address);
                         JSONObject jobj = new JSONObject(json.getJSON());
-                        if(jobj.getString("result").equals("success")){
+                        if (jobj.getString("result").equals("success")) {
                             //Toast.makeText(UpdateUserDetailsActivity.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
                             Toast.makeText(getActivity(), jobj.getString("message"), Toast.LENGTH_LONG).show();
 
@@ -104,15 +105,13 @@ public class UserDetailsFragment extends Fragment {
                             Intent i = new Intent(getActivity(), MainActivity.class);
                             startActivity(i);
                             //finish();
-                        }
-
-                        else if(jobj.getString("result").equals("error")){
+                        } else if (jobj.getString("result").equals("error")) {
                             //Toast.makeText(UpdateUserDetailsActivity.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
                             Toast.makeText(getActivity(), jobj.getString("message"), Toast.LENGTH_LONG).show();
                         }
                     } catch (JSONException e) {
                         System.out.println(e.getMessage());
-                    } catch (Exception e){
+                    } catch (Exception e) {
                         //Toast.makeText(UpdateUserDetailsActivity.this, "Error receiving data.", Toast.LENGTH_LONG).show();
                         Toast.makeText(getActivity(), "Error receiving data.", Toast.LENGTH_LONG).show();
 
@@ -121,8 +120,7 @@ public class UserDetailsFragment extends Fragment {
 
             }
         };
-        RevertChangesButtonListener=new View.OnClickListener()
-        {
+        RevertChangesButtonListener = new View.OnClickListener() {
 
             @Override
             public void onClick(View v) {

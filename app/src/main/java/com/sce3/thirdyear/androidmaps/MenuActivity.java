@@ -27,6 +27,7 @@ import com.sce3.thirdyear.androidmaps.fragments.UserDetailsFragment;
 import com.sce3.thirdyear.androidmaps.fragments.frag;
 import com.sce3.thirdyear.androidmaps.fragments.test;
 import com.sce3.thirdyear.androidmaps.maps.AddressActivity;
+import com.sce3.thirdyear.classes.Ad;
 import com.sce3.thirdyear.classes.MenuAdapter;
 import com.sce3.thirdyear.classes.MenuItemTemplate;
 import com.sce3.thirdyear.classes.MenuTabs;
@@ -46,7 +47,11 @@ public class MenuActivity extends ActionBarActivity {
     public final static  int History = 2;
     public final static  int About = 3;
     public final static  int Logout = 4;
-
+////////////////////////////////////////////////////////////////////////
+    //public ArrayList<Ad> results;
+    public static ArrayList<Ad> resultsAds;
+    public static int resultIndex=0;
+/////////////////////////////////////////////////////////////////////////
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -65,6 +70,7 @@ public class MenuActivity extends ActionBarActivity {
     private  TabHost myTabHost;
     private MenuTabs mt;
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,7 +85,7 @@ public class MenuActivity extends ActionBarActivity {
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-
+        resultsAds =new ArrayList<Ad>();
         for(int i=0;i<menuTitles.length;i++)
         {
             menuitems.add(new MenuItemTemplate(menuTitles[i], menuIcons.getResourceId(i,-1)));
@@ -293,8 +299,13 @@ public class MenuActivity extends ActionBarActivity {
 
         if (tag.equals(searchTabs[0]))
             fragment = new test(); //change to like or unlike or all
-        else if (tag.equals(searchTabs[1]))
-            fragment = new CustomSearchFragment(); //change to like or unlike or all
+        else if (tag.equals(searchTabs[1])) {
+            fragment = new CustomSearchFragment();
+            /*Bundle args = new Bundle();
+            args.putSerializable("Results", results);
+            fragment.setArguments(args);//change to like or unlike or all
+            */
+        }
         else if (tag.equals(historyTabs[0]))
             fragment = new HistoryFragment(); //change to like or unlike or all
         else if (tag.equals(historyTabs[1]))
@@ -312,6 +323,8 @@ public class MenuActivity extends ActionBarActivity {
 
         }
     }
+
+
 
 
 }

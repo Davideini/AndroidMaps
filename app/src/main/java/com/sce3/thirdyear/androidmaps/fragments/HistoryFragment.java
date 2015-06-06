@@ -5,7 +5,6 @@ import android.app.Fragment;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,7 +13,6 @@ import android.widget.ArrayAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
 
-import com.sce3.thirdyear.androidmaps.HistoryActivity;
 import com.sce3.thirdyear.androidmaps.HouseDetailsActivity;
 import com.sce3.thirdyear.androidmaps.MenuActivity;
 import com.sce3.thirdyear.androidmaps.R;
@@ -43,24 +41,24 @@ public class HistoryFragment extends Fragment {
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        View view =  inflater.inflate(R.layout.activity_history,container,false);
+        View view = inflater.inflate(R.layout.activity_history, container, false);
         SQLiteDB db = new SQLiteDB(getActivity().getApplicationContext());
-        String session_str=db.getSavedSession();
-        String address=String.format("http://%s/JavaWeb/api?action=History&session=%s", JSONRequest.SERVER,session_str);
-        JSONRequest json=new JSONRequest(address);
+        String session_str = db.getSavedSession();
+        String address = String.format("http://%s/JavaWeb/api?action=History&session=%s", JSONRequest.SERVER, session_str);
+        JSONRequest json = new JSONRequest(address);
         System.out.println(address);
         try {
             JSONObject jobj = new JSONObject(json.getJSON());
-            if(jobj.getString("result").equals("success")){
-                JSONArray jarr=jobj.getJSONArray("data");
-                final List<Map<String,String>> list=new ArrayList(jarr.length());
-                for(int i=0;i<jarr.length();i++){
-                    Map map=new HashMap();
-                    JSONObject jo=(JSONObject)jarr.get(i);
-                    Iterator it=jo.keys();
-                    while(it.hasNext()){
-                        String key=(String)it.next();
-                        map.put(key,jo.get(key));
+            if (jobj.getString("result").equals("success")) {
+                JSONArray jarr = jobj.getJSONArray("data");
+                final List<Map<String, String>> list = new ArrayList(jarr.length());
+                for (int i = 0; i < jarr.length(); i++) {
+                    Map map = new HashMap();
+                    JSONObject jo = (JSONObject) jarr.get(i);
+                    Iterator it = jo.keys();
+                    while (it.hasNext()) {
+                        String key = (String) it.next();
+                        map.put(key, jo.get(key));
                     }
                     list.add(map);
                 }
@@ -69,12 +67,12 @@ public class HistoryFragment extends Fragment {
                 lv.setAdapter(theAdapter);
                 lv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                     public void onItemClick(AdapterView<?> a, View v, final int position, long id) {
-                        AlertDialog.Builder adb=new AlertDialog.Builder(getActivity());
+                        AlertDialog.Builder adb = new AlertDialog.Builder(getActivity());
                         adb.setTitle("What to do?");
                         adb.setMessage("What you want to do?");
                         final int positionToRemove = position;
-                        adb.setNegativeButton("Show", new AlertDialog.OnClickListener(){
-                            public void onClick(DialogInterface dialog,int which){
+                        adb.setNegativeButton("Show", new AlertDialog.OnClickListener() {
+                            public void onClick(DialogInterface dialog, int which) {
                                 Intent mIntent = new Intent(getActivity(), HouseDetailsActivity.class);
                                 SQLiteDB db = new SQLiteDB(getActivity().getApplicationContext());
                                 String session = db.getSavedSession();
@@ -83,8 +81,8 @@ public class HistoryFragment extends Fragment {
                                 JSONRequest json = new JSONRequest(address);
                                 try {
                                     JSONObject jobj = new JSONObject(json.getJSON());
-                                    JSONObject jdata= jobj.getJSONObject("data");
-                                    Apartment apartment=null;
+                                    JSONObject jdata = jobj.getJSONObject("data");
+                                    Apartment apartment = null;
                                     if (jobj.getString("result").equals("success")) {
                                         //public Apartment(int id, int user_id, int type_id, String city, int price, String territory
                                         // String address, boolean aircondition, boolean elevator, boolean balcony, boolean isolated_room,
@@ -122,11 +120,9 @@ public class HistoryFragment extends Fragment {
                                                 Float.parseFloat(jdata.getString("sizem2")),
                                                 jdata.getString("comment")
                                         );
-                                        mIntent.putExtra(MenuActivity.SER_KEY,apartment);
+                                        mIntent.putExtra(MenuActivity.SER_KEY, apartment);
                                         startActivity(mIntent);
-                                    }
-
-                                    else{
+                                    } else {
                                         Toast.makeText(getActivity().getApplicationContext(), "Error showing item.", Toast.LENGTH_SHORT).show();
                                     }
                                 } catch (JSONException e) {
@@ -160,18 +156,18 @@ public class HistoryFragment extends Fragment {
                                 }
                                 list.remove(positionToRemove);
                                 theAdapter.notifyDataSetChanged();
-                            }});
+                            }
+                        });
                         adb.show();
                     }
                 });
-            }
-            else{
-                Toast.makeText(getActivity().getApplicationContext(),jobj.getString("message"),Toast.LENGTH_LONG).show();
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), jobj.getString("message"), Toast.LENGTH_LONG).show();
             }
         } catch (JSONException e) {
             System.out.println(e.getMessage());
-        } catch (Exception e){
-            Toast.makeText(getActivity().getApplicationContext(),"Error receiving data.",Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            Toast.makeText(getActivity().getApplicationContext(), "Error receiving data.", Toast.LENGTH_LONG).show();
         }
         return view;
 
