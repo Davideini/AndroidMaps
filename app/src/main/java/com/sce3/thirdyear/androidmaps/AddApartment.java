@@ -326,7 +326,7 @@ public class AddApartment extends ActionBarActivity {
             ByteArrayOutputStream stream = new ByteArrayOutputStream();
             bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
             byte[] byteArray = stream.toByteArray();
-            String base64encoded= Base64.encodeToString(byteArray, Base64.DEFAULT);
+            String base64encoded= Base64.encodeToString(byteArray, Base64.NO_WRAP);
             return base64encoded;
     }
 }
