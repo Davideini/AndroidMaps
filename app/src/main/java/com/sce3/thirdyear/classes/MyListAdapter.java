@@ -48,7 +48,7 @@ public class MyListAdapter extends ArrayAdapter<Object> {
 
 
         ImageView theImageView = (ImageView) theView.findViewById(R.id.imageView2);
-        new DownloadImageTask(theImageView).execute(String.format("https://%s/%s/%s", JSONRequest.SERVER, JSONRequest.IMAGE_DIR, filename));
+        new DownloadImageTask(theImageView).execute(String.format("http://%s/%s/%s", JSONRequest.SERVER, JSONRequest.IMAGE_DIR, filename));
 
         //ImageView delete = (ImageView) theView.findViewById(R.id.deletebtn);
         /*

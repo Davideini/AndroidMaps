@@ -206,42 +206,38 @@ public class ResultFragment extends Fragment {
     }
 
     public void onDecisionButtonClick(View v) {
-        if(MenuActivity.resultIndex<MenuActivity.resultsAds.size()) {
-            SQLiteDB db = new SQLiteDB(getActivity().getApplicationContext());
-            String session_str = db.getSavedSession();
-            int desc = 0;
-            if (v.getTag().equals("ok")) {
-                desc = 0;
-                //Toast.makeText(getActivity().getBaseContext(), "ok pressed!!", Toast.LENGTH_LONG).show();
 
-            } else if (v.getTag().equals("no")) {
-                desc = 1;
-                //Toast.makeText(getActivity().getBaseContext(), "no pressed!!", Toast.LENGTH_LONG).show();
-            }
+        SQLiteDB db = new SQLiteDB(getActivity().getApplicationContext());
+        String session_str = db.getSavedSession();
+        int desc = 0;
+        if (v.getTag().equals("ok")) {
+            desc = 0;
+            //Toast.makeText(getActivity().getBaseContext(), "ok pressed!!", Toast.LENGTH_LONG).show();
 
-            String address = String.format("https://%s/JavaWeb/api?action=addHistory&apartment_id=%s&deleted=%s&session=%s", JSONRequest.SERVER, String.valueOf(MenuActivity.resultsAds.get(MenuActivity.resultIndex).getApartment().getId()), String.valueOf(desc), session_str);
-            JSONRequest json = new JSONRequest(address);
-            try {
-                JSONObject jobj = new JSONObject(json.getJSON());
-                if (jobj.getString("result").equals("success")) {
-                    Log.d("transferToHistory", "decision done!!!");
-                    //Toast.makeText(getActivity().getApplicationContext(), "decision done!!!", Toast.LENGTH_SHORT).show();
-                } else {
-                    Toast.makeText(getActivity().getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
-                    Log.d("ErroTansfer", "error to tranfer");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            } catch (ExecutionException e) {
-                e.printStackTrace();
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-            nextResult();
-            if(MenuActivity.resultIndex==MenuActivity.resultsAds.size())
-                    getFragmentManager().beginTransaction().replace(R.id.content_frame,new NoResultFragment()).commit();
+        } else if (v.getTag().equals("no")) {
+            desc = 1;
+            //Toast.makeText(getActivity().getBaseContext(), "no pressed!!", Toast.LENGTH_LONG).show();
         }
 
+        String address = String.format("http://%s/JavaWeb/api?action=addHistory&apartment_id=%s&deleted=%s&session=%s", JSONRequest.SERVER, String.valueOf(MenuActivity.resultsAds.get(MenuActivity.resultIndex).getApartment().getId()), String.valueOf(desc), session_str);
+        JSONRequest json = new JSONRequest(address);
+        try {
+            JSONObject jobj = new JSONObject(json.getJSON());
+            if (jobj.getString("result").equals("success")) {
+                Log.d("transferToHistory", "decision done!!!");
+                //Toast.makeText(getActivity().getApplicationContext(), "decision done!!!", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(getActivity().getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
+                Log.d("ErroTansfer", "error to tranfer");
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        } catch (ExecutionException e) {
+            e.printStackTrace();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        nextResult();
     }
 
 }

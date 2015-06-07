@@ -21,6 +21,9 @@ import com.sce3.thirdyear.classes.User;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+/**
+ * Created by win7 on 04/06/2015.
+ */
 public class UserDetailsFragment extends Fragment {
     private Button finish;
     private Button revert;
@@ -88,7 +91,7 @@ public class UserDetailsFragment extends Fragment {
                     Phone2.setError("Please enter a valid Phone number\n" +
                             "you can right the same number as in phone number 1");
                 } else {
-                    String address = String.format("https://%s/JavaMaps/api?action=UpdateUserDetails&email=%s&fname=%s&lname=%s&phone1=%s&phone2=%s", JSONRequest.SERVER, user.getEmail(), FirstName, LastName, PhoneNumber1, PhoneNumber2);
+                    String address = String.format("http://%s/JavaWeb/api?action=UpdateUserDetails&email=%s&fname=%s&lname=%s&phone1=%s&phone2=%s", JSONRequest.SERVER, user.getEmail(), FirstName, LastName, PhoneNumber1, PhoneNumber2);
 
                     System.out.println(address);
                     try {
@@ -99,7 +102,7 @@ public class UserDetailsFragment extends Fragment {
                             Toast.makeText(getActivity(), jobj.getString("message"), Toast.LENGTH_LONG).show();
 
                             //Intent i = new Intent(UpdateUserDetailsActivity.this, MainActivity.class);
-                            Intent i = new Intent(getActivity(), MainActivity.class);
+                            Intent i = new Intent(getActivity(), MenuActivity.class);
                             startActivity(i);
                             //finish();
                         } else if (jobj.getString("result").equals("error")) {

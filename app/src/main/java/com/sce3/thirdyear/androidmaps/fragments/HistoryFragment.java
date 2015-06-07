@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -32,6 +33,9 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.ExecutionException;
 
+/**
+ * Created by win7 on 02/06/2015.
+ */
 public class HistoryFragment extends Fragment {
     public HistoryFragment() {
     }
@@ -41,14 +45,20 @@ public class HistoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_history, container, false);
         SQLiteDB db = new SQLiteDB(getActivity().getApplicationContext());
         String session_str = db.getSavedSession();
-        String address = String.format("https://%s/JavaWeb/api?action=History&session=%s", JSONRequest.SERVER, session_str);
+        String address=null;
+        if(MenuActivity.historyTab==0)
+            address = String.format("http://%s/JavaWeb/api?action=History&session=%s", JSONRequest.SERVER, session_str);
+        else if(MenuActivity.historyTab==1)
+            address = String.format("http://%s/JavaWeb/api?action=HistoryLiked&session=%s", JSONRequest.SERVER, session_str);
+        else if(MenuActivity.historyTab==2)
+            address = String.format("http://%s/JavaWeb/api?action=HistoryNotLiked&session=%s", JSONRequest.SERVER, session_str);
         JSONRequest json = new JSONRequest(address);
         System.out.println(address);
         try {
             JSONObject jobj = new JSONObject(json.getJSON());
             if (jobj.getString("result").equals("success")) {
                 JSONArray jarr = jobj.getJSONArray("data");
-                final List<Map<String, String>> list = new ArrayList<>(jarr.length());
+                final List<Map<String, String>> list = new ArrayList(jarr.length());
                 for (int i = 0; i < jarr.length(); i++) {
                     Map map = new HashMap();
                     JSONObject jo = (JSONObject) jarr.get(i);
@@ -73,7 +83,7 @@ public class HistoryFragment extends Fragment {
                                 Intent mIntent = new Intent(getActivity(), HouseDetailsActivity.class);
                                 SQLiteDB db = new SQLiteDB(getActivity().getApplicationContext());
                                 String session = db.getSavedSession();
-                                String address = String.format("https://%s/JavaWeb/api?action=getApartment&apartment_id=%s", JSONRequest.SERVER, list.get(position).get("id"));
+                                String address = String.format("http://%s/JavaWeb/api?action=getApartment&apartment_id=%d", JSONRequest.SERVER, list.get(position).get("id"), session);
                                 System.out.println(address);
                                 JSONRequest json = new JSONRequest(address);
                                 try {
@@ -97,19 +107,19 @@ public class HistoryFragment extends Fragment {
                                                 jdata.getInt("price"),
                                                 jdata.getString("territory"),
                                                 jdata.getString("address"),
-                                                jdata.getInt("aircondition") == 1,
-                                                jdata.getInt("elevator") == 1,
-                                                jdata.getInt("balcony") == 1,
-                                                jdata.getInt("isolated_room") == 1,
-                                                jdata.getInt("parking") == 1,
-                                                jdata.getInt("handicap_access") == 1,
-                                                jdata.getInt("storage") == 1,
-                                                jdata.getInt("bars") == 1,
-                                                jdata.getInt("sun_balcony") == 1,
-                                                jdata.getInt("renovated") == 1,
-                                                jdata.getInt("furnished") == 1,
-                                                jdata.getInt("unit") == 1,
-                                                jdata.getInt("pandoor") == 1,
+                                                jdata.getInt("aircondition") == 1 ? true : false,
+                                                jdata.getInt("elevator") == 1 ? true : false,
+                                                jdata.getInt("balcony") == 1 ? true : false,
+                                                jdata.getInt("isolated_room") == 1 ? true : false,
+                                                jdata.getInt("parking") == 1 ? true : false,
+                                                jdata.getInt("handicap_access") == 1 ? true : false,
+                                                jdata.getInt("storage") == 1 ? true : false,
+                                                jdata.getInt("bars") == 1 ? true : false,
+                                                jdata.getInt("sun_balcony") == 1 ? true : false,
+                                                jdata.getInt("renovated") == 1 ? true : false,
+                                                jdata.getInt("furnished") == 1 ? true : false,
+                                                jdata.getInt("unit") == 1 ? true : false,
+                                                jdata.getInt("pandoor") == 1 ? true : false,
                                                 Float.parseFloat(jdata.getString("rooms")),
                                                 jdata.getInt("floor"),
                                                 Float.parseFloat(jdata.getString("longitude")),
@@ -135,7 +145,7 @@ public class HistoryFragment extends Fragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 SQLiteDB db = new SQLiteDB(getActivity().getApplicationContext());
                                 String session = db.getSavedSession();
-                                String address = String.format("https://%s/JavaWeb/api?action=removeHistory&apartment_id=%s&session=%s", JSONRequest.SERVER, list.get(position).get("id"), session);
+                                String address = String.format("http://%s/JavaWeb/api?action=removeHistory&apartment_id=%d&session=%s", JSONRequest.SERVER, list.get(position).get("id"), session);
                                 System.out.println(address);
                                 JSONRequest json = new JSONRequest(address);
                                 JSONObject jobj;

@@ -86,7 +86,7 @@ public class ChangePasswordActivity extends ActionBarActivity {
                 else
                 {
 
-                    String address=String.format("https://%s/JavaWeb/api?action=ChangeUserPassword&email=%s&password=%s", JSONRequest.SERVER,user.getEmail(),NewPassword);
+                    String address=String.format("http://%s/JavaWeb/api?action=ChangeUserPassword&email=%s&password=%s", JSONRequest.SERVER,user.getEmail(),NewPassword);
 
                     System.out.println(address);
                     try {
@@ -95,7 +95,7 @@ public class ChangePasswordActivity extends ActionBarActivity {
                         if(jobj.getString("result").equals("success")){
                             Toast.makeText(ChangePasswordActivity.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
 
-                            Intent i = new Intent(ChangePasswordActivity.this, MainActivity.class);
+                            Intent i = new Intent(ChangePasswordActivity.this, MenuActivity.class);
                             startActivity(i);
                             finish();
                         }

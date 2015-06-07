@@ -37,7 +37,7 @@ public class LoginActivity extends ActionBarActivity {
         else
         {
 
-            String address=String.format("https://%s/JavaWeb/api?action=ForgotPassword&email=%s", JSONRequest.SERVER,email);
+            String address=String.format("http://%s/JavaWeb/api?action=ForgotPassword&email=%s", JSONRequest.SERVER,email);
 
             System.out.println(address);
             try {
@@ -63,7 +63,7 @@ public class LoginActivity extends ActionBarActivity {
         TextView emailText = (TextView) findViewById(R.id.emailText);
         TextView passText = (TextView) findViewById(R.id.passText);
 //        String address=String.format("http://%s/JavaWeb/api?action=Login&email=%s&password=%s",JSONRequest.SERVER,emailText.getText(),passText.getText());
-        String address = String.format("https://%s/JavaWeb/api?action=Login&email=%s&password=%s", JSONRequest.SERVER, emailText.getText(), passText.getText());
+        String address = String.format("http://%s/JavaWeb/api?action=Login&email=%s&password=%s", JSONRequest.SERVER, emailText.getText(), passText.getText());
         //TextView res=(TextView)findViewById(R.id.textView3);
 
         System.out.println(address);
@@ -78,7 +78,7 @@ public class LoginActivity extends ActionBarActivity {
                 //res.setText(jobj.getString("session"));
                 SQLiteDB db=new SQLiteDB(getApplicationContext());
                 db.updateSession(jobj.getString("session"));
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                Intent i = new Intent(LoginActivity.this, MenuActivity.class);
                 startActivity(i);
                 /*
                 SharedPreferences sessionPref=getSharedPreferences("session",MODE_PRIVATE);

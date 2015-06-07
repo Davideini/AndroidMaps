@@ -1,8 +1,8 @@
 package com.sce3.thirdyear.androidmaps;
 
 import android.content.Intent;
-import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
+import android.support.v7.app.ActionBarActivity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -43,6 +43,7 @@ public class SearchActivity extends ActionBarActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_search);
+
 
         City = (EditText)findViewById(R.id.SearchCityeditText);
         Rooms = (EditText)findViewById(R.id.SearchRoomsEditText);
@@ -125,7 +126,7 @@ public class SearchActivity extends ActionBarActivity {
                     MinFloor.setError("FIELD MinFloor CANNOT BE larger than MaxFloor");
                 }
                 else{
-                    String address=String.format("https://%s/JavaWeb/api?action=Search&city=%s&rooms=%s&price1=%s&price2=%s&floor1=%s&floor2=%s", JSONRequest.SERVER,CityName,RoomsNum,MinimumPrice,MaxinumPrice,MinimumFloor,MaximumFloor);
+                    String address=String.format("http://%s/JavaWeb/api?action=Search&city=%s&rooms=%s&price1=%s&price2=%s&floor1=%s&floor2=%s", JSONRequest.SERVER,CityName,RoomsNum,MinimumPrice,MaxinumPrice,MinimumFloor,MaximumFloor);
                     System.out.println(address);
 
                     try {

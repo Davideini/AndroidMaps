@@ -2,7 +2,6 @@ package com.sce3.thirdyear.androidmaps.fragments;
 
 import android.app.Fragment;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,14 +13,20 @@ import android.widget.Toast;
 import com.sce3.thirdyear.androidmaps.MenuActivity;
 import com.sce3.thirdyear.androidmaps.R;
 import com.sce3.thirdyear.classes.Ad;
+import com.sce3.thirdyear.classes.Apartment;
 import com.sce3.thirdyear.classes.InputValidator;
 import com.sce3.thirdyear.classes.JSONRequest;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.ArrayList;
+import java.util.List;
 
+/**
+ * Created by win7 on 06/06/2015.
+ */
 public class CustomSearchFragment extends Fragment {
     private EditText City;
     private EditText Rooms;
@@ -47,6 +52,7 @@ public class CustomSearchFragment extends Fragment {
     public CustomSearchFragment() {
 
     }
+
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View v = inflater.inflate(R.layout.activity_search, container, false);
@@ -77,7 +83,7 @@ public class CustomSearchFragment extends Fragment {
                 final String MaxinumPrice = MaxPrice.getText().toString();
                 final String MinimumFloor = MinFloor.getText().toString();
                 final String MaximumFloor = MaxFloor.getText().toString();
-
+                final List<String> list = new ArrayList<String>();
                 if (InputValidator.isEmpty(CityName)) {
                     City.requestFocus();
                     City.setError("FIELD CANNOT BE EMPTY");
@@ -118,7 +124,7 @@ public class CustomSearchFragment extends Fragment {
                     MinFloor.requestFocus();
                     MinFloor.setError("FIELD MinFloor CANNOT BE larger than MaxFloor");
                 } else {
-                    String address = String.format("https://%s/JavaWeb/api?action=Search&city=%s&rooms=%s&price1=%s&price2=%s&floor1=%s&floor2=%s", JSONRequest.SERVER, CityName, RoomsNum, MinimumPrice, MaxinumPrice, MinimumFloor, MaximumFloor);
+                    String address = String.format("http://%s/JavaWeb/api?action=Search&city=%s&rooms=%s&price1=%s&price2=%s&floor1=%s&floor2=%s", JSONRequest.SERVER, CityName, RoomsNum, MinimumPrice, MaxinumPrice, MinimumFloor, MaximumFloor);
                     System.out.println(address);
 
                     try {
@@ -127,10 +133,52 @@ public class CustomSearchFragment extends Fragment {
                         if (jobj.getString("result").equals("success")) {
                             Toast.makeText(getActivity(), "Apartments found", Toast.LENGTH_LONG).show();
 //////////////////////////////////////////////////////////////////////////////////////////////////
+                            JSONArray arr = jobj.getJSONArray("data");
+//                            for (int i = 0; i < arr.length(); i++) {
+//                                list.add(arr.get(i).toString());
+//                            }
+
+                            List<Apartment> apts = Apartment.GetApartments(address);
+                            List<Ad> adss = new ArrayList<Ad>();
+                            int k = 0;
+                            for (Apartment item : apts) {
+                                ArrayList<String> pic_list = new ArrayList<String>();
+                                JSONObject pic_1 = (JSONObject) arr.get(k);
+
+                                pic_list.add(String.format("http://%s/JavaWeb/images/%s", JSONRequest.SERVER, pic_1.getString("filename")));
+
+                                Ad ad = new Ad(item, pic_list);
+                                adss.add(ad);
+                                k++;
+                            }
+
+
+                            Apartment[] apartments = new Apartment[list.size() / 29];
+                            ArrayList<String> imgSrcs = new ArrayList<String>(list.size() / 29);
+                            Ad[] ads = new Ad[arr.length() / 29];
+                                /*Inserting values into apartments and imgSrcs*/
+                            for (int i = 0, j = 0; i < list.size() / 29 && j < list.size(); i++) {
+                                apartments[i] = new Apartment(list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString(), list.get(j++).toString());
+                                    /*++j to skip unnecessary column apartment_id which we already have at id*/
+                                imgSrcs.add(i, list.get(++j).toString());
+                                j++;
+                            }
+                                /*Inserting values into ads*/
+                            MenuActivity.resultsAds.clear();
+
+                            for (Ad item : adss) {
+                                MenuActivity.resultsAds.add(item);
+                            }
+
+
+//                            for (int i = 0; i < list.size() / 29; i++) {
+//                                MenuActivity.resultsAds.add(new Ad(apartments[i], imgSrcs));
+//                            }
                             //put in all the data to MenuActivity.resultsAds
                             //create new Arraylist for Ads and copt he result to the resultAds
-                             MenuActivity.resultIndex=0;//init the index
-
+                            MenuActivity.resultIndex = 0;//init the index
+                            getFragmentManager().beginTransaction().replace(R.id.content_frame, new ResultFragment()).commit();
+                            //getFragmentManager().beginTransaction().replace(R.id.content_frame, new ResultFragment()).commit();
                             // Intent i = new Intent(SearchActivity.this, MainActivity.class);
                             //startActivity(i);
 ////////////////////////////////////////////////////////////////////////////////////////////////////
