@@ -111,7 +111,7 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
         if (!forApt) {
             SearchMarkers(formattedAddress, lat, lng);
         } else {
-            SearchApartments("", null, 0);
+            SearchApartments(formattedAddress, null, 0);
         }
         setTitle("Maps!");
     }
@@ -214,6 +214,7 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
                 continue;
             }
             Marker marker = mMap.addMarker(MapUtility.CreateMarker(item, BitmapDescriptorFactory.HUE_BLUE));
+            marker.setSnippet(item.getId() + "");
             item.setMarker(marker);
             hasMarkers = true;
         }
@@ -321,8 +322,16 @@ public class FindByAddressActivity extends ActionBarActivity implements SearchVi
     public boolean onMarkerClick(Marker marker) {
         if (dialog) {
             selectedMarker = marker;
+            int id = 0;
+            if (forApt) {
+                try {
+                    id = Integer.parseInt(marker.getSnippet());
+                } catch (Exception e) {
+                }
+            }
+
             marker.setSnippet("true");
-            MarkerUtility.MarkerInfo(marker, mMap, FindByAddressActivity.this, forApt);
+            MarkerUtility.MarkerInfo(marker, mMap, id, FindByAddressActivity.this, forApt);
         }
         return true;
     }

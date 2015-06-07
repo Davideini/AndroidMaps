@@ -96,43 +96,43 @@ public class Apartment implements Serializable {
         this.price = Integer.parseInt(price);
         this.territory = territory;
         this.address = address;
-        if(aircondition == "true" || aircondition == "1")
+        if (aircondition == "true" || aircondition == "1")
             this.aircondition = true;
         else this.aircondition = false;
-        if(elevator == "true" || elevator == "1")
+        if (elevator == "true" || elevator == "1")
             this.elevator = true;
         else this.elevator = false;
-        if(balcony == "true" || balcony == "1")
+        if (balcony == "true" || balcony == "1")
             this.balcony = true;
         else this.balcony = false;
-        if(isolated_room == "true" || isolated_room == "1")
+        if (isolated_room == "true" || isolated_room == "1")
             this.isolated_room = true;
         else this.isolated_room = false;
-        if(parking == "true" || parking == "1")
+        if (parking == "true" || parking == "1")
             this.parking = true;
         else this.parking = false;
-        if(handicap_access == "true" || handicap_access == "1")
+        if (handicap_access == "true" || handicap_access == "1")
             this.handicap_access = true;
         else this.handicap_access = false;
-        if(storage == "true" || storage == "1")
+        if (storage == "true" || storage == "1")
             this.storage = true;
         else this.storage = false;
-        if(bars == "true" || bars == "1")
+        if (bars == "true" || bars == "1")
             this.bars = true;
         else this.bars = false;
-        if(sun_balcony == "true" || sun_balcony == "1")
+        if (sun_balcony == "true" || sun_balcony == "1")
             this.sun_balcony = true;
         else this.sun_balcony = false;
-        if(renovated == "true" || renovated == "1")
+        if (renovated == "true" || renovated == "1")
             this.renovated = true;
         else this.renovated = false;
-        if(furnished == "true" || furnished == "1")
+        if (furnished == "true" || furnished == "1")
             this.furnished = true;
         else this.furnished = false;
-        if(unit == "true" || unit == "1")
+        if (unit == "true" || unit == "1")
             this.unit = true;
         else this.unit = false;
-        if(pandoor == "true" || pandoor == "1")
+        if (pandoor == "true" || pandoor == "1")
             this.pandoor = true;
         else this.pandoor = false;
 
@@ -389,7 +389,7 @@ public class Apartment implements Serializable {
         return GetApartments(url);
     }
 
-    private static List<Apartment> GetApartments(String url) {
+    public static List<Apartment> GetApartments(String url) {
 
         List<Apartment> apartments = new ArrayList<>();
 
@@ -398,11 +398,25 @@ public class Apartment implements Serializable {
 
             String Status = jsonObject.getString("result");
             if (Status.equalsIgnoreCase("success")) {
-                JSONArray results = jsonObject.getJSONArray("data");
-                for (int j = 0; j < results.length(); j++) {
-                    JSONObject json = results.getJSONObject(j);
-                    apartments.add(ApartmentFromJSON(json));
+
+                JSONArray results = null;
+                JSONObject result = null;
+                try {
+                    results = jsonObject.getJSONArray("data");
+                    for (int j = 0; j < results.length(); j++) {
+                        JSONObject json = results.getJSONObject(j);
+                        apartments.add(ApartmentFromJSON(json));
+                    }
+                } catch (Exception e) {
                 }
+                try {
+                    if (results == null) {
+                        result = jsonObject.getJSONObject("data");
+                        apartments.add(ApartmentFromJSON(result));
+                    }
+                } catch (Exception e) {
+                }
+
             }
         } catch (JSONException e) {
             e.printStackTrace();
