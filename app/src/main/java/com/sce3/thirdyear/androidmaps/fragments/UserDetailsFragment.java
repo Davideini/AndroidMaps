@@ -102,7 +102,7 @@ public class UserDetailsFragment extends Fragment {
                             Toast.makeText(getActivity(), jobj.getString("message"), Toast.LENGTH_LONG).show();
 
                             //Intent i = new Intent(UpdateUserDetailsActivity.this, MainActivity.class);
-                            Intent i = new Intent(getActivity(), MainActivity.class);
+                            Intent i = new Intent(getActivity(), MenuActivity.class);
                             startActivity(i);
                             //finish();
                         } else if (jobj.getString("result").equals("error")) {
