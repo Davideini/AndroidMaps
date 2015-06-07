@@ -124,7 +124,7 @@ public class CustomSearchFragment extends Fragment {
                     MinFloor.requestFocus();
                     MinFloor.setError("FIELD MinFloor CANNOT BE larger than MaxFloor");
                 } else {
-                    String address = String.format("http://%s/JavaWeb/api?action=Search&city=%s&rooms=%s&price1=%s&price2=%s&floor1=%s&floor2=%s", JSONRequest.SERVER, CityName, RoomsNum, MinimumPrice, MaxinumPrice, MinimumFloor, MaximumFloor);
+                    String address = String.format("https://%s/JavaWeb/api?action=Search&city=%s&rooms=%s&price1=%s&price2=%s&floor1=%s&floor2=%s", JSONRequest.SERVER, CityName, RoomsNum, MinimumPrice, MaxinumPrice, MinimumFloor, MaximumFloor);
                     System.out.println(address);
 
                     try {
@@ -145,7 +145,7 @@ public class CustomSearchFragment extends Fragment {
                                 ArrayList<String> pic_list = new ArrayList<String>();
                                 JSONObject pic_1 = (JSONObject) arr.get(k);
 
-                                pic_list.add(String.format("http://%s/JavaWeb/images/%s", JSONRequest.SERVER, pic_1.getString("filename")));
+                                pic_list.add(String.format("https://%s/JavaWeb/images/%s", JSONRequest.SERVER, pic_1.getString("filename")));
 
                                 Ad ad = new Ad(item, pic_list);
                                 adss.add(ad);

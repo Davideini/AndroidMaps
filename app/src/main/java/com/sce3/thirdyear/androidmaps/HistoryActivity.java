@@ -40,7 +40,7 @@ public class HistoryActivity extends ActionBarActivity {
 
         SQLiteDB db = new SQLiteDB(getApplicationContext());
         String session_str=db.getSavedSession();
-        String address=String.format("http://%s/JavaWeb/api?action=History&session=%s", JSONRequest.SERVER,session_str);
+        String address=String.format("https://%s/JavaWeb/api?action=History&session=%s", JSONRequest.SERVER,session_str);
         JSONRequest json=new JSONRequest(address);
         System.out.println(address);
         try {
@@ -72,7 +72,7 @@ public class HistoryActivity extends ActionBarActivity {
                                 Intent mIntent = new Intent(HistoryActivity.this, HouseDetailsActivity.class);
                                 SQLiteDB db = new SQLiteDB(getApplicationContext());
                                 String session = db.getSavedSession();
-                                String address = String.format("http://%s/JavaWeb/api?action=getApartment&apartment_id=%d", JSONRequest.SERVER, list.get(position).get("id"), session);
+                                String address = String.format("https://%s/JavaWeb/api?action=getApartment&apartment_id=%d", JSONRequest.SERVER, list.get(position).get("id"), session);
                                 System.out.println(address);
                                 JSONRequest json = new JSONRequest(address);
                                 try {
@@ -136,7 +136,7 @@ public class HistoryActivity extends ActionBarActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 SQLiteDB db = new SQLiteDB(getApplicationContext());
                                 String session = db.getSavedSession();
-                                String address = String.format("http://%s/JavaWeb/api?action=removeHistory&apartment_id=%d&session=%s", JSONRequest.SERVER, list.get(position).get("id"), session);
+                                String address = String.format("https://%s/JavaWeb/api?action=removeHistory&apartment_id=%d&session=%s", JSONRequest.SERVER, list.get(position).get("id"), session);
                                 System.out.println(address);
                                 JSONRequest json = new JSONRequest(address);
                                 JSONObject jobj;

@@ -200,8 +200,8 @@ public class AddressActivity extends ActionBarActivity {
             country.setError("FIELD CANNOT BE EMPTY");
         } else {
          User user = new User(new SQLiteDB(getApplicationContext()));
-            String address = String.format("http://%s/JavaWeb/api?action=Registration_Location&userid=%s&lati=%s&lngi=%s&addresstosend=%s&name=%s", JSONRequest.SERVER, user.getID(), Lat, Lng, addresstosend, Name);
-            //String address = String.format("http://%s/JavaMaps/api?action=aaa", JSONRequest.SERVER);
+            String address = String.format("https://%s/JavaWeb/api?action=Registration_Location&userid=%s&lati=%s&lngi=%s&addresstosend=%s&name=%s", JSONRequest.SERVER, user.getID(), Lat, Lng, addresstosend, Name);
+            //String address = String.format("https://%s/JavaMaps/api?action=aaa", JSONRequest.SERVER);
 
             System.out.println(address);
             try {

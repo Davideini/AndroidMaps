@@ -79,7 +79,7 @@ public class RegistrationBuyerActivity extends ActionBarActivity {
                         Address1.setError("Not allowed signs");
                     }
                     else{
-                        String address=String.format("http://%s/JavaWeb/api?action=Registration&email=%s&name=%s&address=%s&latitude=%s&longitude=%s", JSONRequest.SERVER,n1,a1,Latitude1,Longitude1);
+                        String address=String.format("https://%s/JavaWeb/api?action=Registration&email=%s&name=%s&address=%s&latitude=%s&longitude=%s", JSONRequest.SERVER,n1,a1,Latitude1,Longitude1);
                         registerToServer(address);
                     }
                 }
@@ -92,7 +92,7 @@ public class RegistrationBuyerActivity extends ActionBarActivity {
                             Address2.setError("Not allowed signs");
                         }
                          else{
-                            String address=String.format("http://%s/JavaWeb/api?action=Registration&email=%s&name=%s&address=%s&latitude=%s&longitude=%s", JSONRequest.SERVER,n2,a2,Latitude2,Longitude2);
+                            String address=String.format("https://%s/JavaWeb/api?action=Registration&email=%s&name=%s&address=%s&latitude=%s&longitude=%s", JSONRequest.SERVER,n2,a2,Latitude2,Longitude2);
                             registerToServer(address);
                         }
                     }
@@ -105,7 +105,7 @@ public class RegistrationBuyerActivity extends ActionBarActivity {
                             Address3.setError("Not allowed signs");
                         }
                          else{
-                            String address=String.format("http://%s/JavaWeb/api?action=Registration&email=%s&name=%s&address=%s&latitude=%s&longitude=%s", JSONRequest.SERVER,n3,a3,Latitude3,Longitude3);
+                            String address=String.format("https://%s/JavaWeb/api?action=Registration&email=%s&name=%s&address=%s&latitude=%s&longitude=%s", JSONRequest.SERVER,n3,a3,Latitude3,Longitude3);
                             registerToServer(address);
                         }
                     }
