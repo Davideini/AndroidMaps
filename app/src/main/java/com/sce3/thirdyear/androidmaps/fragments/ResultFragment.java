@@ -16,6 +16,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -80,6 +81,14 @@ public class ResultFragment extends Fragment {
         }
         else {
             view = inflater.inflate(R.layout.fragment_result, container, false);
+            //view.findViewById(R.id.tabs)
+            //////////////////////////////////////////////////////////////
+            TabHost t=((TabHost)view.findViewById(android.R.id.tabhost));
+                    if(t.getTabWidget().getTabCount()!=0) {
+                        t.setCurrentTab(0);
+                        t.clearAllTabs();
+                    }
+            //////////////////////////////////////////////////////////////////
             desc = (TextView) view.findViewById(R.id.DescVal);
             address = (TextView) view.findViewById(R.id.AddressVal);
             img = (ImageView) view.findViewById(R.id.imgResButton);
