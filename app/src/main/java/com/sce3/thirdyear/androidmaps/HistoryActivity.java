@@ -40,14 +40,14 @@ public class HistoryActivity extends ActionBarActivity {
 
         SQLiteDB db = new SQLiteDB(getApplicationContext());
         String session_str=db.getSavedSession();
-        String address=String.format("http://%s/JavaWeb/api?action=History&session=%s", JSONRequest.SERVER,session_str);
+        String address=String.format("https://%s/JavaWeb/api?action=History&session=%s", JSONRequest.SERVER,session_str);
         JSONRequest json=new JSONRequest(address);
         System.out.println(address);
         try {
             JSONObject jobj = new JSONObject(json.getJSON());
             if(jobj.getString("result").equals("success")){
                 JSONArray jarr=jobj.getJSONArray("data");
-                final List<Map<String,String>> list=new ArrayList(jarr.length());
+                final List<Map<String,String>> list=new ArrayList<>(jarr.length());
                 for(int i=0;i<jarr.length();i++){
                     Map map=new HashMap();
                     JSONObject jo=(JSONObject)jarr.get(i);
@@ -72,7 +72,7 @@ public class HistoryActivity extends ActionBarActivity {
                                 Intent mIntent = new Intent(HistoryActivity.this, HouseDetailsActivity.class);
                                 SQLiteDB db = new SQLiteDB(getApplicationContext());
                                 String session = db.getSavedSession();
-                                String address = String.format("http://%s/JavaWeb/api?action=getApartment&apartment_id=%d", JSONRequest.SERVER, list.get(position).get("id"), session);
+                                String address = String.format("https://%s/JavaWeb/api?action=getApartment&apartment_id=%d", JSONRequest.SERVER, list.get(position).get("id"), session);
                                 System.out.println(address);
                                 JSONRequest json = new JSONRequest(address);
                                 try {
@@ -96,19 +96,19 @@ public class HistoryActivity extends ActionBarActivity {
                                                 jdata.getInt("price"),
                                                 jdata.getString("territory"),
                                                 jdata.getString("address"),
-                                                jdata.getInt("aircondition") == 1 ? true : false,
-                                                jdata.getInt("elevator") == 1 ? true : false,
-                                                jdata.getInt("balcony") == 1 ? true : false,
-                                                jdata.getInt("isolated_room") == 1 ? true : false,
-                                                jdata.getInt("parking") == 1 ? true : false,
-                                                jdata.getInt("handicap_access") == 1 ? true : false,
-                                                jdata.getInt("storage") == 1 ? true : false,
-                                                jdata.getInt("bars") == 1 ? true : false,
-                                                jdata.getInt("sun_balcony") == 1 ? true : false,
-                                                jdata.getInt("renovated") == 1 ? true : false,
-                                                jdata.getInt("furnished") == 1 ? true : false,
-                                                jdata.getInt("unit") == 1 ? true : false,
-                                                jdata.getInt("pandoor") == 1 ? true : false,
+                                                jdata.getInt("aircondition") == 1,
+                                                jdata.getInt("elevator") == 1,
+                                                jdata.getInt("balcony") == 1,
+                                                jdata.getInt("isolated_room") == 1,
+                                                jdata.getInt("parking") == 1,
+                                                jdata.getInt("handicap_access") == 1,
+                                                jdata.getInt("storage") == 1,
+                                                jdata.getInt("bars") == 1,
+                                                jdata.getInt("sun_balcony") == 1,
+                                                jdata.getInt("renovated") == 1,
+                                                jdata.getInt("furnished") == 1,
+                                                jdata.getInt("unit") == 1,
+                                                jdata.getInt("pandoor") == 1,
                                                 Float.parseFloat(jdata.getString("rooms")),
                                                 jdata.getInt("floor"),
                                                 Float.parseFloat(jdata.getString("longitude")),
@@ -136,7 +136,7 @@ public class HistoryActivity extends ActionBarActivity {
                             public void onClick(DialogInterface dialog, int which) {
                                 SQLiteDB db = new SQLiteDB(getApplicationContext());
                                 String session = db.getSavedSession();
-                                String address = String.format("http://%s/JavaWeb/api?action=removeHistory&apartment_id=%d&session=%s", JSONRequest.SERVER, list.get(position).get("id"), session);
+                                String address = String.format("https://%s/JavaWeb/api?action=removeHistory&apartment_id=%s&session=%s", JSONRequest.SERVER, list.get(position).get("id"), session);
                                 System.out.println(address);
                                 JSONRequest json = new JSONRequest(address);
                                 JSONObject jobj;

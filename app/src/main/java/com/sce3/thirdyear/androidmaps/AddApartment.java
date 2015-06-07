@@ -5,7 +5,6 @@ import android.graphics.Bitmap;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v7.app.ActionBarActivity;
-import android.util.Base64;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -25,7 +24,6 @@ import com.sce3.thirdyear.maps.data.tools.Utility;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.ByteArrayOutputStream;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.Calendar;
@@ -38,7 +36,6 @@ public class AddApartment extends ActionBarActivity {
     static final int REQUEST_IMAGE_CAPTURE = 1;
     ImageView mImageView;
     ImageButton mImageButton;
-    Bitmap imageBitmap;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +87,7 @@ public class AddApartment extends ActionBarActivity {
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_IMAGE_CAPTURE && resultCode == RESULT_OK) {
             Bundle extras = data.getExtras();
-            imageBitmap = (Bitmap) extras.get("data");
+            Bitmap imageBitmap = (Bitmap) extras.get("data");
 //            mImageView.setImageBitmap(imageBitmap);
 
 //            ImageButton imageButton;
@@ -101,6 +98,8 @@ public class AddApartment extends ActionBarActivity {
     public void addNewApt(View view) {
         EditText street, city, house_num, apt_num, room_num, area, price, floor_num, territory, descr;
         CheckBox elevator, sunBalcony, mamad, serviceBalcony, parking, hadicappedAccess, storage, rent, sell, ac, renovated, furnished, unit, pandoor, bars;
+
+
         street = (EditText) findViewById(R.id.streetNameEditText);
         city = (EditText) findViewById(R.id.cityEditText);
         house_num = (EditText) findViewById(R.id.houseNumEditText);
@@ -112,19 +111,12 @@ public class AddApartment extends ActionBarActivity {
         territory = (EditText) findViewById(R.id.territoryEditText);
         descr = (EditText) findViewById(R.id.descriptionEditText);
         elevator = (CheckBox) findViewById(R.id.elevatorCheckBox);
-        sunBalcony = (CheckBox) findViewById(R.id.sunBalconyCheckBox);
         mamad = (CheckBox) findViewById(R.id.mamadCheckBox);
         serviceBalcony = (CheckBox) findViewById(R.id.serviceBalconyCheckBox);
         parking = (CheckBox) findViewById(R.id.parkingCheckBox);
-        hadicappedAccess = (CheckBox) findViewById(R.id.handicappedAccessCheckBox);
-        storage = (CheckBox) findViewById(R.id.storageCheckBox);
         rent = (CheckBox) findViewById(R.id.rentCheckBox);
         sell = (CheckBox) findViewById(R.id.sellCheckBox);
         ac = (CheckBox) findViewById(R.id.airConditionCheckBox);
-        renovated = (CheckBox) findViewById(R.id.renovatedCheckBox);
-        furnished = (CheckBox) findViewById(R.id.furnishedCheckBox);
-        unit = (CheckBox) findViewById(R.id.unitCheckBox);
-        pandoor = (CheckBox) findViewById(R.id.pandoorCheckBox);
         bars = (CheckBox) findViewById(R.id.barsCheckBox);
         sunBalcony = (CheckBox) findViewById(R.id.sunBalconyCheckBox);
         hadicappedAccess = (CheckBox) findViewById(R.id.handicappedAccessCheckBox);
@@ -208,9 +200,7 @@ public class AddApartment extends ActionBarActivity {
             dict.put("elevator", String.valueOf(elevator.isChecked()));
             dict.put("balcony", String.valueOf(serviceBalcony.isChecked()));
             dict.put("isolated_room", String.valueOf(mamad.isChecked()));
-            dict.put("parking", String.valueOf(parking.isChecked()
-
-            ));
+            dict.put("parking", String.valueOf(parking.isChecked()));
             dict.put("handicap_access", String.valueOf(hadicappedAccess.isChecked()));
             dict.put("storage", String.valueOf(storage.isChecked()));
             dict.put("bars", String.valueOf(bars.isChecked()));
@@ -220,9 +210,7 @@ public class AddApartment extends ActionBarActivity {
             dict.put("unit", String.valueOf(unit.isChecked()));
             dict.put("pandoor", String.valueOf(pandoor.isChecked()));
             dict.put("add_date", Calendar.getInstance().getTime().toString());
-            //String imageBase64=getImageBase64(imageBitmap);
-            //dict.put("image",imageBase64);
-            //dict.put("session",db.getSavedSession());
+
 //
 //            dict.put("user_id", "");
 //            dict.put("type_id", "");
@@ -257,7 +245,7 @@ public class AddApartment extends ActionBarActivity {
 
             boolean first = true;
             String delim = "";
-            StringBuilder sb = new StringBuilder(String.format("http://%s/JavaWeb/api?", JSONRequest.SERVER));
+            StringBuilder sb = new StringBuilder(String.format("https://%s/JavaWeb/api?", JSONRequest.SERVER));
             for (String key : dict.keySet()) {
 
                 if (!first) {
@@ -272,7 +260,6 @@ public class AddApartment extends ActionBarActivity {
 
             String link = result.replaceAll(" ", "%20");
 
-            //String link = String.format("http://%s/JavaWeb/api?action=AddApt",JSONRequest.SERVER);
 //            String encodedUrl = null;
 //            try {
 //                encodedUrl = URLEncoder.encode(result, "UTF-8");
@@ -290,8 +277,6 @@ public class AddApartment extends ActionBarActivity {
 
             System.out.println(link);
             try {
-                //JSONObject data = new JSONObject(dict);
-                //System.out.println(data);
                 JSONRequest json = new JSONRequest(link);
                 JSONObject jobj = new JSONObject(json.getJSON());
                 if (jobj.getString("result").equals("success")) {
@@ -321,12 +306,5 @@ public class AddApartment extends ActionBarActivity {
 //
 //            }
 //        });
-    }
-    private String getImageBase64(Bitmap bmp){
-            ByteArrayOutputStream stream = new ByteArrayOutputStream();
-            bmp.compress(Bitmap.CompressFormat.JPEG, 100, stream);
-            byte[] byteArray = stream.toByteArray();
-            String base64encoded= Base64.encodeToString(byteArray, Base64.NO_WRAP);
-            return base64encoded;
     }
 }

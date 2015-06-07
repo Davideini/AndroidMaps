@@ -13,14 +13,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by win7 on 25/05/2015.
- */
 
 public class Apartment implements Serializable {
 
     // private const
-    private static final String SERVER_URL = "http://%s/JavaWeb/api?action=SearchAddress&%s";
+    private static final String SERVER_URL = "https://%s/JavaWeb/api?action=SearchAddress&%s";
     private static final String BY_LATLNG_DIST = "latlng=%s,%s&distance=%s";
     private static final String BY_ADDRESS = "address=%s";
     private static final String UPDATE = "update=true";
@@ -86,62 +83,6 @@ public class Apartment implements Serializable {
 
     public Apartment() {
 
-    }
-
-    public Apartment(String id, String user_id, String type_id, String city, String price, String territory, String address, String aircondition, String elevator, String balcony, String isolated_room, String parking, String handicap_access, String storage, String bars, String sun_balcony, String renovated, String furnished, String unit, String pandoor, String rooms, String floor, String longitude, String latitude, String sizem2, String comment) {
-        this.id = Integer.parseInt(id);
-        this.user_id = Integer.parseInt(user_id);
-        this.type_id = Integer.parseInt(type_id);
-        this.city = city;
-        this.price = Integer.parseInt(price);
-        this.territory = territory;
-        this.address = address;
-        if (aircondition == "true" || aircondition == "1")
-            this.aircondition = true;
-        else this.aircondition = false;
-        if (elevator == "true" || elevator == "1")
-            this.elevator = true;
-        else this.elevator = false;
-        if (balcony == "true" || balcony == "1")
-            this.balcony = true;
-        else this.balcony = false;
-        if (isolated_room == "true" || isolated_room == "1")
-            this.isolated_room = true;
-        else this.isolated_room = false;
-        if (parking == "true" || parking == "1")
-            this.parking = true;
-        else this.parking = false;
-        if (handicap_access == "true" || handicap_access == "1")
-            this.handicap_access = true;
-        else this.handicap_access = false;
-        if (storage == "true" || storage == "1")
-            this.storage = true;
-        else this.storage = false;
-        if (bars == "true" || bars == "1")
-            this.bars = true;
-        else this.bars = false;
-        if (sun_balcony == "true" || sun_balcony == "1")
-            this.sun_balcony = true;
-        else this.sun_balcony = false;
-        if (renovated == "true" || renovated == "1")
-            this.renovated = true;
-        else this.renovated = false;
-        if (furnished == "true" || furnished == "1")
-            this.furnished = true;
-        else this.furnished = false;
-        if (unit == "true" || unit == "1")
-            this.unit = true;
-        else this.unit = false;
-        if (pandoor == "true" || pandoor == "1")
-            this.pandoor = true;
-        else this.pandoor = false;
-
-        this.rooms = Float.parseFloat(rooms);
-        this.floor = Integer.parseInt(floor);
-        this.longitude = Float.parseFloat(longitude);
-        this.latitude = Float.parseFloat(latitude);
-        this.sizem2 = Float.parseFloat(sizem2);
-        this.comment = comment;
     }
 
     public Marker getMarker() {
@@ -363,8 +304,7 @@ public class Apartment implements Serializable {
 
     public static List<Apartment> SearchApi(String address) {
         address = address.replaceAll("[' ']", "%20");
-        String parm1 = String.format(BY_ADDRESS, address);
-        String params = parm1;
+        String params = String.format(BY_ADDRESS, address);
         String url = String.format(SERVER_URL, JSONRequest.SERVER, params);
 
         return GetApartments(url);
@@ -383,13 +323,12 @@ public class Apartment implements Serializable {
     }
 
     public static List<Apartment> AddressByLatLng(LatLng latLng, float distance) {
-        String parm1 = String.format(BY_LATLNG_DIST, latLng.latitude, latLng.longitude, distance);
-        String params = parm1;
+        String params = String.format(BY_LATLNG_DIST, latLng.latitude, latLng.longitude, distance);
         String url = String.format(SERVER_URL, JSONRequest.SERVER, params);
         return GetApartments(url);
     }
 
-    public static List<Apartment> GetApartments(String url) {
+    private static List<Apartment> GetApartments(String url) {
 
         List<Apartment> apartments = new ArrayList<>();
 
@@ -398,25 +337,11 @@ public class Apartment implements Serializable {
 
             String Status = jsonObject.getString("result");
             if (Status.equalsIgnoreCase("success")) {
-
-                JSONArray results = null;
-                JSONObject result = null;
-                try {
-                    results = jsonObject.getJSONArray("data");
-                    for (int j = 0; j < results.length(); j++) {
-                        JSONObject json = results.getJSONObject(j);
-                        apartments.add(ApartmentFromJSON(json));
-                    }
-                } catch (Exception e) {
+                JSONArray results = jsonObject.getJSONArray("data");
+                for (int j = 0; j < results.length(); j++) {
+                    JSONObject json = results.getJSONObject(j);
+                    apartments.add(ApartmentFromJSON(json));
                 }
-                try {
-                    if (results == null) {
-                        result = jsonObject.getJSONObject("data");
-                        apartments.add(ApartmentFromJSON(result));
-                    }
-                } catch (Exception e) {
-                }
-
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -470,7 +395,7 @@ public class Apartment implements Serializable {
                 bool = new Integer(1).equals(json.get(key));
             } catch (JSONException e1) {
                 try {
-                    bool = "true" == json.getString(key).toLowerCase();
+                    bool = "true".equals(json.getString(key).toLowerCase());
                 } catch (JSONException e2) {
 
                 }

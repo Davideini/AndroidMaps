@@ -144,7 +144,7 @@ public class RegistrationActivity extends ActionBarActivity {
                 else
                 {
 
-                    String address=String.format("http://%s/JavaWeb/api?action=Registration&email=%s&password=%s&fname=%s&lname=%s&phone1=%s&phone2=%s", JSONRequest.SERVER,EmailAddress,Password,FirstName,LastName,PhoneNumber1,PhoneNumber2);
+                    String address=String.format("https://%s/JavaWeb/api?action=Registration&email=%s&password=%s&fname=%s&lname=%s&phone1=%s&phone2=%s", JSONRequest.SERVER,EmailAddress,Password,FirstName,LastName,PhoneNumber1,PhoneNumber2);
 
                     System.out.println(address);
                     try {
@@ -260,7 +260,7 @@ public class RegistrationActivity extends ActionBarActivity {
                 else
                 {
 
-                    String address=String.format("http://%s/JavaWeb/api?action=Registration&email=%s&password=%s&fname=%s&lname=%s&phone1=%s&phone2=%s", JSONRequest.SERVER,EmailAddress,Password,FirstName,LastName,PhoneNumber1,PhoneNumber2);
+                    String address=String.format("https://%s/JavaWeb/api?action=Registration&email=%s&password=%s&fname=%s&lname=%s&phone1=%s&phone2=%s", JSONRequest.SERVER,EmailAddress,Password,FirstName,LastName,PhoneNumber1,PhoneNumber2);
 
                     System.out.println(address);
                     try {
@@ -269,7 +269,7 @@ public class RegistrationActivity extends ActionBarActivity {
                         if(jobj.getString("result").equals("success")){
                             Toast.makeText(RegistrationActivity.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
 
-                            Intent i = new Intent(RegistrationActivity.this, MenuActivity.class);
+                            Intent i = new Intent(RegistrationActivity.this, MainActivity.class);
                             startActivity(i);
 
                         }

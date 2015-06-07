@@ -73,7 +73,7 @@ public class HouseDetailsActivity extends ActionBarActivity {
         SN.setText(ap.getAddress());
         City.setText(ap.getCity());
         price.setText(String.valueOf(ap.getPrice()));
-        String address = String.format("http://%s/JavaWeb/api?action=getUserInfo&user_id=%d", JSONRequest.SERVER, ap.getUser_id());
+        String address = String.format("https://%s/JavaWeb/api?action=getUserInfo&user_id=%d", JSONRequest.SERVER, ap.getUser_id());
         System.out.println(address);
         JSONRequest json = new JSONRequest(address);
         try {
