@@ -91,7 +91,7 @@ public class UserDetailsFragment extends Fragment {
                     Phone2.setError("Please enter a valid Phone number\n" +
                             "you can right the same number as in phone number 1");
                 } else {
-                    String address = String.format("http://%s/JavaMaps/api?action=UpdateUserDetails&email=%s&fname=%s&lname=%s&phone1=%s&phone2=%s", JSONRequest.SERVER, user.getEmail(), FirstName, LastName, PhoneNumber1, PhoneNumber2);
+                    String address = String.format("http://%s/JavaWeb/api?action=UpdateUserDetails&email=%s&fname=%s&lname=%s&phone1=%s&phone2=%s", JSONRequest.SERVER, user.getEmail(), FirstName, LastName, PhoneNumber1, PhoneNumber2);
 
                     System.out.println(address);
                     try {
