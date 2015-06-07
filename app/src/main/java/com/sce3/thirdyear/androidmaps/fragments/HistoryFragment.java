@@ -44,6 +44,7 @@ public class HistoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_history, container, false);
         SQLiteDB db = new SQLiteDB(getActivity().getApplicationContext());
         String session_str = db.getSavedSession();
+
         String address = String.format("http://%s/JavaWeb/api?action=History&session=%s", JSONRequest.SERVER, session_str);
         JSONRequest json = new JSONRequest(address);
         System.out.println(address);

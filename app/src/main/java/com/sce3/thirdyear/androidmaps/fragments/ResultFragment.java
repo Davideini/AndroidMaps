@@ -10,13 +10,11 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.TabHost;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -24,8 +22,6 @@ import com.sce3.thirdyear.androidmaps.HouseDetailsActivity;
 import com.sce3.thirdyear.androidmaps.MenuActivity;
 import com.sce3.thirdyear.androidmaps.R;
 import com.sce3.thirdyear.androidmaps.showImgsActivity;
-import com.sce3.thirdyear.classes.Ad;
-import com.sce3.thirdyear.classes.Apartment;
 import com.sce3.thirdyear.classes.JSONRequest;
 import com.sce3.thirdyear.classes.SQLiteDB;
 
@@ -33,7 +29,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.InputStream;
-import java.util.ArrayList;
 import java.util.concurrent.ExecutionException;
 
 /**
@@ -76,18 +71,18 @@ public class ResultFragment extends Fragment {
                              Bundle savedInstanceState) {
 
         View view;
-        if(MenuActivity.resultIndex<MenuActivity.resultsAds.size()) {
+        if (MenuActivity.resultIndex >= MenuActivity.resultsAds.size()) {
             view = inflater.inflate(R.layout.noresult_fragment, container, false);
         }
         else {
             view = inflater.inflate(R.layout.fragment_result, container, false);
             //view.findViewById(R.id.tabs)
             //////////////////////////////////////////////////////////////
-            TabHost t=((TabHost)view.findViewById(android.R.id.tabhost));
+           /* TabHost t=((TabHost)  getActivity().findViewById(android.R.id.tabhost));
                     if(t.getTabWidget().getTabCount()!=0) {
                         t.setCurrentTab(0);
                         t.clearAllTabs();
-                    }
+                    }*/
             //////////////////////////////////////////////////////////////////
             desc = (TextView) view.findViewById(R.id.DescVal);
             address = (TextView) view.findViewById(R.id.AddressVal);

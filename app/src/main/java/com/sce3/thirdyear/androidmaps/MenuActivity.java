@@ -149,9 +149,10 @@ public class MenuActivity extends ActionBarActivity {
     }
 
     public void showFullscreen(View view) {
-
-        resf.sentToFullscreenActivity(this);
-
+        try {
+            resf.sentToFullscreenActivity(this);
+        } catch (Exception e) {
+        }
     }
 
     public void moreDetailsFromRes(View view) {
