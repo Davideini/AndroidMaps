@@ -1,14 +1,15 @@
 package com.sce3.thirdyear.androidmaps;
+
 import android.app.Fragment;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
+import android.os.Bundle;
 import android.support.v4.app.ActionBarDrawerToggle;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarActivity;
-import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
@@ -19,13 +20,12 @@ import android.widget.TabHost;
 import android.widget.TabWidget;
 import android.widget.Toast;
 
-
 import com.sce3.thirdyear.androidmaps.fragments.About;
 import com.sce3.thirdyear.androidmaps.fragments.CustomSearchFragment;
+import com.sce3.thirdyear.androidmaps.fragments.ForMapsFregment;
 import com.sce3.thirdyear.androidmaps.fragments.HistoryFragment;
 import com.sce3.thirdyear.androidmaps.fragments.ResultFragment;
 import com.sce3.thirdyear.androidmaps.fragments.UserDetailsFragment;
-import com.sce3.thirdyear.androidmaps.fragments.frag;
 import com.sce3.thirdyear.androidmaps.fragments.test;
 import com.sce3.thirdyear.androidmaps.maps.AddressActivity;
 import com.sce3.thirdyear.classes.Ad;
@@ -35,6 +35,7 @@ import com.sce3.thirdyear.classes.MenuItemTemplate;
 import com.sce3.thirdyear.classes.MenuTabs;
 import com.sce3.thirdyear.classes.SQLiteDB;
 import com.sce3.thirdyear.classes.User;
+import com.sce3.thirdyear.maps.data.tools.Utility;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -45,22 +46,22 @@ import java.util.concurrent.ExecutionException;
 public class MenuActivity extends ActionBarActivity {
     /////////////////////////////////////////////////////////
     //static keys
-    public  final static String SER_KEY = "com.sce3.thirdyear.HouseDetailsActivity";
+    public final static String SER_KEY = "com.sce3.thirdyear.HouseDetailsActivity";
     ////////////////////static Drawer category
-    final static String [] historyTabs ={"Liked","Unliked","ALL"};
-    final static String [] searchTabs={"By Address","Custom Search"};
-    final static String [] profileTabs={"Personal Details" ,"My Ads"};
-    public final static  int Profile =0;
-    public final static  int Search = 1;
-    public final static  int History = 2;
-    public final static  int About = 3;
-    public final static  int Logout = 4;
-    public final static  int RESULTS =5;
-////////////////////////////////////////////////////////////////////////
+    final static String[] historyTabs = {"Liked", "Unliked", "ALL"};
+    final static String[] searchTabs = {"By Address", "Custom Search"};
+    final static String[] profileTabs = {"Personal Details", "My Ads"};
+    public final static int Profile = 0;
+    public final static int Search = 1;
+    public final static int History = 2;
+    public final static int About = 3;
+    public final static int Logout = 4;
+    public final static int RESULTS = 5;
+    ////////////////////////////////////////////////////////////////////////
     //public ArrayList<Ad> results;
     public static ArrayList<Ad> resultsAds;
-    public static int resultIndex=0;
-/////////////////////////////////////////////////////////////////////////
+    public static int resultIndex = 0;
+    /////////////////////////////////////////////////////////////////////////
     private DrawerLayout mDrawerLayout;
     private ListView mDrawerList;
     private ActionBarDrawerToggle mDrawerToggle;
@@ -70,13 +71,13 @@ public class MenuActivity extends ActionBarActivity {
     private TypedArray menuIcons;
     private ArrayList<MenuItemTemplate> menuitems;
     ResultFragment resf;
-    Fragment fragment=null;
-    private int chosenMenuItem=-1;
+    Fragment fragment = null;
+    private int chosenMenuItem = -1;
     Bitmap b;
     ///////////////////////////////////////////////////////////
     private User user; //important for profile fragment
     ////////////////////////////////////////////////////////////
-    private  TabHost myTabHost;
+    private TabHost myTabHost;
     private MenuTabs mt;
 
 
@@ -85,27 +86,27 @@ public class MenuActivity extends ActionBarActivity {
         super.onCreate(savedInstanceState);
 
         setContentView(R.layout.activity_menu);
+        Utility.SetupUIKeyboard(findViewById(R.id.drawer_layout), this);
 
         menuitems = new ArrayList<MenuItemTemplate>();
         mTitle = mDrawerTitle = getTitle();
         menuTitles = getResources().getStringArray(R.array.menu_array);
-        menuIcons =getResources().obtainTypedArray(R.array.menu_icons);
+        menuIcons = getResources().obtainTypedArray(R.array.menu_icons);
         mDrawerLayout = (DrawerLayout) findViewById(R.id.drawer_layout);
         mDrawerList = (ListView) findViewById(R.id.left_drawer);
         // set a custom shadow that overlays the main content when the drawer opens
         mDrawerLayout.setDrawerShadow(R.drawable.drawer_shadow, GravityCompat.START);
-        resultsAds =new ArrayList<Ad>();
-        for(int i=0;i<menuTitles.length;i++)
-        {
-            menuitems.add(new MenuItemTemplate(menuTitles[i], menuIcons.getResourceId(i,-1)));
+        resultsAds = new ArrayList<Ad>();
+        for (int i = 0; i < menuTitles.length; i++) {
+            menuitems.add(new MenuItemTemplate(menuTitles[i], menuIcons.getResourceId(i, -1)));
         }
 
         menuIcons.recycle();
 
 
-        mDrawerList.setAdapter(new MenuAdapter(getApplicationContext(),menuitems));
-                mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
-        
+        mDrawerList.setAdapter(new MenuAdapter(getApplicationContext(), menuitems));
+        mDrawerList.setOnItemClickListener(new DrawerItemClickListener());
+
         //Object a=getSupportActionBar();
         // enable ActionBar app icon to behave as action to toggle nav drawer
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
@@ -121,7 +122,7 @@ public class MenuActivity extends ActionBarActivity {
                 R.string.drawer_close  /* "close drawer" description for accessibility */
         ) {
             public void onDrawerClosed(View view) {
-               // getSupportActionBar().setTitle(mTitle);
+                // getSupportActionBar().setTitle(mTitle);
                 invalidateOptionsMenu(); // creates call to onPrepareOptionsMenu()
             }
 
@@ -134,9 +135,9 @@ public class MenuActivity extends ActionBarActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
 
 ////////////////////////////////////////////////////////////////
-        myTabHost=(TabHost)findViewById(android.R.id.tabhost);
+        myTabHost = (TabHost) findViewById(android.R.id.tabhost);
         myTabHost.setup();
-        mt=new MenuTabs(myTabHost,getFragmentManager(),this);
+        mt = new MenuTabs(myTabHost, getFragmentManager(), this);
 ////////////////////////////////////////////////////
         if (savedInstanceState == null) {
             ///here we can put the automatic search
@@ -145,18 +146,16 @@ public class MenuActivity extends ActionBarActivity {
         }
 
 
-
-
     }
 
     public void showFullscreen(View view) {
 
-       resf.sentToFullscreenActivity(this);
+        resf.sentToFullscreenActivity(this);
 
     }
 
     public void moreDetailsFromRes(View view) {
-        ((ResultFragment)getFragmentManager().findFragmentById(R.id.content_frame)).moreDetails();
+        ((ResultFragment) getFragmentManager().findFragmentById(R.id.content_frame)).moreDetails();
     }
 
 
@@ -169,42 +168,37 @@ public class MenuActivity extends ActionBarActivity {
 
     private void selectItem(int position) {
         // update the main content by replacing fragments
-        fragment=null;
-        TabWidget t=(TabWidget)findViewById(android.R.id.tabs);
-        int count=t.getTabCount();
-       if(t.getTabCount()!=0) {
+        fragment = null;
+        TabWidget t = (TabWidget) findViewById(android.R.id.tabs);
+        int count = t.getTabCount();
+        if (t.getTabCount() != 0) {
             //t.removeAllViews();
             myTabHost.setCurrentTab(0);
             myTabHost.clearAllTabs();
         }
-            //myTabHost.getTabWidget().removeAllViews();
-        if(position==MenuActivity.Profile) {
+        //myTabHost.getTabWidget().removeAllViews();
+        if (position == MenuActivity.Profile) {
             mt.createTabs(MenuActivity.profileTabs);
             fragment = new UserDetailsFragment();
             //fragment = new ResultFragment();
-           // resf = new ResultFragment();
+            // resf = new ResultFragment();
             //mt.createProfileTabs();
-             //resf = new ResultFragment();
+            //resf = new ResultFragment();
             //getFragmentManager().beginTransaction().replace(R.id.content_frame, resf).commit();
             // = (ResultFragment) fragment;
             //fragment=resf;
-        }
-        else if(position==MenuActivity.Search){
+        } else if (position == MenuActivity.Search) {
             mt.createTabs(MenuActivity.searchTabs);
-            fragment = new test();
-        }
-        else if(position==MenuActivity.History){
+            fragment = new ForMapsFregment();
+        } else if (position == MenuActivity.History) {
             mt.createTabs(MenuActivity.historyTabs);
             fragment = new HistoryFragment();
-        }
-        else if(position==MenuActivity.About){
+        } else if (position == MenuActivity.About) {
 
             fragment = new About();
-        }
-        else if(position==MenuActivity.RESULTS) {
-            fragment=new ResultFragment();
-            }
-        else if(position==MenuActivity.Logout){
+        } else if (position == MenuActivity.RESULTS) {
+            fragment = new ResultFragment();
+        } else if (position == MenuActivity.Logout) {
             logOut();
             Intent intent = new Intent(MenuActivity.this, LoginActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // To clean up all activities
@@ -220,7 +214,7 @@ public class MenuActivity extends ActionBarActivity {
         //FragmentManager fragmentManager = getFragmentManager();
         //fragmentManager.beginTransaction().replace(R.id.content_frame, fragment).commit();
         //resf=(ResultFragment) fragmentManager.findFragmentById(R.id.content_frame);
-        if(position==MenuActivity.History||position==MenuActivity.Search||position==MenuActivity.Profile) {
+        if (position == MenuActivity.History || position == MenuActivity.Search || position == MenuActivity.Profile) {
             myTabHost.setOnTabChangedListener(new TabHost.OnTabChangeListener() {
 
                 @Override
@@ -232,11 +226,11 @@ public class MenuActivity extends ActionBarActivity {
 
         }
 
-            mDrawerList.setItemChecked(position, true);
-            getSupportActionBar().setDisplayShowHomeEnabled(true);
-            getSupportActionBar().setIcon(menuitems.get(position).getIcon());
-            getSupportActionBar().setTitle(menuitems.get(position).getTitle());
-            mDrawerLayout.closeDrawer(mDrawerList);
+        mDrawerList.setItemChecked(position, true);
+        getSupportActionBar().setDisplayShowHomeEnabled(true);
+        getSupportActionBar().setIcon(menuitems.get(position).getIcon());
+        getSupportActionBar().setTitle(menuitems.get(position).getTitle());
+        mDrawerLayout.closeDrawer(mDrawerList);
 
 
     }
@@ -272,24 +266,22 @@ public class MenuActivity extends ActionBarActivity {
         if (id == R.id.action_settings) {
             return true;
         }
-        if(id ==R.id.add_appartment)
-        {
-            Intent i=new Intent(this, AddApartment.class);
+        if (id == R.id.add_appartment) {
+            Intent i = new Intent(this, AddApartment.class);
             startActivity(i);
         }
-        if(id==R.id.add_location)
-        {
-            Intent i=new Intent(this, AddressActivity.class);
+        if (id == R.id.add_location) {
+            Intent i = new Intent(this, AddressActivity.class);
             startActivity(i);
         }
-        if(id==R.id.search_result){
+        if (id == R.id.search_result) {
             //selectItem(MenuActivity.RESULTS);
-            if(myTabHost.getTabWidget().getTabCount()!=0) {
+            if (myTabHost.getTabWidget().getTabCount() != 0) {
                 //t.removeAllViews();
                 myTabHost.setCurrentTab(0);
                 myTabHost.clearAllTabs();
             }
-            getFragmentManager().beginTransaction().replace(R.id.content_frame,new ResultFragment()).commit();
+            getFragmentManager().beginTransaction().replace(R.id.content_frame, new ResultFragment()).commit();
             //((MenuItem)findViewById(R.id.search_result)).setIcon(R.drawable.ic_resultsfilled);
         }
 
@@ -322,18 +314,17 @@ public class MenuActivity extends ActionBarActivity {
         resf.updateTextView();
     }*/
 
-    public void setContent(String tag){
+    public void setContent(String tag) {
 
         if (tag.equals(searchTabs[0]))
-            fragment = new test(); //change to like or unlike or all
+            fragment = new ForMapsFregment(); //change to like or unlike or all
         else if (tag.equals(searchTabs[1])) {
             fragment = new CustomSearchFragment();
             /*Bundle args = new Bundle();
             args.putSerializable("Results", results);
             fragment.setArguments(args);//change to like or unlike or all
             */
-        }
-        else if (tag.equals(historyTabs[0]))
+        } else if (tag.equals(historyTabs[0]))
             fragment = new HistoryFragment(); //change to like or unlike or all
         else if (tag.equals(historyTabs[1]))
             fragment = new test(); //change to like or unlike or all
@@ -350,7 +341,8 @@ public class MenuActivity extends ActionBarActivity {
 
         }
     }
-    private void logOut(){
+
+    private void logOut() {
         SQLiteDB db = new SQLiteDB(getApplicationContext());
         String session = db.getSavedSession();
         String address = String.format("http://%s/JavaWeb/api?action=Logout&session=%s", JSONRequest.SERVER, session);
@@ -370,8 +362,6 @@ public class MenuActivity extends ActionBarActivity {
             e.printStackTrace();
         }
     }
-
-
 
 
 }

@@ -80,7 +80,7 @@
         <activity
             android:name=".MenuActivity"
             android:label="@string/title_activity_menu"
-            android:screenOrientation="portrait"/>
+            android:screenOrientation="portrait" />
         <activity
             android:name=".AddApartment"
             android:label="@string/title_activity_add_apartment" />
@@ -107,10 +107,10 @@
             android:label="@string/title_activity_add_new_apt" />
         <activity
             android:name=".SearchActivity"
-            android:label="@string/title_activity_search"></activity>
+            android:label="@string/title_activity_search" />
         <activity
             android:name=".NormalActivity"
-            android:label="@string/title_activity_normal"></activity>
+            android:label="@string/title_activity_normal" />
     </application>
 
 </manifest>
