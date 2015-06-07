@@ -6,6 +6,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
+import android.view.Menu;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
@@ -44,8 +45,13 @@ public class HistoryFragment extends Fragment {
         View view = inflater.inflate(R.layout.activity_history, container, false);
         SQLiteDB db = new SQLiteDB(getActivity().getApplicationContext());
         String session_str = db.getSavedSession();
-
-        String address = String.format("http://%s/JavaWeb/api?action=History&session=%s", JSONRequest.SERVER, session_str);
+        String address=null;
+        if(MenuActivity.historyTab==0)
+            address = String.format("http://%s/JavaWeb/api?action=History&session=%s", JSONRequest.SERVER, session_str);
+        else if(MenuActivity.historyTab==1)
+            address = String.format("http://%s/JavaWeb/api?action=HistoryLiked&session=%s", JSONRequest.SERVER, session_str);
+        else if(MenuActivity.historyTab==2)
+            address = String.format("http://%s/JavaWeb/api?action=HistoryNotLiked&session=%s", JSONRequest.SERVER, session_str);
         JSONRequest json = new JSONRequest(address);
         System.out.println(address);
         try {

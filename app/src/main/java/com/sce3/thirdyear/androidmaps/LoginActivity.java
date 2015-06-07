@@ -78,7 +78,7 @@ public class LoginActivity extends ActionBarActivity {
                 //res.setText(jobj.getString("session"));
                 SQLiteDB db=new SQLiteDB(getApplicationContext());
                 db.updateSession(jobj.getString("session"));
-                Intent i = new Intent(LoginActivity.this, MainActivity.class);
+                Intent i = new Intent(LoginActivity.this, MenuActivity.class);
                 startActivity(i);
                 /*
                 SharedPreferences sessionPref=getSharedPreferences("session",MODE_PRIVATE);

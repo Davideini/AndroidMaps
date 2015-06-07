@@ -15,7 +15,8 @@
             android:adjustViewBounds="true"
             android:onClick="showFullscreen"
             android:scaleType="fitXY"
-            android:src="@android:drawable/ic_menu_report_image" />
+            android:src="@android:drawable/ic_menu_report_image"
+            android:background="#fff3f3f3"/>
 
         <TextView
             android:id="@+id/AddresstextView"
@@ -78,7 +79,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="70dp"
                 android:src="@drawable/ic_ok"
-                android:tag="ok" />
+                android:tag="ok"
+                android:background="#fff3f3f3"/>
 
             <ImageButton
                 android:id="@+id/cancelBtn"
@@ -86,7 +88,8 @@
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="30dp"
                 android:src="@drawable/ic_cancel"
-                android:tag="no" />
+                android:tag="no"
+                android:background="#fff3f3f3"/>
 
         </LinearLayout>
 

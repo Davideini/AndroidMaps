@@ -139,42 +139,42 @@ public class AddApartment extends ActionBarActivity {
             street.requestFocus();
             street.setError("FIELD CANNOT BE EMPTY");
         }
-//        else if (!InputValidator.EmptyField(city.getText().toString())) {
-//            city.requestFocus();
-//            city.setError("FIELD CANNOT BE EMPTY");
-//        }
-//        else if (!InputValidator.EmptyField(house_num.getText().toString())) {
-//            house_num.requestFocus();
-//            house_num.setError("FIELD CANNOT BE EMPTY");
-//        }
-//        else if (!InputValidator.EmptyField(apt_num.getText().toString())) {
-//            apt_num.requestFocus();
-//            apt_num.setError("FIELD CANNOT BE EMPTY");
-//        }
-//        else if (!InputValidator.EmptyField(floor_num.getText().toString())) {
-//            apt_num.requestFocus();
-//            apt_num.setError("FIELD CANNOT BE EMPTY");
-//        }
-//        else if (!InputValidator.EmptyField(territory.getText().toString())) {
-//            apt_num.requestFocus();
-//            apt_num.setError("FIELD CANNOT BE EMPTY");
-//        }
-//        else if (!InputValidator.EmptyField(room_num.getText().toString())) {
-//            room_num.requestFocus();
-//            room_num.setError("FIELD CANNOT BE EMPTY");
-//        }
-//        else if (!InputValidator.EmptyField(area.getText().toString())) {
-//            area.requestFocus();
-//            area.setError("FIELD CANNOT BE EMPTY");
-//        }
-//        else if (!InputValidator.EmptyField(price.getText().toString())) {
-//            price.requestFocus();
-//            price.setError("FIELD CANNOT BE EMPTY");
-//        }
-//
-//        else if (!(rent.isChecked() && !(sell.isChecked()))) {
-//            Toast.makeText(getApplicationContext(), "Must Choose Rent\\Sell!", Toast.LENGTH_SHORT).show();
-//        }
+        else if (!InputValidator.EmptyField(city.getText().toString())) {
+            city.requestFocus();
+            city.setError("FIELD CANNOT BE EMPTY");
+        }
+        else if (!InputValidator.EmptyField(house_num.getText().toString())) {
+            house_num.requestFocus();
+            house_num.setError("FIELD CANNOT BE EMPTY");
+        }
+        else if (!InputValidator.EmptyField(apt_num.getText().toString())) {
+            apt_num.requestFocus();
+            apt_num.setError("FIELD CANNOT BE EMPTY");
+        }
+        else if (!InputValidator.EmptyField(floor_num.getText().toString())) {
+            floor_num.requestFocus();
+            floor_num.setError("FIELD CANNOT BE EMPTY");
+        }
+        else if (!InputValidator.EmptyField(territory.getText().toString())) {
+            territory.requestFocus();
+            territory.setError("FIELD CANNOT BE EMPTY");
+        }
+        else if (!InputValidator.EmptyField(room_num.getText().toString())) {
+            room_num.requestFocus();
+            room_num.setError("FIELD CANNOT BE EMPTY");
+        }
+        else if (!InputValidator.EmptyField(area.getText().toString())) {
+            area.requestFocus();
+            area.setError("FIELD CANNOT BE EMPTY");
+        }
+        else if (!InputValidator.EmptyField(price.getText().toString())) {
+            price.requestFocus();
+            price.setError("FIELD CANNOT BE EMPTY");
+        }
+
+        else if (!(rent.isChecked() && !(sell.isChecked()))) {
+            Toast.makeText(getApplicationContext(), "Must Choose Rent\\Sell!", Toast.LENGTH_SHORT).show();
+        }
 
         else {
             Address add2 = new Address(street, house_num, city);

@@ -212,11 +212,11 @@ public class ResultFragment extends Fragment {
         int desc = 0;
         if (v.getTag().equals("ok")) {
             desc = 0;
-            Toast.makeText(getActivity().getBaseContext(), "ok pressed!!", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity().getBaseContext(), "ok pressed!!", Toast.LENGTH_LONG).show();
 
         } else if (v.getTag().equals("no")) {
             desc = 1;
-            Toast.makeText(getActivity().getBaseContext(), "no pressed!!", Toast.LENGTH_LONG).show();
+            //Toast.makeText(getActivity().getBaseContext(), "no pressed!!", Toast.LENGTH_LONG).show();
         }
 
         String address = String.format("http://%s/JavaWeb/api?action=addHistory&apartment_id=%s&deleted=%s&session=%s", JSONRequest.SERVER, String.valueOf(MenuActivity.resultsAds.get(MenuActivity.resultIndex).getApartment().getId()), String.valueOf(desc), session_str);
@@ -225,7 +225,7 @@ public class ResultFragment extends Fragment {
             JSONObject jobj = new JSONObject(json.getJSON());
             if (jobj.getString("result").equals("success")) {
                 Log.d("transferToHistory", "decision done!!!");
-                Toast.makeText(getActivity().getApplicationContext(), "decision done!!!", Toast.LENGTH_SHORT).show();
+                //Toast.makeText(getActivity().getApplicationContext(), "decision done!!!", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(getActivity().getApplicationContext(), "Error", Toast.LENGTH_SHORT).show();
                 Log.d("ErroTansfer", "error to tranfer");

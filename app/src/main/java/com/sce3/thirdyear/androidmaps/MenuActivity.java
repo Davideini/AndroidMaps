@@ -79,12 +79,46 @@ public class MenuActivity extends ActionBarActivity {
     ////////////////////////////////////////////////////////////
     private TabHost myTabHost;
     private MenuTabs mt;
-
+    public static int historyTab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
+        SQLiteDB db = new SQLiteDB(getApplicationContext());
+        String session = db.getSavedSession();
+
+        //dbg
+        System.out.println(session);
+        //TextView txt = (TextView) findViewById(R.id.textView);
+        //txt.setVisibility(View.INVISIBLE);
+
+        if (!session.equals("")) {
+//            String address = String.format("http://%s/JavaWeb/api?action=Main&session=%s", JSONRequest.SERVER, session);
+            String address = String.format("http://%s/JavaWeb/api?action=Main&session=%s", JSONRequest.SERVER, session);
+            JSONRequest json = new JSONRequest(address);
+            System.out.println(address);
+            try {
+                JSONObject jobj = new JSONObject(json.getJSON());
+                if (jobj.getString("result").equals("success")) {
+                    //txt.setVisibility(View.VISIBLE); //logged by session.
+                    /////////////////////////////////////////////////////////
+                } else {
+                    Intent i = new Intent(this, LoginActivity.class);
+                    startActivity(i);
+                }
+            } catch (JSONException e) {
+                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                Toast.makeText(this, "Error receiving data.", Toast.LENGTH_LONG).show();
+                Intent i = new Intent(this, LoginActivity.class);
+                startActivity(i);
+            }
+        } else {
+            //no session in local db or session expired on server
+            Intent i = new Intent(this, LoginActivity.class);
+            startActivity(i);
+        }
         setContentView(R.layout.activity_menu);
         Utility.SetupUIKeyboard(findViewById(R.id.drawer_layout), this);
 
@@ -205,6 +239,7 @@ public class MenuActivity extends ActionBarActivity {
             intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP); // To clean up all activities
             startActivity(intent);
             finish();
+            return;
         }
         getFragmentManager().beginTransaction().replace(R.id.content_frame, fragment).commit();
 ///////////////this the way how to move things to Fragments
@@ -325,13 +360,16 @@ public class MenuActivity extends ActionBarActivity {
             args.putSerializable("Results", results);
             fragment.setArguments(args);//change to like or unlike or all
             */
-        } else if (tag.equals(historyTabs[0]))
+        } else if (tag.equals(historyTabs[0])) {
+            historyTab = 2;
             fragment = new HistoryFragment(); //change to like or unlike or all
-        else if (tag.equals(historyTabs[1]))
-            fragment = new test(); //change to like or unlike or all
-        else if (tag.equals(historyTabs[2]))
-            fragment = new test(); //change to like or unlike or all
-        else if (tag.equals(profileTabs[0]))
+        } else if (tag.equals(historyTabs[1])) {
+            historyTab = 1;
+            fragment = new HistoryFragment(); //change to like or unlike or all
+        } else if (tag.equals(historyTabs[2])) {
+            historyTab = 0;
+            fragment = new HistoryFragment(); //change to like or unlike or all
+        } else if (tag.equals(profileTabs[0]))
             fragment = new UserDetailsFragment(); //change to like or unlike or all
         else if (tag.equals(profileTabs[1]))
             fragment = new test(); //change to like or unlike or all
