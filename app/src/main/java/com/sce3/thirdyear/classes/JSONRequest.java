@@ -3,15 +3,23 @@ package com.sce3.thirdyear.classes;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
+import org.apache.http.HttpVersion;
 import org.apache.http.StatusLine;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.ClientConnectionManager;
+import org.apache.http.conn.scheme.PlainSocketFactory;
+import org.apache.http.conn.scheme.Scheme;
+import org.apache.http.conn.scheme.SchemeRegistry;
+import org.apache.http.conn.ssl.SSLSocketFactory;
 import org.apache.http.entity.StringEntity;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.impl.conn.tsccm.ThreadSafeClientConnManager;
 import org.apache.http.params.BasicHttpParams;
 import org.apache.http.params.HttpConnectionParams;
 import org.apache.http.params.HttpParams;
+import org.apache.http.params.HttpProtocolParams;
 import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
 
@@ -26,6 +34,22 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.security.KeyManagementException;
+import java.security.KeyStore;
+import java.security.KeyStoreException;
+import java.security.NoSuchAlgorithmException;
+import java.security.UnrecoverableKeyException;
+import java.security.cert.CertificateException;
+import java.security.cert.X509Certificate;
+
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.TrustManager;
+import javax.net.ssl.X509TrustManager;
+
+import org.apache.http.conn.ssl.SSLSocketFactory;
 
 public class JSONRequest implements Callable<String> {
     //public final static String SERVER = "192.168.80.1:8081";
@@ -38,16 +62,8 @@ public class JSONRequest implements Callable<String> {
     public final static String IMAGE_DIR = "JavaWeb/images";
 
     String address;
-    JSONObject JSON;
     Future<String> future;
     public JSONRequest(String address) {
-        this.address = address;
-        ExecutorService pool = Executors.newFixedThreadPool(1);
-        future = pool.submit(this);
-    }
-
-    public JSONRequest(String address,JSONObject JSON) {
-        this.JSON = JSON;
         this.address = address;
         ExecutorService pool = Executors.newFixedThreadPool(1);
         future = pool.submit(this);
@@ -63,22 +79,13 @@ public class JSONRequest implements Callable<String> {
 
     private String getJSON(String address) throws IOException {
         StringBuilder builder = new StringBuilder();
-        HttpParams httpParameters=new BasicHttpParams();
+        //HttpParams httpParameters=new BasicHttpParams();
         HttpResponse response;
-        if(JSON!=null){
-            HttpPost httpPost = new HttpPost(address);
-            StringEntity entity = new StringEntity(JSON.toString(), HTTP.UTF_8);
-            entity.setContentType("application/json");
-            httpPost.setEntity(entity);
-            HttpClient client = new DefaultHttpClient(httpParameters);
-            response = client.execute(httpPost);
-        } else {
-            HttpConnectionParams.setConnectionTimeout(httpParameters, 5000);
-            HttpConnectionParams.setSoTimeout(httpParameters,5000);
-            HttpGet httpGet = new HttpGet(address);
-            HttpClient client = new DefaultHttpClient(httpParameters);
-            response = client.execute(httpGet);
-        }
+
+        HttpGet httpGet = new HttpGet(address);
+        HttpClient client = getNewHttpClient();
+        response = client.execute(httpGet);
+
 
         StatusLine statusLine = response.getStatusLine();
         int statusCode = statusLine.getStatusCode();
@@ -97,4 +104,32 @@ public class JSONRequest implements Callable<String> {
         return builder.toString();
     }
 
+    public HttpClient getNewHttpClient() {
+        try {
+            KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
+            trustStore.load(null, null);
+
+            MySSLSocketFactory sf = new MySSLSocketFactory(trustStore);
+            sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
+
+            HttpParams params = new BasicHttpParams();
+            HttpConnectionParams.setConnectionTimeout(params, 5000);
+            HttpConnectionParams.setSoTimeout(params, 5000);
+            HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
+            HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
+
+            SchemeRegistry registry = new SchemeRegistry();
+            registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 80));
+            registry.register(new Scheme("https", sf, 443));
+            registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 8080));
+            registry.register(new Scheme("https", sf, 8443));
+            registry.register(new Scheme("http", PlainSocketFactory.getSocketFactory(), 8081));
+
+            ClientConnectionManager ccm = new ThreadSafeClientConnManager(params, registry);
+
+            return new DefaultHttpClient(ccm, params);
+        } catch (Exception e) {
+            return new DefaultHttpClient();
+        }
+    }
 }
