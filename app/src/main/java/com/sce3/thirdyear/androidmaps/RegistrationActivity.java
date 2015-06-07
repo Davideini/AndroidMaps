@@ -269,7 +269,7 @@ public class RegistrationActivity extends ActionBarActivity {
                         if(jobj.getString("result").equals("success")){
                             Toast.makeText(RegistrationActivity.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
 
-                            Intent i = new Intent(RegistrationActivity.this, MainActivity.class);
+                            Intent i = new Intent(RegistrationActivity.this, MenuActivity.class);
                             startActivity(i);
 
                         }

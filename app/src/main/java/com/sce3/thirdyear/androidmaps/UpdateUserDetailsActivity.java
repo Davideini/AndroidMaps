@@ -91,7 +91,7 @@ public class UpdateUserDetailsActivity extends ActionBarActivity {
                         if(jobj.getString("result").equals("success")){
                             Toast.makeText(UpdateUserDetailsActivity.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
 
-                            Intent i = new Intent(UpdateUserDetailsActivity.this, MainActivity.class);
+                            Intent i = new Intent(UpdateUserDetailsActivity.this, MenuActivity.class);
                             startActivity(i);
                             finish();
                         }

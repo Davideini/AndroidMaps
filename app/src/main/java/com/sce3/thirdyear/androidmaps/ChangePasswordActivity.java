@@ -95,7 +95,7 @@ public class ChangePasswordActivity extends ActionBarActivity {
                         if(jobj.getString("result").equals("success")){
                             Toast.makeText(ChangePasswordActivity.this, jobj.getString("message"), Toast.LENGTH_LONG).show();
 
-                            Intent i = new Intent(ChangePasswordActivity.this, MainActivity.class);
+                            Intent i = new Intent(ChangePasswordActivity.this, MenuActivity.class);
                             startActivity(i);
                             finish();
                         }
