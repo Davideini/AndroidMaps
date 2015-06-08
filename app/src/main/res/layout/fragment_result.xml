@@ -80,7 +80,7 @@
                 android:layout_marginLeft="70dp"
                 android:src="@drawable/ic_ok"
                 android:tag="ok"
-                android:background="#fff3f3f3"/>
+                android:background="@null"/>
 
             <ImageButton
                 android:id="@+id/cancelBtn"
@@ -89,7 +89,7 @@
                 android:layout_marginLeft="30dp"
                 android:src="@drawable/ic_cancel"
                 android:tag="no"
-                android:background="#fff3f3f3"/>
+                android:background="@null"/>
 
         </LinearLayout>
 
