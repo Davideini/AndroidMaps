@@ -47,11 +47,11 @@ public class HistoryFragment extends Fragment {
         String session_str = db.getSavedSession();
         String address=null;
         if(MenuActivity.historyTab==0)
-            address = String.format("https://%s/JavaWeb/api?action=History&session=%s", JSONRequest.SERVER, session_str);
+            address = String.format("http://%s/JavaWeb/api?action=History&session=%s", JSONRequest.SERVER, session_str);
         else if(MenuActivity.historyTab==1)
-            address = String.format("https://%s/JavaWeb/api?action=HistoryLiked&session=%s", JSONRequest.SERVER, session_str);
+            address = String.format("http://%s/JavaWeb/api?action=HistoryLiked&session=%s", JSONRequest.SERVER, session_str);
         else if(MenuActivity.historyTab==2)
-            address = String.format("https://%s/JavaWeb/api?action=HistoryNotLiked&session=%s", JSONRequest.SERVER, session_str);
+            address = String.format("http://%s/JavaWeb/api?action=HistoryNotLiked&session=%s", JSONRequest.SERVER, session_str);
         JSONRequest json = new JSONRequest(address);
         System.out.println(address);
         try {
@@ -83,7 +83,7 @@ public class HistoryFragment extends Fragment {
                                 Intent mIntent = new Intent(getActivity(), HouseDetailsActivity.class);
                                 SQLiteDB db = new SQLiteDB(getActivity().getApplicationContext());
                                 String session = db.getSavedSession();
-                                String address = String.format("https://%s/JavaWeb/api?action=getApartment&apartment_id=%d", JSONRequest.SERVER, list.get(position).get("id"), session);
+                                String address = String.format("http://%s/JavaWeb/api?action=getApartment&apartment_id=%d", JSONRequest.SERVER, list.get(position).get("id"), session);
                                 System.out.println(address);
                                 JSONRequest json = new JSONRequest(address);
                                 try {
@@ -145,7 +145,7 @@ public class HistoryFragment extends Fragment {
                             public void onClick(DialogInterface dialog, int which) {
                                 SQLiteDB db = new SQLiteDB(getActivity().getApplicationContext());
                                 String session = db.getSavedSession();
-                                String address = String.format("https://%s/JavaWeb/api?action=removeHistory&apartment_id=%d&session=%s", JSONRequest.SERVER, list.get(position).get("id"), session);
+                                String address = String.format("http://%s/JavaWeb/api?action=removeHistory&apartment_id=%d&session=%s", JSONRequest.SERVER, list.get(position).get("id"), session);
                                 System.out.println(address);
                                 JSONRequest json = new JSONRequest(address);
                                 JSONObject jobj;

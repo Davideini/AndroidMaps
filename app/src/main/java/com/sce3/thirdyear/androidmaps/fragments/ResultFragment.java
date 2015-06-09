@@ -219,7 +219,7 @@ public class ResultFragment extends Fragment {
                 //Toast.makeText(getActivity().getBaseContext(), "no pressed!!", Toast.LENGTH_LONG).show();
             }
 
-            String address = String.format("https://%s/JavaWeb/api?action=addHistory&apartment_id=%s&deleted=%s&session=%s", JSONRequest.SERVER, String.valueOf(MenuActivity.resultsAds.get(MenuActivity.resultIndex).getApartment().getId()), String.valueOf(desc), session_str);
+            String address = String.format("http://%s/JavaWeb/api?action=addHistory&apartment_id=%s&deleted=%s&session=%s", JSONRequest.SERVER, String.valueOf(MenuActivity.resultsAds.get(MenuActivity.resultIndex).getApartment().getId()), String.valueOf(desc), session_str);
             JSONRequest json = new JSONRequest(address);
             try {
                 JSONObject jobj = new JSONObject(json.getJSON());

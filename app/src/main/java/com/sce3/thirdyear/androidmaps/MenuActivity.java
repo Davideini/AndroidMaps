@@ -94,8 +94,8 @@ public class MenuActivity extends ActionBarActivity {
         //txt.setVisibility(View.INVISIBLE);
 
         if (!session.equals("")) {
-//            String address = String.format("https://%s/JavaWeb/api?action=Main&session=%s", JSONRequest.SERVER, session);
-            String address = String.format("https://%s/JavaWeb/api?action=Main&session=%s", JSONRequest.SERVER, session);
+//            String address = String.format("http://%s/JavaWeb/api?action=Main&session=%s", JSONRequest.SERVER, session);
+            String address = String.format("http://%s/JavaWeb/api?action=Main&session=%s", JSONRequest.SERVER, session);
             JSONRequest json = new JSONRequest(address);
             System.out.println(address);
             try {
@@ -384,7 +384,7 @@ public class MenuActivity extends ActionBarActivity {
     private void logOut() {
         SQLiteDB db = new SQLiteDB(getApplicationContext());
         String session = db.getSavedSession();
-        String address = String.format("https://%s/JavaWeb/api?action=Logout&session=%s", JSONRequest.SERVER, session);
+        String address = String.format("http://%s/JavaWeb/api?action=Logout&session=%s", JSONRequest.SERVER, session);
         System.out.println(address);
         JSONRequest json = new JSONRequest(address);
         JSONObject jobj;

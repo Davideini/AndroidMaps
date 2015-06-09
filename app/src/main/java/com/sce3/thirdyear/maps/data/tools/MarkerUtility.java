@@ -82,7 +82,7 @@ public class MarkerUtility {
     }
 
     private static void ForApartment(final Marker marker, GoogleMap mMap, final Activity activity, final int id) {
-        String address = String.format("https://%s/JavaWeb/api?action=getApartment&apartment_id=%d", JSONRequest.SERVER, id);
+        String address = String.format("http://%s/JavaWeb/api?action=getApartment&apartment_id=%d", JSONRequest.SERVER, id);
 
         List apartments = Apartment.GetApartments(address);
 

@@ -20,7 +20,7 @@ import java.util.List;
 public class Apartment implements Serializable {
 
     // private const
-    private static final String SERVER_URL = "https://%s/JavaWeb/api?action=SearchAddress&%s";
+    private static final String SERVER_URL = "http://%s/JavaWeb/api?action=SearchAddress&%s";
     private static final String BY_LATLNG_DIST = "latlng=%s,%s&distance=%s";
     private static final String BY_ADDRESS = "address=%s";
     private static final String UPDATE = "update=true";

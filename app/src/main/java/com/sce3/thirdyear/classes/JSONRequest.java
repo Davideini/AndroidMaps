@@ -55,9 +55,9 @@ public class JSONRequest implements Callable<String> {
     //public final static String SERVER = "192.168.80.1:8081";
     //public final static String SERVER = "10.200.204.243:81";//"10.0.0.138:81"; //"10.200.204.243:81";
     //public final static String SERVER = "10.200.201.176:8080";
-    //public final static String SERVER = "10.0.0.14:8080";
+    public final static String SERVER = "10.200.204.136:8081";
     //public final static String SERVER = "192.168.1.2:8081";
-    public final static String SERVER = "192.168.1.2:8443";
+    //public final static String SERVER = "192.168.1.2:8443";
     //public final static String SERVER = "localhost:8081";//"localhost:8080";
     public final static String IMAGE_DIR = "JavaWeb/images";
 
@@ -81,11 +81,12 @@ public class JSONRequest implements Callable<String> {
         StringBuilder builder = new StringBuilder();
         //HttpParams httpParameters=new BasicHttpParams();
         HttpResponse response;
-
+        HttpParams params = new BasicHttpParams();
+        HttpConnectionParams.setConnectionTimeout(params, 5000);
+        HttpConnectionParams.setSoTimeout(params, 5000);
         HttpGet httpGet = new HttpGet(address);
-        HttpClient client = getNewHttpClient();
+        HttpClient client = new DefaultHttpClient();
         response = client.execute(httpGet);
-
 
         StatusLine statusLine = response.getStatusLine();
         int statusCode = statusLine.getStatusCode();
@@ -103,7 +104,7 @@ public class JSONRequest implements Callable<String> {
         }
         return builder.toString();
     }
-
+/*
     public HttpClient getNewHttpClient() {
         try {
             KeyStore trustStore = KeyStore.getInstance(KeyStore.getDefaultType());
@@ -112,9 +113,7 @@ public class JSONRequest implements Callable<String> {
             MySSLSocketFactory sf = new MySSLSocketFactory(trustStore);
             sf.setHostnameVerifier(SSLSocketFactory.ALLOW_ALL_HOSTNAME_VERIFIER);
 
-            HttpParams params = new BasicHttpParams();
-            HttpConnectionParams.setConnectionTimeout(params, 5000);
-            HttpConnectionParams.setSoTimeout(params, 5000);
+
             HttpProtocolParams.setVersion(params, HttpVersion.HTTP_1_1);
             HttpProtocolParams.setContentCharset(params, HTTP.UTF_8);
 
@@ -131,5 +130,5 @@ public class JSONRequest implements Callable<String> {
         } catch (Exception e) {
             return new DefaultHttpClient();
         }
-    }
+    }*/
 }

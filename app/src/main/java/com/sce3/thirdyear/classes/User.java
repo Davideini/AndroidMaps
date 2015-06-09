@@ -16,7 +16,7 @@ public class User {
     {}
     /*st*/
     public User(SQLiteDB db) {
-        String address = String.format("https://%s/JavaWeb/api?action=GetUserUsingSession&session=%s", JSONRequest.SERVER, db.getSavedSession());
+        String address = String.format("http://%s/JavaWeb/api?action=GetUserUsingSession&session=%s", JSONRequest.SERVER, db.getSavedSession());
 
         try {
             JSONRequest json = new JSONRequest(address);

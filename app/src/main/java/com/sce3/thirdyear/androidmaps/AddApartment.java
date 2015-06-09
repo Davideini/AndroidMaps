@@ -172,7 +172,7 @@ public class AddApartment extends ActionBarActivity {
             price.setError("FIELD CANNOT BE EMPTY");
         }
 
-        else if (!(rent.isChecked() && !(sell.isChecked()))) {
+        else if (!(rent.isChecked()) ^ !(sell.isChecked())) {
             Toast.makeText(getApplicationContext(), "Must Choose Rent\\Sell!", Toast.LENGTH_SHORT).show();
         }
 
@@ -182,7 +182,7 @@ public class AddApartment extends ActionBarActivity {
             double lat = add2.getLat();
 
 
-            Toast.makeText(this, "Lat: " + lat + ", Lng: " + lng, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, "Lat: " + lat + ", Lng: " + lng, Toast.LENGTH_SHORT).show();
 
             SQLiteDB db = new SQLiteDB(getApplicationContext());
             user = new User(db);
@@ -257,7 +257,7 @@ public class AddApartment extends ActionBarActivity {
 
             boolean first = true;
             String delim = "";
-            StringBuilder sb = new StringBuilder(String.format("https://%s/JavaWeb/api?", JSONRequest.SERVER));
+            StringBuilder sb = new StringBuilder(String.format("http://%s/JavaWeb/api?", JSONRequest.SERVER));
             for (String key : dict.keySet()) {
 
                 if (!first) {
@@ -272,7 +272,7 @@ public class AddApartment extends ActionBarActivity {
 
             String link = result.replaceAll(" ", "%20");
 
-            //String link = String.format("https://%s/JavaWeb/api?action=AddApt",JSONRequest.SERVER);
+            //String link = String.format("http://%s/JavaWeb/api?action=AddApt",JSONRequest.SERVER);
 //            String encodedUrl = null;
 //            try {
 //                encodedUrl = URLEncoder.encode(result, "UTF-8");
@@ -280,7 +280,7 @@ public class AddApartment extends ActionBarActivity {
 //                // Can be safely ignored because UTF-8 is always supported
 //            }
 
-//            String apartment = String.format("https://%s/JavaMaps/api?action=AddApt&city=%s&price=%s&territory=%s&street=%s&house_num=%s&apt_num=%s&rooms=%s&floor=%s" +
+//            String apartment = String.format("http://%s/JavaMaps/api?action=AddApt&city=%s&price=%s&territory=%s&street=%s&house_num=%s&apt_num=%s&rooms=%s&floor=%s" +
 //                            "&sizem2=%s&desc=%s&aircondition=%s&elevator=%s&balcony=%s&isolated_room=%s&parking=%s&handicap_access=%s&storage=%s" +
 //                            "&bars=%s&sun_balcony=%s&renovated=%s&furnished=%s&unit=%s&pandoor=%s", JSONRequest.SERVER, user.getID() + "", city.getText().toString(), price.getText().toString(),
 //                    territory.getText().toString(), street.getText().toString(), house_num.getText().toString(), apt_num.getText().toString(), room_num.getText().toString(),

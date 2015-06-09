@@ -48,7 +48,7 @@ public class MyListAdapter extends ArrayAdapter<Object> {
 
 
         ImageView theImageView = (ImageView) theView.findViewById(R.id.imageView2);
-        new DownloadImageTask(theImageView).execute(String.format("https://%s/%s/%s", JSONRequest.SERVER, JSONRequest.IMAGE_DIR, filename));
+        new DownloadImageTask(theImageView).execute(String.format("http://10.200.204.136:8081/%s/%s", JSONRequest.IMAGE_DIR, filename));
 
         //ImageView delete = (ImageView) theView.findViewById(R.id.deletebtn);
         /*
@@ -57,7 +57,7 @@ public class MyListAdapter extends ArrayAdapter<Object> {
             public void onClick(View v) {
                 SQLiteDB db = new SQLiteDB(v.getContext().getApplicationContext());
                 String session = db.getSavedSession();
-                String address = String.format("https://%s/JavaWeb/api?action=removeHistory&apartment_id=%d&session=%s", JSONRequest.SERVER, id, session);
+                String address = String.format("http://%s/JavaWeb/api?action=removeHistory&apartment_id=%d&session=%s", JSONRequest.SERVER, id, session);
                 System.out.println(address);
                 JSONRequest json = new JSONRequest(address);
                 JSONObject jobj;
